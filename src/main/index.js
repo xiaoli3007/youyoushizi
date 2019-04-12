@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, globalShortcut } from 'electron'
 import './menu'
 /**
  * Set `__static` path to static files in production
@@ -24,16 +24,28 @@ function createWindow () {
     useContentSize: true,
     width: 1000,
 		// fullscreen:true
+		// frame:false
   })
 
   mainWindow.loadURL(winURL)
-
+	// mainWindow.setFullScreen(true)
+	// mainWindow.setSimpleFullScreen(true)
   mainWindow.on('closed', () => {
     mainWindow = null
   })
 }
 
 app.on('ready', createWindow)
+
+app.on('ready', () => {
+  globalShortcut.register('Escape', () => {
+			if(mainWindow){
+					if(mainWindow.isFullScreen()){
+							mainWindow.setFullScreen(false)
+					}
+			}
+  })
+})
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

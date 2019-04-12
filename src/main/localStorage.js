@@ -55,7 +55,7 @@ function writeConfig (value) {
 
 const localConfig = {
   config: null,
-  configUrl: path.join(os.homedir(), './.cocomusic.json'),
+  configUrl: path.join(os.homedir(), './.youyoushizi.json'),
   setStoragePath: (path) => {
     localConfig.configUrl = path//
   },

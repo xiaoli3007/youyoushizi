@@ -4,6 +4,8 @@ const {
 	dialog
 } = require('electron')
 
+import localStorage from './localStorage'
+
 const template = [{
 		label: '设置',
 		submenu: [{
@@ -11,17 +13,27 @@ const template = [{
 			label: '阅读声音',
 			submenu: [{
 					role: 'man',
-					label: '男声'
+					type:'radio',
+					label: '男声',
+					checked:localStorage.getItem('voice') === 'man' || !localStorage.getItem('voice'),
+					click() {
+						localStorage.setItem('voice', 'man')
+					}
 				},
 				{
-					role: 'women',
-					label: '女声'
+					role: 'woman',
+					type:'radio',
+					label: '女声',
+					checked:localStorage.getItem('voice') === 'woman',
+					click() {
+						localStorage.setItem('voice', 'woman')
+					}
 				},
 			]
 		}, {
 			role: 'toggleFullScreen',
 			label: '全屏',
-		},]
+		}, ]
 	},
 	{
 		label: '帮助',

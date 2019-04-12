@@ -1,57 +1,57 @@
 <template>
-<div>
-	<el-row :gutter="20">
-		<el-col :span="12">
-			<el-card class="box-card">
-				<div slot="header" class="clearfix">
-					<span>进行中的任务</span>
-					<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
-				</div>
-				<div v-for="o in 11" :key="o" class="text item">
-					{{'列表内容 ' + o }}
-				</div>
-			</el-card>
-		</el-col>
-		<el-col :span="12">
-			<el-card class="box-card">
-				<div slot="header" class="clearfix">
-					<span>初次完成的任务</span>
-					<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
-				</div>
-				<div v-for="o in 11" :key="o" class="text item">
-					{{'列表内容 ' + o }}
-				</div>
-			</el-card>
-		</el-col>
+	<div>
+		<el-row :gutter="20">
+			<el-col :span="12">
+				<el-card class="box-card">
+					<div slot="header" class="clearfix">
+						<span>进行中的任务</span>
+						<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
+					</div>
+					<div v-for="o in 11" :key="o" class="text item">
+						{{'列表内容 ' + o }}
+					</div>
+				</el-card>
+			</el-col>
+			<el-col :span="12">
+				<el-card class="box-card">
+					<div slot="header" class="clearfix">
+						<span>初次完成的任务</span>
+						<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
+					</div>
+					<div v-for="o in 11" :key="o" class="text item">
+						{{'列表内容 ' + o }}
+					</div>
+				</el-card>
+			</el-col>
 
-	</el-row>
+		</el-row>
 
-	<el-row :gutter="20">
-		<el-col :span="12">
-			<el-card class="box-card">
-				<div slot="header" class="clearfix">
-					<span>已经完成任务</span>
-					<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
-				</div>
-				<div v-for="o in 11" :key="o" class="text item">
-					{{'列表内容 ' + o }}
-				</div>
-			</el-card>
-		</el-col>
-		<el-col :span="12">
-			<el-card class="box-card">
-				<div slot="header" class="clearfix">
-					<span>建议复习的任务</span>
-					<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
-				</div>
-				<div v-for="o in 11" :key="o" class="text item">
-					{{'列表内容 ' + o }}
-				</div>
-			</el-card>
-		</el-col>
+		<el-row :gutter="20">
+			<el-col :span="12">
+				<el-card class="box-card">
+					<div slot="header" class="clearfix">
+						<span>已经完成任务</span>
+						<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
+					</div>
+					<div v-for="o in 11" :key="o" class="text item">
+						{{'列表内容 ' + o }}
+					</div>
+				</el-card>
+			</el-col>
+			<el-col :span="12">
+				<el-card class="box-card">
+					<div slot="header" class="clearfix">
+						<span>建议复习的任务</span>
+						<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
+					</div>
+					<div v-for="o in 11" :key="o" class="text item">
+						{{'列表内容 ' + o }}
+					</div>
+				</el-card>
+			</el-col>
 
-	</el-row>
-</div>
+		</el-row>
+	</div>
 
 </template>
 
@@ -60,7 +60,17 @@
 		mapGetters
 	} from 'vuex'
 
+	const localStorage = require('../../../main/localStorage').default
+
 	export default {
+		data () {
+		  return {
+		    voice: localStorage.getItem('voice'),
+		  }
+		},
+		created() {
+			// console.log(this.voice)
+		},
 		name: 'dashboard',
 		computed: {
 			...mapGetters([
@@ -82,9 +92,9 @@
 			line-height: 46px;
 		}
 	}
-	
-	 .el-row {
-    margin-top: 20px;
+
+	.el-row {
+		margin-top: 20px;
 		padding: 0 15px;
-  }
+	}
 </style>

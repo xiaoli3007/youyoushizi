@@ -64,7 +64,8 @@
 		"element-ui": "2.3.4",
 		"js-cookie": "^2.2.0",
 		"normalize.css": "7.0.0",
-		"nprogress": "0.2.0"
+		"nprogress": "0.2.0",
+		"lodash": "^4.17.2"
   },
   "devDependencies": {
     "ajv": "^6.5.0",
