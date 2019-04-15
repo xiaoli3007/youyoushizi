@@ -45,6 +45,12 @@ export const constantRouterMap = [
 			  component:  require('@/views/study/list/book').default,
 			  meta: { title: '课外读物', icon: 'book' }
 			},
+			{
+			  path: 'read',
+			  name: 'Read',
+				hidden: true,
+			  component:  require('@/views/study/read').default
+			},
 //       {
 //         path: 'cat',
 //         name: 'Cat',

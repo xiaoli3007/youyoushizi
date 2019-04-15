@@ -14,6 +14,12 @@ import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+// require styles
+import 'swiper/dist/css/swiper.css'
+
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 
@@ -22,7 +28,7 @@ Vue.use(_)
 
 Vue.config.productionTip = false
 
-
+window._ = _
 
 /* eslint-disable no-new */
 new Vue({

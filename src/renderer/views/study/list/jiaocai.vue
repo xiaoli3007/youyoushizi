@@ -23,6 +23,12 @@
 			  </template>
 			</el-table-column>
 			
+				 <el-table-column label="操作" width="110" align="center">
+			  <template slot-scope="scope">
+			    <span>   <el-button type="primary" v-on:click="read">开始听写</el-button> </span>
+			  </template>
+			</el-table-column>
+			
      
     </el-table>
   </div>
@@ -52,12 +58,13 @@ export default {
     this.fetchData()
   },
   methods: {
+	  read() {
+	  	this.$router.replace({ name: 'Read' })
+	  },
     fetchData() {
       this.listLoading = true
       getjiaocaiList(this.listQuery).then(response => {
         this.list = response.data.chapter
-				
-				
 				var temp = this.list
 				_(temp).forEach(function(value,key) {
 					// console.log(value.word1);
@@ -73,7 +80,7 @@ export default {
 						
 				});
 				this.list = temp
-				console.log(this.list);
+				console.log(temp);
 				
         this.listLoading = false
       })
