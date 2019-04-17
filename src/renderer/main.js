@@ -17,8 +17,10 @@ import '@/permission' // permission control
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 // require styles
 import 'swiper/dist/css/swiper.css'
-
 Vue.use(VueAwesomeSwiper, /* { default global options } */)
+
+import audio from './lib/audio'
+Vue.use(audio)
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios

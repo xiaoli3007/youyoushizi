@@ -49,7 +49,8 @@ export const constantRouterMap = [
 			  path: 'read',
 			  name: 'Read',
 				hidden: true,
-			  component:  require('@/views/study/read').default
+			  component:  require('@/views/study/read').default,
+			  meta: { title: '任务中'}
 			},
 //       {
 //         path: 'cat',
