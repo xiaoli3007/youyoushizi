@@ -1,5 +1,5 @@
 <template>
-    <div class="x-audio-wrap" :class="{inline:!block}" ref="wrap" @click="play">
+    <div class="x-audio-wrap" :class="{inline:!block}" ref="wrap" @click="play"   >
         <div class="x-sector" :class="{play:animate}">
             <div class="x-dot"></div>
         </div>
@@ -29,6 +29,10 @@ export default {
 		autoplay:{
             type:Boolean,
             default:false
+        },
+		playnow:{
+            type:Boolean,
+            default:false
         }
     },
     data(){
@@ -37,6 +41,7 @@ export default {
             animate:false,
             timer:null,
             duration:null,
+			// playnowdata:this.playnow
         }
     },
     mounted(){
@@ -66,6 +71,11 @@ export default {
 		if(this.autoplay){
 			this.audio.play()
 		}
+    },
+	watch:{
+     playnow(newValue, oldValue) {
+        console.log(newValue)
+    }
     },
     methods:{
         play(){

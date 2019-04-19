@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<read-task :words="words"></read-task>
+		<read-task :words="words" :rautoplay="rautoplay" ></read-task>
 	</div>
 </template>
 
@@ -10,6 +10,7 @@
 	export default {
 		data() {
 			return {
+				rautoplay:false,
 				words: {
 					"id": "01",
 					"name": "第一课 燕子",
@@ -89,7 +90,10 @@
 
 		},
 		created() {
-			this.fetchData()
+		this.rautoplay = this.$route.query.rautoplay==0?false:true
+			
+			// console.log(this.$route.query.rautoplay)
+			// console.log(this.rautoplay)
 		},
 		methods: {
 			fetchData() {

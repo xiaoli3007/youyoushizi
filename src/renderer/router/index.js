@@ -37,7 +37,7 @@ export const constantRouterMap = [
         path: 'jiaocai',
         name: 'Jiaocai',
         component:  require('@/views/study/list/jiaocai').default,
-        meta: { title: '教材', icon: 'jiaocai' }
+        meta: { title: '教材', icon: 'jiaocai' },
       },
 			{
 			  path: 'book',

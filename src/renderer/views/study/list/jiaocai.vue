@@ -23,9 +23,14 @@
 			  </template>
 			</el-table-column>
 			
-				 <el-table-column label="操作" width="110" align="center">
+			<el-table-column label="操作" width="310" align="center">
 			  <template slot-scope="scope">
-			    <span>   <el-button type="primary" v-on:click="read">开始听写</el-button> </span>
+				  
+				  <el-col :span="12"><el-button type="primary" v-on:click="read(0)">手动听写</el-button></el-col>
+				  <el-col :span="12"><el-button type="success" v-on:click="read(1)">自动听写</el-button> </el-col>
+  
+				 
+				
 			  </template>
 			</el-table-column>
 			
@@ -58,8 +63,8 @@ export default {
     this.fetchData()
   },
   methods: {
-	  read() {
-	  	this.$router.replace({ name: 'Read' })
+	  read(a) {
+	  	this.$router.replace({ name: 'Read' , query:{  rautoplay: a }})
 	  },
     fetchData() {
       this.listLoading = true
