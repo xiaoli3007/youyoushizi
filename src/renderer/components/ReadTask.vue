@@ -6,7 +6,7 @@
 
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						<div class="aaa">{{slide.sw}}</div>
+						<div class="tasktext">{{slide.sw}}</div>
 					</el-col>
 				</el-row>
 
@@ -98,7 +98,7 @@
 								// 								console.log('当前的slide序号是' + this.activeIndex);
 								// 								console.log('当前的slide序号是' + this.realIndex);
 									self.$refs.myaudio[this.realIndex].play()
-							}, 3000)
+							}, 2000)
 						},
 						keyPress: function(event) {
 							// console.log('你按了键盘' + event)
@@ -125,7 +125,9 @@
 						slideChange: function() {
 							// console.log('改变了')
 							// console.log(this.realIndex);
-							self.$refs.myaudio[this.realIndex].play()
+							setTimeout(() => {
+								self.$refs.myaudio[this.realIndex].play()
+							}, 1000)
 						}
 					},
 				}
@@ -174,11 +176,12 @@
 </script>
 
 <style>
-	.aaa {
+	.tasktext {
 		/* width: 500px; height: 300px; */
 		font-size: 500px;
 		/* text-align: center; */
 		margin-top: 6.25rem;
+		user-select: none;
 	}
 	 .el-row {
     margin-bottom: 20px;
