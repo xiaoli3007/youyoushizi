@@ -1,9 +1,9 @@
 <template>
 	<div class="dashboard-editor-container">
 		
-		<panel-group @handleSetLineChartData="handleSetLineChartData"/>
+		<panel-group/>
 		
-		<el-row style="background:#fff;padding:16px 0 0;margin-bottom:32px;">
+		<el-row style="margin-bottom:32px;">
 		  <line-chart :chart-data="lineChartData"/>
 		</el-row>
 		
@@ -25,59 +25,6 @@
 		  </el-col>
 		</el-row>
 		
-	
-		
-		<el-row :gutter="20">
-			<el-col :span="12">
-				<el-card class="box-card">
-					<div slot="header" class="clearfix">
-						<span>进行中的任务</span>
-						<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
-					</div>
-					<div v-for="o in 11" :key="o" class="text item">
-						{{'列表内容 ' + o }}
-					</div>
-				</el-card>
-			</el-col>
-			<el-col :span="12">
-				<el-card class="box-card">
-					<div slot="header" class="clearfix">
-						<span>初次完成的任务</span>
-						<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
-					</div>
-					<div v-for="o in 11" :key="o" class="text item">
-						{{'列表内容 ' + o }}
-					</div>
-				</el-card>
-			</el-col>
-
-		</el-row>
-
-		<el-row :gutter="20">
-			<el-col :span="12">
-				<el-card class="box-card">
-					<div slot="header" class="clearfix">
-						<span>已经完成任务</span>
-						<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
-					</div>
-					<div v-for="o in 11" :key="o" class="text item">
-						{{'列表内容 ' + o }}
-					</div>
-				</el-card>
-			</el-col>
-			<el-col :span="12">
-				<el-card class="box-card">
-					<div slot="header" class="clearfix">
-						<span>建议复习的任务</span>
-						<el-button style="float: right; padding: 3px 0" type="text">更多</el-button>
-					</div>
-					<div v-for="o in 11" :key="o" class="text item">
-						{{'列表内容 ' + o }}
-					</div>
-				</el-card>
-			</el-col>
-
-		</el-row>
 	</div>
 
 </template>
@@ -93,18 +40,6 @@
 	  newVisitis: {
 	    expectedData: [100, 120, 161, 134, 105, 160, 165],
 	    actualData: [120, 82, 91, 154, 162, 140, 145]
-	  },
-	  messages: {
-	    expectedData: [200, 192, 120, 144, 160, 130, 140],
-	    actualData: [180, 160, 151, 106, 145, 150, 130]
-	  },
-	  purchases: {
-	    expectedData: [80, 100, 121, 104, 105, 90, 100],
-	    actualData: [120, 90, 100, 138, 142, 130, 130]
-	  },
-	  shoppings: {
-	    expectedData: [130, 140, 141, 142, 145, 150, 160],
-	    actualData: [120, 82, 91, 154, 162, 140, 130]
 	  }
 	}
 	

@@ -1,41 +1,45 @@
 <template>
   <el-row :gutter="40" class="panel-group">
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+      <div class="card-panel">
         <div class="card-panel-icon-wrapper icon-people">
+			<svg-icon  icon-class="shijian" class-name="card-panel-icon"></svg-icon>
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">New Visits</div>
+          <div class="card-panel-text">在线学习时长</div>
           <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
+      <div class="card-panel" >
         <div class="card-panel-icon-wrapper icon-message">
+			<svg-icon  icon-class="ting" class-name="card-panel-icon"></svg-icon>
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">Messages</div>
+          <div class="card-panel-text">听写任务</div>
           <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
+      <div class="card-panel" >
         <div class="card-panel-icon-wrapper icon-money">
+			<svg-icon  icon-class="shizi" class-name="card-panel-icon"></svg-icon>
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">Purchases</div>
+          <div class="card-panel-text">识字任务</div>
           <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
+      <div class="card-panel" >
         <div class="card-panel-icon-wrapper icon-shopping">
+			<svg-icon  icon-class="tongji" class-name="card-panel-icon"></svg-icon>
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">Shoppings</div>
+          <div class="card-panel-text">识字量</div>
           <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num"/>
         </div>
       </div>
@@ -47,6 +51,12 @@
 import CountTo from 'vue-count-to'
 
 export default {
+	
+	data() {
+	  return {
+	    shijian: 'shijian',
+	  }
+	},
   components: {
     CountTo
   },
@@ -60,9 +70,9 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .panel-group {
-  margin-top: 18px;
+  // margin-top: 18px;
   .card-panel-col{
-    margin-bottom: 32px;
+    margin-bottom: 10px;
   }
   .card-panel {
     height: 108px;
@@ -74,23 +84,7 @@ export default {
     background: #fff;
     box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
     border-color: rgba(0, 0, 0, .05);
-    &:hover {
-      .card-panel-icon-wrapper {
-        color: #fff;
-      }
-      .icon-people {
-         background: #40c9c6;
-      }
-      .icon-message {
-        background: #36a3f7;
-      }
-      .icon-money {
-        background: #f4516c;
-      }
-      .icon-shopping {
-        background: #34bfa3
-      }
-    }
+   
     .icon-people {
       color: #40c9c6;
     }
