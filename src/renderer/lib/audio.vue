@@ -108,7 +108,7 @@ export default {
 <style lang="scss" scoped>
 .x-audio-wrap{
     height: 30px;
-    width: 150px;
+    width: 80px;
     border-radius: 15px;
     // border: 1px solid #ddd;
     display: flex;

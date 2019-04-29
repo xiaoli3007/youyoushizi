@@ -6,25 +6,53 @@
 
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						<div class="tasktext">{{slide.sw}}</div>
+						<div class="" style="margin-top: 15px;">
+							<el-tag type="info"> 第三册第二课听写任务--听写 </el-tag>
+							<el-tag type="success"> 3/12 </el-tag>
+							<el-tag type="info"> 用时：03:45 </el-tag>
+							<el-tag type="info">
+								<screenfull style="display: inline;" />
+							</el-tag>
+							<el-tag type="warning" @click.native="gotoback">退出</el-tag>
+						</div>
+					</el-col>
+				</el-row>
+
+
+
+				<el-row>
+					<el-col :span="20" :offset="2" justify="center" align="center">
+						<div class="tasktext" v-if="type===2">{{slide.sw}}</div>
 					</el-col>
 				</el-row>
 
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						<m-audio :show-duration="false" text="点击或按空格播放" :src="require('@/assets/'+slide.sw_sound)" :block="false"
-						 ref="myaudio"></m-audio>
-						 
-						
-						  
+
+							<el-radio v-model="radioaaa" label="1" @change="testa(1)" border>认识</el-radio>
+							<el-radio v-model="radioaaa" label="2" @change="testa(2)" border>不认识</el-radio>
+
+
+					</el-col>
+				</el-row>
+
+				<el-row>
+					<el-col :span="20" :offset="2" justify="center" align="center">
+						<el-tag type="info" @click.native="testa(1)">首字</el-tag>
+
+						<m-audio :show-duration="false" text="字" :src="require('@/assets/'+slide.sw_sound)" :block="false" ref="myaudio_zi"></m-audio>
+
+						<m-audio :show-duration="false" text="词语" :src="require('@/assets/'+slide.dw_sound)" :block="false" ref="myaudio_ci"></m-audio>
+
+						<m-audio :show-duration="false" text="例句" :src="require('@/assets/'+slide.lw_sound)" :block="false" ref="myaudio_ju"></m-audio>
+						<el-tag type="info">尾字</el-tag>
 					</el-col>
 				</el-row>
 
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<!-- <div class="aaa"><audio class="success" :src="wavv" autoplay="autoplay"></audio></div> -->
-						<el-button type="warning" v-if="index===words.word1.length-1">从新开始</el-button>
-						<el-button type="primary" v-if="index===words.word1.length-1">已到达最后，点击对照错字</el-button>
+						<el-button type="primary" v-if="index===words.word1.length-1">听写检查</el-button>
 						<!-- <el-button type="primary" @click="onEnlargeText" >111</el-button> -->
 					</el-col>
 				</el-row>
@@ -48,6 +76,8 @@
 		swiperSlide
 	} from 'vue-awesome-swiper'
 
+	import Screenfull from '@/components/Screenfull'
+
 	export default {
 		name: 'read-task',
 		props: {
@@ -58,6 +88,10 @@
 				type: Boolean,
 				default: false
 			},
+			type: {
+				type: Number,
+				default: 1
+			},
 			// audiolist:[]
 		},
 		data() {
@@ -65,6 +99,8 @@
 			return {
 				// wavv,
 				// data_rautoplay: this.rautoplay,
+				radioaaa: '',
+				resource: '',
 				isplaynow: false,
 				thistype: this.words,
 				swiperOption: {
@@ -78,6 +114,7 @@
 					},
 					pagination: {
 						el: '.swiper-pagination',
+						// type: 'fraction'
 						type: 'progressbar'
 					},
 					simulateTouch: false, //禁止鼠标模拟
@@ -97,7 +134,9 @@
 							setTimeout(() => {
 								// 								console.log('当前的slide序号是' + this.activeIndex);
 								// 								console.log('当前的slide序号是' + this.realIndex);
+								if (self.rautoplay) {
 									self.$refs.myaudio[this.realIndex].play()
+								}
 							}, 2000)
 						},
 						keyPress: function(event) {
@@ -105,7 +144,7 @@
 							if (event == 32) {
 								//空格控制语音
 								// console.log(this.audiolist)
-								self.$refs.myaudio[this.realIndex].play()
+								self.$refs.myaudio_zi[this.realIndex].play()
 								// this.audiolist[this.realIndex].play()
 								// this.audio=new Audio()
 								// this.audio.src=require('@/assets/'+this.wordsdata.word1[this.realIndex].sw_sound)
@@ -113,21 +152,29 @@
 								// this.audio.play()
 								// console.log(this.wordsdata.word1[this.realIndex].sw_sound);
 								// console.log(this.realIndex);
+							} else if (event == 84) { // 按键T 读词
+
+								self.$refs.myaudio_ci[this.realIndex].play()
+
+							} else if (event == 83) { // 按键S 读句子
+
+								self.$refs.myaudio_ju[this.realIndex].play()
+
 							} else if (event == 36) { //home 按键
-								
+
 								this.slideTo(0, 1000, false)
-								
+
 							} else if (event == 35) { //end 按键
-								
+
 								this.slideTo(this.slides.length, 1000, false)
 							}
 						},
 						slideChange: function() {
 							// console.log('改变了')
 							// console.log(this.realIndex);
-							setTimeout(() => {
-								self.$refs.myaudio[this.realIndex].play()
-							}, 1000)
+							// setTimeout(() => {
+							// 	self.$refs.myaudio[this.realIndex].play()
+							// }, 1000)
 						}
 					},
 				}
@@ -135,6 +182,9 @@
 		},
 		created() {
 			// console.log(this.rautoplay);
+		},
+		components: {
+			Screenfull
 		},
 		computed: {
 			swiper() {
@@ -161,6 +211,11 @@
 			// this.swiper.slideTo(3, 1000, false)
 		},
 		methods: {
+			gotoback() {
+				this.$router.replace({
+					name: 'Jiaocai'
+				})
+			},
 			testa(data) {
 				console.log(data);
 			},
@@ -180,13 +235,15 @@
 		/* width: 500px; height: 300px; */
 		font-size: 500px;
 		/* text-align: center; */
-		margin-top: 6.25rem;
+		margin-top: 1rem;
 		user-select: none;
 	}
-	 .el-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+
+	.el-row {
+		margin-bottom: 20px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 </style>

@@ -6,6 +6,7 @@ Vue.use(Router)
 import Layout from '../views/layout/Layout'
 
 export const constantRouterMap = [
+  { path: '/read', name: 'Read', component:  require('@/views/study/read').default, hidden: true },
   { path: '/login', component:  require('@/views/login/index').default, hidden: true },
   { path: '/404', component:  require('@/views/404').default, hidden: true },
   {
@@ -45,13 +46,13 @@ export const constantRouterMap = [
 			  component:  require('@/views/study/list/book').default,
 			  meta: { title: '课外读物', icon: 'book' }
 			},
-			{
-			  path: 'read',
-			  name: 'Read',
-				hidden: true,
-			  component:  require('@/views/study/read').default,
-			  meta: { title: '任务中'}
-			},
+			// {
+			//   path: 'read',
+			//   name: 'Read',
+			// 	hidden: true,
+			//   component:  require('@/views/study/read').default,
+			//   meta: { title: '任务中'}
+			// },
 //       {
 //         path: 'cat',
 //         name: 'Cat',

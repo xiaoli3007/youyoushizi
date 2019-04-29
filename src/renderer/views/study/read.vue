@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<read-task :words="words" :rautoplay="rautoplay" ></read-task>
+		<read-task :words="words" :rautoplay="rautoplay" :type="type"></read-task>
 	</div>
 </template>
 
@@ -11,6 +11,7 @@
 		data() {
 			return {
 				rautoplay:false,
+				type:1,
 				words: {
 					"id": "01",
 					"name": "第一课 燕子",
@@ -91,6 +92,7 @@
 		},
 		created() {
 		this.rautoplay = this.$route.query.rautoplay==0?false:true
+		this.type = this.$route.query.type==1?1:2
 			
 			// console.log(this.$route.query.rautoplay)
 			// console.log(this.rautoplay)
