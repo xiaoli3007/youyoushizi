@@ -86,7 +86,7 @@ export default {
 						
 				});
 				this.list = temp
-				console.log(temp);
+				// console.log(temp);
 				
         this.listLoading = false
       })

@@ -1,58 +1,67 @@
 <template>
 	<div>
+			<el-row>
+			<el-col :span="20" :offset="2" justify="center" align="center">
+				<div class="" style="margin-top: 15px;">
+					<el-tag type="info"> {{words.name}}</el-tag>
+					<el-tag type="info"> 用时：03:45 </el-tag>
+					<el-tag type="success"> 3/12 </el-tag>
+					<el-tag type="info" class="backbutton">使用帮助</el-tag>
+					<el-tag type="info">
+						<screenfull style="display: inline;" />
+					</el-tag>
+					<el-tag type="warning" @click.native="gotoback" class="backbutton">退出</el-tag>
+				</div>
+			</el-col>
+		</el-row>
+		
 		<swiper :options="swiperOption" ref="mySwiper">
 			<!-- slides -->
 			<swiper-slide v-for="(slide, index) in words.word1" :key="index">
-
-				<el-row>
-					<el-col :span="20" :offset="2" justify="center" align="center">
-						<div class="" style="margin-top: 15px;">
-							<el-tag type="info"> 第三册第二课听写任务--听写 </el-tag>
-							<el-tag type="success"> 3/12 </el-tag>
-							<el-tag type="info"> 用时：03:45 </el-tag>
-							<el-tag type="info">
-								<screenfull style="display: inline;" />
-							</el-tag>
-							<el-tag type="warning" @click.native="gotoback">退出</el-tag>
-						</div>
-					</el-col>
-				</el-row>
-
-
-
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<div class="tasktext" v-if="type===2">{{slide.sw}}</div>
+						<div class="tasktext" v-if="type===1"><svg-icon  icon-class="erji2" ></svg-icon></div>
+					</el-col>
+				</el-row>
+
+				<el-row v-if="type===2"> 
+					<el-col :span="20" :offset="2" justify="center" align="center">
+							<el-radio v-model="task_result.word1[index]" label="1" @change="know(index,'1')" border>认识{{task_result.word1[index].konwtype}}</el-radio>
+							<el-radio v-model="task_result.word1[index]" label="2" @change="know(index,'2')" border>不认识</el-radio>
+								
 					</el-col>
 				</el-row>
 
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
+						
+					
 
-							<el-radio v-model="radioaaa" label="1" @change="testa(1)" border>认识</el-radio>
-							<el-radio v-model="radioaaa" label="2" @change="testa(2)" border>不认识</el-radio>
-
-
-					</el-col>
-				</el-row>
-
-				<el-row>
-					<el-col :span="20" :offset="2" justify="center" align="center">
-						<el-tag type="info" @click.native="testa(1)">首字</el-tag>
-
-						<m-audio :show-duration="false" text="字" :src="require('@/assets/'+slide.sw_sound)" :block="false" ref="myaudio_zi"></m-audio>
-
-						<m-audio :show-duration="false" text="词语" :src="require('@/assets/'+slide.dw_sound)" :block="false" ref="myaudio_ci"></m-audio>
-
-						<m-audio :show-duration="false" text="例句" :src="require('@/assets/'+slide.lw_sound)" :block="false" ref="myaudio_ju"></m-audio>
-						<el-tag type="info">尾字</el-tag>
+						<el-tooltip content="键盘:Home" placement="bottom" effect="light">
+						<el-button size="small" @click.native="testa(1)" round>首字</el-button>
+						</el-tooltip>
+						<el-tooltip content="字音(键盘:空格)" placement="bottom" effect="light">
+						<m-audio :show-duration="false" text="字" :src="slide.local_sw_sound" :block="false" ref="myaudio_zi"></m-audio>
+</el-tooltip>
+<el-tooltip content="词音(键盘:T)" placement="bottom" effect="light">
+						<m-audio :show-duration="false" text="词语" :src="slide.local_dw_sound" :block="false" ref="myaudio_ci"></m-audio>
+</el-tooltip>
+						<el-tooltip content="句音(键盘:S)" placement="bottom" effect="light">
+						<m-audio :show-duration="false" text="例句" :src="slide.local_lw_sound" :block="false" ref="myaudio_ju"></m-audio>
+						</el-tooltip>
+						<el-tooltip content="键盘:End" placement="bottom" effect="light">
+						<el-button size="small" @click.native="testa(1)" round>尾字</el-button>
+						</el-tooltip>
+						<!-- <myaudio :show-duration="false" text="字" :block="false" :src="slide.local_sw_sound" ref="myaudio_ju"></myaudio> -->
 					</el-col>
 				</el-row>
 
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<!-- <div class="aaa"><audio class="success" :src="wavv" autoplay="autoplay"></audio></div> -->
-						<el-button type="primary" v-if="index===words.word1.length-1">听写检查</el-button>
+						<el-button type="primary" v-if="index===words.word1.length-1 && type===1">听写检查</el-button>
+						<el-button type="primary" v-if="index===words.word1.length-1 && type===2">完成并记录</el-button>
 						<!-- <el-button type="primary" @click="onEnlargeText" >111</el-button> -->
 					</el-col>
 				</el-row>
@@ -65,6 +74,9 @@
 			<div class="swiper-button-next" slot="button-next"></div>
 			<!--<div class="swiper-scrollbar" slot="scrollbar"></div> -->
 		</swiper>
+		
+	
+		
 	</div>
 </template>
 
@@ -77,6 +89,7 @@
 	} from 'vue-awesome-swiper'
 
 	import Screenfull from '@/components/Screenfull'
+	// import myaudio from '@/components/myaudio'
 
 	export default {
 		name: 'read-task',
@@ -100,6 +113,7 @@
 				// wavv,
 				// data_rautoplay: this.rautoplay,
 				radioaaa: '',
+				task_result: {id:this.words.id,name:this.words.name,word1:[],word2:[]},
 				resource: '',
 				isplaynow: false,
 				thistype: this.words,
@@ -135,9 +149,9 @@
 								// 								console.log('当前的slide序号是' + this.activeIndex);
 								// 								console.log('当前的slide序号是' + this.realIndex);
 								if (self.rautoplay) {
-									self.$refs.myaudio[this.realIndex].play()
+									self.$refs.myaudio_zi[this.realIndex].play()
 								}
-							}, 2000)
+							}, 1000)
 						},
 						keyPress: function(event) {
 							// console.log('你按了键盘' + event)
@@ -172,9 +186,11 @@
 						slideChange: function() {
 							// console.log('改变了')
 							// console.log(this.realIndex);
-							// setTimeout(() => {
-							// 	self.$refs.myaudio[this.realIndex].play()
-							// }, 1000)
+							setTimeout(() => {
+								if (self.rautoplay) {
+									self.$refs.myaudio_zi[this.realIndex].play()
+								}
+							}, 1000)
 						}
 					},
 				}
@@ -182,6 +198,33 @@
 		},
 		created() {
 			// console.log(this.rautoplay);
+			let temp = this.words.word1
+			const selfmain = this
+			_(temp).forEach(function(value, key) {
+				// console.log(value);
+				let a = new Audio()
+				a.src = require('@/assets/' + value.sw_sound)
+				let b = new Audio()
+				b.src = require('@/assets/' + value.dw_sound)
+				let c = new Audio()
+				c.src = require('@/assets/' + value.lw_sound)
+				// this.audiolist.push(a)
+				_.set(temp, key+"[sw_audio]", a);
+				_.set(temp, key+"[dw_audio]", b);
+				_.set(temp, key+"[lw_audio]", c);
+				_.set(temp, key+"[local_sw_sound]", require('@/assets/' + value.sw_sound));
+				_.set(temp, key+"[local_dw_sound]", require('@/assets/' + value.dw_sound));
+				_.set(temp, key+"[local_lw_sound]", require('@/assets/' + value.lw_sound));
+				
+				// _.set(selfmain.task_result, "[word1]"+key+"[text]", value.sw);
+				// _.set(selfmain.task_result, "[word2]"+key+"[text]", value.sw);
+				
+				_.set(selfmain.task_result, "[word1]"+key, '');
+				_.set(selfmain.task_result, "[word2]"+key, '');
+				
+			});
+			console.log(11111111)
+			console.log(this.task_result)
 		},
 		components: {
 			Screenfull
@@ -192,23 +235,12 @@
 			}
 		},
 		mounted() {
-			// current swiper instance
 			// 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
 			// console.log(this.words);
 			this.swiper.wordsdata = this.words
 			// this.audiolist = new Audio()
-			var temp = this.words.word1
-			_(temp).forEach(function(value, key) {
-				// console.log(value);
-				let a = new Audio()
-				a.src = require('@/assets/' + value.sw_sound)
-				// this.audiolist.push(a)
-				_.set(temp, key, a);
-			});
-			// console.log(temp)
-			this.swiper.audiolist = temp
-			// console.log('this is current swiper instance object', this.swiper)
-			// this.swiper.slideTo(3, 1000, false)
+			// console.log(this.words)
+			// this.swiper.audiolist = temp
 		},
 		methods: {
 			gotoback() {
@@ -217,15 +249,14 @@
 				})
 			},
 			testa(data) {
-				console.log(data);
+				// console.log(this.words);
 			},
-			onEnlargeText() {
-				//console.log(this.isplaynow);
-				//this.isplaynow = true
-				//console.log(this.isplaynow);
-				// console.log(this.$refs.myaudio[0].play());
-				// this.$refs.myaudio.play()
+			know(index,knowtype) {
+				console.log("索引"+index);
+				console.log("字type"+knowtype);
+				console.log(this.task_result)
 			}
+			
 		}
 	}
 </script>
@@ -245,5 +276,8 @@
 		&:last-child {
 			margin-bottom: 0;
 		}
+	}
+	.backbutton{
+		cursor: pointer;
 	}
 </style>
