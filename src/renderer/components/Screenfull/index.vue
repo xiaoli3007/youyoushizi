@@ -17,7 +17,6 @@ export default {
   },
   mounted() {
     this.init()
-		console.log(222)
   },
   methods: {
     click() {

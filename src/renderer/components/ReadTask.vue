@@ -6,7 +6,7 @@
 					<el-tag type="info"> {{words.name}}</el-tag>
 					<el-tag type="info"> 用时：03:45 </el-tag>
 					<el-tag type="success"> 3/12 </el-tag>
-					<el-tag type="info" class="backbutton">使用帮助</el-tag>
+					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true" >使用帮助</el-tag>
 					<el-tag type="info">
 						<screenfull style="display: inline;" />
 					</el-tag>
@@ -22,6 +22,9 @@
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<div class="tasktext" v-if="type===2">{{slide.sw}}</div>
 						<div class="tasktext" v-if="type===1"><svg-icon  icon-class="erji2" ></svg-icon></div>
+						
+						<div class="tasktext_ci" v-if="type===2">{{slide.dw}}</div>
+						<div class="tasktext_ju" v-if="type===2">{{slide.lw}}</div>
 					</el-col>
 				</el-row>
 
@@ -56,13 +59,22 @@
 						<!-- <myaudio :show-duration="false" text="字" :block="false" :src="slide.local_sw_sound" ref="myaudio_ju"></myaudio> -->
 					</el-col>
 				</el-row>
-
+				
+				<!-- 	<el-row>
+					<el-col :span="20" :offset="2" justify="center" align="center">
+						 <el-tooltip :content="slide.dw" placement="bottom" effect="light">
+						 <el-button size="small"  round>词语提示</el-button>
+						 </el-tooltip>
+						 <el-tooltip :content="slide.lw" placement="bottom" effect="light">
+						 <el-button size="small" round>句子提示</el-button>
+						 </el-tooltip>
+					</el-col>
+				</el-row> -->
+				
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						<!-- <div class="aaa"><audio class="success" :src="wavv" autoplay="autoplay"></audio></div> -->
 						<el-button type="primary" v-if="index===words.word1.length-1 && type===1">听写检查</el-button>
-						<el-button type="primary" v-if="index===words.word1.length-1 && type===2">完成并记录</el-button>
-						<!-- <el-button type="primary" @click="onEnlargeText" >111</el-button> -->
+						<el-button type="primary" v-if="index===words.word1.length-1 && type===2">认字完成</el-button>
 					</el-col>
 				</el-row>
 
@@ -75,7 +87,72 @@
 			<!--<div class="swiper-scrollbar" slot="scrollbar"></div> -->
 		</swiper>
 		
+		
+		<el-dialog title="使用帮助" :visible.sync="dialogTableVisible">
+ <el-alert
+    title="功能说明"
+    type="success" :closable="false"
+    description="1. 点击相应读音时，显示对应词语例句 ">
+  </el-alert>
+   <el-alert
+     title=""
+     type="success" :closable="false"
+     description="2. 选择不认识，则会被加入到错字本 ">
+   </el-alert>
+    <el-alert
+      title=""
+      type="success" :closable="false"
+      description=" 3. 在跳转过程中，每个字的检查结果保留">
+    </el-alert>
 	
+	 <el-alert
+	   title="键盘快捷键"
+	   type="warning" :closable="false"
+	   description="←:上一个字 ">
+	 </el-alert>
+	 
+	 <el-alert
+	   title=""
+	   type="warning" :closable="false"
+	   description="→:下一个字 ">
+	 </el-alert>
+	  <el-alert
+	   title=""
+	   type="warning" :closable="false"
+	   description="Home:转到第一个字 ">
+	 </el-alert>
+	 
+	 <el-alert
+	   title=""
+	   type="warning" :closable="false"
+	   description="End: 转到最后一个字">
+	 </el-alert>
+	 <el-alert
+	   title=""
+	   type="warning" :closable="false"
+	   description="空格: 字发音">
+	 </el-alert>
+	 <el-alert
+	   title=""
+	   type="warning" :closable="false"
+	   description="T: 词语发音">
+	 </el-alert>
+	 <el-alert
+	   title=""
+	   type="warning" :closable="false"
+	   description="S: 句子发音">
+	 </el-alert>
+	 
+	  <el-alert
+	   title=""
+	   type="warning" :closable="false"
+	   description="F11: 全屏幕">
+	 </el-alert>
+	 
+</el-dialog>
+
+
+  
 		
 	</div>
 </template>
@@ -113,6 +190,7 @@
 				// wavv,
 				// data_rautoplay: this.rautoplay,
 				radioaaa: '',
+				dialogTableVisible: false,
 				task_result: {id:this.words.id,name:this.words.name,word1:[],word2:[]},
 				resource: '',
 				isplaynow: false,
@@ -223,8 +301,8 @@
 				_.set(selfmain.task_result, "[word2]"+key, '');
 				
 			});
-			console.log(11111111)
-			console.log(this.task_result)
+			// console.log(11111111)
+			// console.log(this.task_result)
 		},
 		components: {
 			Screenfull
@@ -255,6 +333,9 @@
 				console.log("索引"+index);
 				console.log("字type"+knowtype);
 				console.log(this.task_result)
+			},
+			help_sy(){
+				
 			}
 			
 		}
