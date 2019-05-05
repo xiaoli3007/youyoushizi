@@ -20,22 +20,40 @@
 			<swiper-slide v-for="(slide, index) in words.word1" :key="index">
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						<div class="tasktext" v-if="type===2">{{slide.sw}}</div>
+						
 						<div class="tasktext" v-if="type===1"><svg-icon  icon-class="erji2" ></svg-icon></div>
 						
-						<div class="tasktext_ci" v-if="type===2">{{slide.dw}}</div>
-						<div class="tasktext_ju" v-if="type===2">{{slide.lw}}</div>
+						
+						
+						 <el-tabs tab-position="right" style=" margin-top: 15px;" v-if="type===2"> 
+							<el-tab-pane label="字"><div class="tasktext" v-if="type===2">{{slide.sw}}</div></el-tab-pane>
+							<el-tab-pane label="词"><div class="tasktext_ci" v-if="type===2">{{slide.dw}}</div></el-tab-pane>
+							<el-tab-pane label="句"><div class="tasktext_ju" v-if="type===2">{{slide.lw}}</div></el-tab-pane>
+						  </el-tabs>
 					</el-col>
 				</el-row>
 
 				<el-row v-if="type===2"> 
 					<el-col :span="20" :offset="2" justify="center" align="center">
-							<el-radio v-model="task_result.word1[index]" label="1" @change="know(index,'1')" border>认识{{task_result.word1[index].konwtype}}</el-radio>
+							<el-radio v-model="task_result.word1[index]" label="1" @change="know(index,'1')" border>认识</el-radio>
 							<el-radio v-model="task_result.word1[index]" label="2" @change="know(index,'2')" border>不认识</el-radio>
 								
 					</el-col>
 				</el-row>
+				
+				<el-row v-if="type===2"> 
 
+					<el-col :span="20" :offset="2" justify="center" align="center">
+						<el-tag type="info"> 下次复习时间</el-tag>
+							<el-radio v-model="task_result.fx_time[index]" label="600"  border>10分钟</el-radio>
+							<el-radio v-model="task_result.fx_time[index]" label="3600"  border>1小时</el-radio>
+							<el-radio v-model="task_result.fx_time[index]" label="86400"  border>1天</el-radio>
+							<el-radio v-model="task_result.fx_time[index]" label="345600"  border>4天</el-radio>
+								
+					</el-col>
+				</el-row>
+				
+				
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						
@@ -92,7 +110,7 @@
  <el-alert
     title="功能说明"
     type="success" :closable="false"
-    description="1. 点击相应读音时，显示对应词语例句 ">
+    description="1. 点击右侧 '字' '词' '句'，显示对应字,词语,例句 ">
   </el-alert>
    <el-alert
      title=""
@@ -191,7 +209,8 @@
 				// data_rautoplay: this.rautoplay,
 				radioaaa: '',
 				dialogTableVisible: false,
-				task_result: {id:this.words.id,name:this.words.name,word1:[],word2:[]},
+				task_result: {id:this.words.id,name:this.words.name,word1:[],fx_time:[],word2:[]},
+				// task_result: null,
 				resource: '',
 				isplaynow: false,
 				thistype: this.words,
@@ -298,11 +317,12 @@
 				// _.set(selfmain.task_result, "[word2]"+key+"[text]", value.sw);
 				
 				_.set(selfmain.task_result, "[word1]"+key, '');
+				_.set(selfmain.task_result, "[fx_time]"+key, '');
 				_.set(selfmain.task_result, "[word2]"+key, '');
 				
 			});
 			// console.log(11111111)
-			// console.log(this.task_result)
+			console.log(this.task_result.fx_time)
 		},
 		components: {
 			Screenfull
@@ -343,14 +363,24 @@
 </script>
 
 <style>
-	.tasktext {
+	.tasktext ,.tasktext_ci, .tasktext_ju{
 		/* width: 500px; height: 300px; */
 		font-size: 500px;
 		/* text-align: center; */
 		margin-top: 1rem;
 		user-select: none;
 	}
-
+	
+	.tasktext_ci{
+		
+		font-size: 300px;
+		
+	}
+	.tasktext_ju{
+		
+		font-size: 100px;text-align: left;
+	
+	}
 	.el-row {
 		margin-bottom: 20px;
 
