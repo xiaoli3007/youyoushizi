@@ -4,8 +4,9 @@
 			<el-col :span="20" :offset="2" justify="center" align="center">
 				<div class="" style="margin-top: 15px;">
 					<el-tag type="info"> {{words.name}}</el-tag>
-					<el-tag type="info"> 用时：03:45 </el-tag>
-					<el-tag type="success"> 3/12 </el-tag>
+					<el-tag type="info"> <mytime :autoStart="true" :sendSync="true" ref="mytime" v-on:getDataFromChild="getDataFromChild"></mytime> </el-tag>
+					<!-- <el-tag type="info"> <mytime :autoStart="false" :sendSync="false" ref="mytime"></mytime> </el-tag> -->
+					<el-tag type="success"> {{swiper_index}}/{{swiper_length}} </el-tag>
 					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true" >使用帮助</el-tag>
 					<el-tag type="info">
 						<screenfull style="display: inline;" />
@@ -37,19 +38,16 @@
 					<el-col :span="20" :offset="2" justify="center" align="center">
 							<el-radio v-model="task_result.word1[index]" label="1" @change="know(index,'1')" border>认识</el-radio>
 							<el-radio v-model="task_result.word1[index]" label="2" @change="know(index,'2')" border>不认识</el-radio>
-								
 					</el-col>
 				</el-row>
 				
 				<el-row v-if="type===2"> 
-
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<el-tag type="info"> 下次复习时间</el-tag>
 							<el-radio v-model="task_result.fx_time[index]" label="600"  border>10分钟</el-radio>
 							<el-radio v-model="task_result.fx_time[index]" label="3600"  border>1小时</el-radio>
 							<el-radio v-model="task_result.fx_time[index]" label="86400"  border>1天</el-radio>
 							<el-radio v-model="task_result.fx_time[index]" label="345600"  border>4天</el-radio>
-								
 					</el-col>
 				</el-row>
 				
@@ -60,7 +58,7 @@
 					
 
 						<el-tooltip content="键盘:Home" placement="bottom" effect="light">
-						<el-button size="small" @click.native="testa(1)" round>首字</el-button>
+						<el-button size="small" @click.native="swiper_slideTo(0)" round>首字</el-button>
 						</el-tooltip>
 						<el-tooltip content="字音(键盘:空格)" placement="bottom" effect="light">
 						<m-audio :show-duration="false" text="字" :src="slide.local_sw_sound" :block="false" ref="myaudio_zi"></m-audio>
@@ -72,7 +70,7 @@
 						<m-audio :show-duration="false" text="例句" :src="slide.local_lw_sound" :block="false" ref="myaudio_ju"></m-audio>
 						</el-tooltip>
 						<el-tooltip content="键盘:End" placement="bottom" effect="light">
-						<el-button size="small" @click.native="testa(1)" round>尾字</el-button>
+						<el-button size="small" @click.native="swiper_slideTo(1)" round>尾字</el-button>
 						</el-tooltip>
 						<!-- <myaudio :show-duration="false" text="字" :block="false" :src="slide.local_sw_sound" ref="myaudio_ju"></myaudio> -->
 					</el-col>
@@ -184,6 +182,7 @@
 	} from 'vue-awesome-swiper'
 
 	import Screenfull from '@/components/Screenfull'
+	import mytime from '@/components/mytime'
 	// import myaudio from '@/components/myaudio'
 
 	export default {
@@ -214,6 +213,9 @@
 				resource: '',
 				isplaynow: false,
 				thistype: this.words,
+				swiper_index:1,
+				swiper_length:0,
+				xx_time:0,
 				swiperOption: {
 					// some swiper options/callbacks
 					// 所有的参数同 swiper 官方 api 参数
@@ -283,6 +285,7 @@
 						slideChange: function() {
 							// console.log('改变了')
 							// console.log(this.realIndex);
+							self.swiper_index = this.realIndex+1
 							setTimeout(() => {
 								if (self.rautoplay) {
 									self.$refs.myaudio_zi[this.realIndex].play()
@@ -322,10 +325,11 @@
 				
 			});
 			// console.log(11111111)
-			console.log(this.task_result.fx_time)
+			// console.log(this.task_result.fx_time)
 		},
 		components: {
-			Screenfull
+			Screenfull,
+			mytime
 		},
 		computed: {
 			swiper() {
@@ -336,8 +340,10 @@
 			// 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
 			// console.log(this.words);
 			this.swiper.wordsdata = this.words
-			// this.audiolist = new Audio()
-			// console.log(this.words)
+			// this.audiolist = new Audio() swiper_length
+			// console.log(this.swiper)
+			this.swiper_index = this.swiper.realIndex+1
+			this.swiper_length = this.swiper.slides.length 
 			// this.swiper.audiolist = temp
 		},
 		methods: {
@@ -346,8 +352,13 @@
 					name: 'Jiaocai'
 				})
 			},
-			testa(data) {
+			swiper_slideTo(data) {
 				// console.log(this.words);
+				if(data===0){
+					this.swiper.slideTo(0, 1000, false)
+				}else{
+					this.swiper.slideTo(this.swiper.slides.length-1, 1000, false)
+				}
 			},
 			know(index,knowtype) {
 				console.log("索引"+index);
@@ -356,6 +367,10 @@
 			},
 			help_sy(){
 				
+			},
+			getDataFromChild(data){
+				this.xx_time =data
+				// console.log("getDataFromChild"+this.xx_time);
 			}
 			
 		}
