@@ -6,7 +6,7 @@
 					<el-tag type="info"> {{words.name}}</el-tag>
 					<el-tag type="info"> <mytime :autoStart="true" :sendSync="true" ref="mytimea" v-on:getDataFromChild="getDataFromChild"></mytime> </el-tag>
 					<!-- <el-tag type="info"> <mytime :autoStart="false" :sendSync="false" ref="mytimea2"></mytime> </el-tag> -->
-					<!-- <el-tag type="info" @click.native="help_sy"> ddd</el-tag> -->
+					<el-tag type="info" @click.native="help_sy"> ddd</el-tag>
 					<el-tag type="success"> {{swiper_index}}/{{swiper_length}} </el-tag>
 					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true" >使用帮助</el-tag>
 					<el-tag type="info">
@@ -27,10 +27,10 @@
 						
 						
 						
-						 <el-tabs tab-position="right" style=" margin-top: 15px;" v-if="type===2"> 
-							<el-tab-pane label="字"><div class="tasktext" v-if="type===2">{{slide.sw}}</div></el-tab-pane>
-							<el-tab-pane label="词"><div class="tasktext_ci" v-if="type===2">{{slide.dw}}</div></el-tab-pane>
-							<el-tab-pane label="句"><div class="tasktext_ju" v-if="type===2">{{slide.lw}}</div></el-tab-pane>
+						 <el-tabs  v-model="TabsValue[index]" tab-position="right" style=" margin-top: 15px;" v-if="type===2"> 
+							<el-tab-pane label="字" name='0'><div class="tasktext" v-if="type===2">{{slide.sw}}</div></el-tab-pane>
+							<el-tab-pane label="词" name='1'><div class="tasktext_ci" v-if="type===2">{{slide.dw}}</div></el-tab-pane>
+							<el-tab-pane label="句" name='2'><div class="tasktext_ju" v-if="type===2">{{slide.lw}}</div></el-tab-pane>
 						  </el-tabs>
 					</el-col>
 				</el-row>
@@ -107,7 +107,7 @@
 		
 		<el-dialog title="使用帮助" :visible.sync="dialogTableVisible">
  <el-alert
-    title="功能说明"
+    title="识字模式"
     type="success" :closable="false"
     description="1. 点击右侧 '字' '词' '句'，显示对应字,词语,例句 ">
   </el-alert>
@@ -160,11 +160,11 @@
 	   description="S: 句子发音">
 	 </el-alert>
 	 
-	  <el-alert
+	 <!-- <el-alert
 	   title=""
 	   type="warning" :closable="false"
 	   description="F11: 全屏幕">
-	 </el-alert>
+	 </el-alert> -->
 	 
 </el-dialog>
 
@@ -207,7 +207,8 @@
 			return {
 				// wavv,
 				// data_rautoplay: this.rautoplay,
-				radioaaa: '',
+				// radioaaa: '',
+				TabsValue:[],
 				dialogTableVisible: false,
 				task_result: {id:this.words.id,name:this.words.name,word1:[],fx_time:[],word2:[]},
 				// task_result: null,
@@ -281,6 +282,26 @@
 							} else if (event == 35) { //end 按键
 
 								this.slideTo(this.slides.length, 1000, false)
+								
+							} else if (event == 38) { //上 按键
+							
+								if(parseInt(self.TabsValue[this.realIndex])>0){
+									// console.log(333)
+									let t = parseInt(self.TabsValue[this.realIndex])-1
+									self.TabsValue[this.realIndex]=t.toString()
+								}
+								console.log(self.TabsValue[this.realIndex])	
+								
+							} else if (event == 40) { //下 按键
+								
+								self.TabsValue[0]='2'
+								
+								// if(parseInt(self.TabsValue[this.realIndex])<2){
+								// 	// console.log(333)
+								// 	let t = parseInt(self.TabsValue[this.realIndex])+1
+								// 	self.TabsValue[this.realIndex]=t.toString()
+								// }
+								console.log(self.TabsValue[this.realIndex])	
 							}
 						},
 						slideChange: function() {
@@ -324,9 +345,13 @@
 				_.set(selfmain.task_result, "[fx_time]"+key, '');
 				_.set(selfmain.task_result, "[word2]"+key, '');
 				
+				// _.set(selfmain.TabsValue, key, "0");
+				
+				
+				
 			});
 			// console.log(11111111)
-			// console.log(this.task_result.fx_time)
+			// console.log(this.TabsValue)
 		},
 		components: {
 			Screenfull,
@@ -376,7 +401,7 @@
 				
 				
 				// console.log(this.$refs.mytimea.all_second)
-				// console.log(this.$refs.mytimea[1].second)
+				console.log(this.TabsValue)
 			},
 			getDataFromChild(data){
 				this.xx_time =data

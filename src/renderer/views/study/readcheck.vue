@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="readcheck">
 		<template>
 
 			<el-row>
@@ -7,6 +7,9 @@
 					<div class="" style="margin-top: 15px;">
 						{{words.name}}
 						<el-tag type="warning">听写对照</el-tag>
+						<el-tag type="info">
+							<screenfull style="display: inline;" />
+						</el-tag>
 					</div>
 				</el-col>
 			</el-row>
@@ -16,20 +19,20 @@
 					<div class="grid-content bg-purple">
 						<el-tabs tab-position="right" style=" margin-top: 15px;">
 							<el-tab-pane label="字">
-								<div class="tasktext">{{singe.sw}}</div>
+								<div class="checktext">{{singe.sw}}</div>
 							</el-tab-pane>
 							<el-tab-pane label="词">
-								<div class="tasktext_ci">{{singe.dw}}</div>
+								<div class="checktext_ci">{{singe.dw}}</div>
 							</el-tab-pane>
 							<el-tab-pane label="句">
-								<div class="tasktext_ju">{{singe.lw}}</div>
+								<div class="checktext_ju">{{singe.lw}}</div>
 							</el-tab-pane>
 						</el-tabs>
 
 						<el-row>
 							<el-col :span="20" :offset="2" justify="center" align="center">
-								<el-radio label="1" border>正确</el-radio>
-								<el-radio label="2" border>错误</el-radio>
+								<el-radio v-model="singe.check" label="1" border>正确</el-radio>
+								<el-radio v-model="singe.check" label="2" border>错误</el-radio>
 							</el-col>
 						</el-row>
 
@@ -50,6 +53,9 @@
 			<el-row>
 				<el-col :span="20" :offset="2" justify="center" align="center">
 					<el-button type="primary" @click="gotoback()">检查完成</el-button>
+					
+					<!-- <el-button type="primary" @click="cs()">cs</el-button> -->
+					
 				</el-col>
 			</el-row>
 			
@@ -60,7 +66,7 @@
 
 <script>
 	// import ReadTask from '@/components/ReadTask'
-
+import Screenfull from '@/components/Screenfull'
 	export default {
 		data() {
 			return {
@@ -111,7 +117,7 @@
 
 			}
 		},
-		components: {},
+		components: {Screenfull},
 		filters: {
 
 		},
@@ -134,7 +140,7 @@
 				
 			});
 			// console.log(11111111)
-			console.log(this.words.word1)
+			// console.log(this.words.word1)
 		},
 		methods: {
 			gotoback() {
@@ -142,10 +148,14 @@
 					name: 'Jiaocai'
 				})
 			},
+			cs() {
+				console.log(this.words.word1)
+			}
 		}
 	}
 </script>
-<style>
+<style rel="stylesheet/scss" lang="scss">
+	.readcheck{
 	.el-row {
 		margin: 20px 0 0;
 		padding: 0 15px;
@@ -165,7 +175,7 @@
 	}
 
 	.bg-purple {
-		background: #eee;
+		background: #eee; border: 1px solid #ccc;
 	}
 
 	.bg-purple-light {
@@ -182,9 +192,9 @@
 		background-color: #f9fafc;
 	}
 
-	.tasktext,
-	.tasktext_ci,
-	.tasktext_ju {
+	.checktext,
+	.checktext_ci,
+	.checktext_ju {
 		/* width: 500px; height: 300px; */
 		font-size: 100px;
 		/* text-align: center; */
@@ -193,16 +203,17 @@
 		text-align: center;
 	}
 
-	.tasktext_ci {
+	.checktext_ci {
 
 		font-size: 60px;
 
 	}
 
-	.tasktext_ju {
+	.checktext_ju {
 	
 		font-size: 20px;
 		text-align: left; text-indent: 30px; margin-left: 15px;
 
+	}
 	}
 </style>
