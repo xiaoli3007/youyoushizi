@@ -4,8 +4,9 @@
 			<el-col :span="20" :offset="2" justify="center" align="center">
 				<div class="" style="margin-top: 15px;">
 					<el-tag type="info"> {{words.name}}</el-tag>
-					<el-tag type="info"> <mytime :autoStart="true" :sendSync="true" ref="mytime" v-on:getDataFromChild="getDataFromChild"></mytime> </el-tag>
-					<!-- <el-tag type="info"> <mytime :autoStart="false" :sendSync="false" ref="mytime"></mytime> </el-tag> -->
+					<el-tag type="info"> <mytime :autoStart="true" :sendSync="true" ref="mytimea" v-on:getDataFromChild="getDataFromChild"></mytime> </el-tag>
+					<!-- <el-tag type="info"> <mytime :autoStart="false" :sendSync="false" ref="mytimea2"></mytime> </el-tag> -->
+					<!-- <el-tag type="info" @click.native="help_sy"> ddd</el-tag> -->
 					<el-tag type="success"> {{swiper_index}}/{{swiper_length}} </el-tag>
 					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true" >使用帮助</el-tag>
 					<el-tag type="info">
@@ -89,8 +90,8 @@
 				
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						<el-button type="primary" v-if="index===words.word1.length-1 && type===1">听写检查</el-button>
-						<el-button type="primary" v-if="index===words.word1.length-1 && type===2">认字完成</el-button>
+						<el-button type="primary" v-if="index===words.word1.length-1 && type===1" @click="gotojc()">听写检查</el-button>
+						<el-button type="primary" v-if="index===words.word1.length-1 && type===2" @click="gotoback()">认字完成</el-button>
 					</el-col>
 				</el-row>
 
@@ -352,6 +353,11 @@
 					name: 'Jiaocai'
 				})
 			},
+			gotojc() {
+				this.$router.replace({
+					name: 'ReadCheck'
+				})
+			},
 			swiper_slideTo(data) {
 				// console.log(this.words);
 				if(data===0){
@@ -364,9 +370,13 @@
 				console.log("索引"+index);
 				console.log("字type"+knowtype);
 				console.log(this.task_result)
+				this.swiper.slideTo(index+1, 500, false)
 			},
 			help_sy(){
 				
+				
+				// console.log(this.$refs.mytimea.all_second)
+				// console.log(this.$refs.mytimea[1].second)
 			},
 			getDataFromChild(data){
 				this.xx_time =data

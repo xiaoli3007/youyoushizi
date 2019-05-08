@@ -40,7 +40,9 @@ export default {
       handler: function(val, oldVal) {
         var vm = this
         if (vm.needSendSunc) {
-			// console.log('countString')
+			
+			// let s =this.day*86400+this.hour*3600+this.minute*60+this.second
+			// console.log(this.all_second)
           vm.passToParent(val)
         }
       }
@@ -79,7 +81,10 @@ export default {
   computed: {
     needSendSunc: function() {
       return this.sendSync
-    }
+    },
+	all_second: function() {
+	  return this.day*86400+this.hour*3600+this.minute*60+this.second
+	}
   },
   created: function() {
     this.$on('startCount', function() {
