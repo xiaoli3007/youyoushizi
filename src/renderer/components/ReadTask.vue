@@ -8,7 +8,7 @@
 						<mytime :autoStart="true" :sendSync="true" ref="mytimea" v-on:getDataFromChild="getDataFromChild"></mytime>
 					</el-tag>
 					<!-- <el-tag type="info"> <mytime :autoStart="false" :sendSync="false" ref="mytimea2"></mytime> </el-tag> -->
-					<!-- <el-tag type="info" @click.native="help_sy"> ddd</el-tag> -->
+					<el-tag type="info" @click.native="help_sy"> 测试按钮</el-tag>
 					<el-tag type="success"> {{swiper_index}}/{{swiper_length}} </el-tag>
 					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true">使用帮助</el-tag>
 					<el-tag type="info">
@@ -47,8 +47,10 @@
 
 				<el-row v-if="type===2">
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						<el-radio v-model="task_result.word1[index]" label="1" @change="know(index,'1')" border>认识</el-radio>
-						<el-radio v-model="task_result.word1[index]" label="2" @change="know(index,'2')" border>不认识</el-radio>
+						<el-radio ref='elradio' v-model="task_result.word1[index]" label="1" @change="know(this,index,'1')" border>认识</el-radio>
+						<el-radio v-model="task_result.word1[index]" label="2" @change="know(this,index,'2')" border>不认识</el-radio>
+						
+						<myradio v-on:passtoparentradio="passtoparentradio" v-model="task_result.word1[index]"></myradio>
 					</el-col>
 				</el-row>
 
@@ -160,6 +162,7 @@
 
 <script>
 	// import wavv from '@/assets/voice/26/73/2673734f025fa484228e34212569c44a.wav'
+		const remote = require('electron').remote
 	import {
 		swiper,
 		swiperSlide
@@ -167,7 +170,7 @@
 
 	import Screenfull from '@/components/Screenfull'
 	import mytime from '@/components/mytime'
-	// import myaudio from '@/components/myaudio'
+	import myradio from '@/components/myradio'
 
 	export default {
 		name: 'read-task',
@@ -213,6 +216,7 @@
 					// 所有的参数同 swiper 官方 api 参数
 					// ...
 					// effect : 'flip',
+					 
 					navigation: {
 						nextEl: '.swiper-button-next',
 						prevEl: '.swiper-button-prev',
@@ -308,6 +312,8 @@
 						},
 						slideChange: function() {
 							// console.log('改变了')
+							// remote.getCurrentWindow().focus()
+							// console.log(remote.getCurrentWindow().isFocused())
 							// console.log(this.realIndex);
 							self.swiper_index = this.realIndex + 1
 							setTimeout(() => {
@@ -357,7 +363,8 @@
 		},
 		components: {
 			Screenfull,
-			mytime
+			mytime,
+			myradio
 		},
 		computed: {
 			swiper() {
@@ -393,11 +400,15 @@
 					this.swiper.slideTo(this.swiper.slides.length - 1, 1000, false)
 				}
 			},
-			know(index, knowtype) {
-				console.log("索引" + index);
-				console.log("字type" + knowtype);
-				console.log(this.task_result)
-				this.swiper.slideTo(index + 1, 500, false)
+			know(that,index, knowtype) {
+				
+				// console.log("字type" + knowtype);
+				// console.log(this.task_result)
+				// this.swiper.slideTo(this.swiper.realIndex + 1, 500, false)
+				// remote.getCurrentWindow().show()
+				// console.log(remote.getCurrentWindow().isFocused())
+				// this.swiper.$wrapperEl[0].focus()
+				// console.log(this.swiper.$wrapperEl[0])
 			},
 			passtoparenttabvlue(index) {
 				// console.log("索引" + index);
@@ -409,10 +420,16 @@
 				// this.$set(this.TabsValue,0,'2')
 				// this.TabsValue[0]='0'
 				// console.log(this.$refs.mytimea.all_second)
+				// console.log(this.$refs.elradio[this.swiper.realIndex].focus);
+				// this.swiper.slideTo(this.swiper.realIndex + 1, 500, false)
 			},
 			getDataFromChild(data) {
 				this.xx_time = data
 				// console.log("getDataFromChild"+this.xx_time);
+			},
+			passtoparentradio(data) {
+				console.log("passtoparentradio"+data);
+				this.swiper.slideTo(this.swiper.realIndex +1<this.swiper.slides.length?this.swiper.realIndex + 1:this.swiper.slides.length, 500, false)
 			}
 
 		}
