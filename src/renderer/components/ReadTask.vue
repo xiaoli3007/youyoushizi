@@ -6,7 +6,7 @@
 					<el-tag type="info"> {{words.name}}</el-tag>
 					<el-tag type="info"> <mytime :autoStart="true" :sendSync="true" ref="mytimea" v-on:getDataFromChild="getDataFromChild"></mytime> </el-tag>
 					<!-- <el-tag type="info"> <mytime :autoStart="false" :sendSync="false" ref="mytimea2"></mytime> </el-tag> -->
-					<el-tag type="info" @click.native="help_sy"> ddd</el-tag>
+					<!-- <el-tag type="info" @click.native="help_sy"> ddd</el-tag> -->
 					<el-tag type="success"> {{swiper_index}}/{{swiper_length}} </el-tag>
 					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true" >使用帮助</el-tag>
 					<el-tag type="info">
@@ -176,7 +176,6 @@
 
 <script>
 	// import wavv from '@/assets/voice/26/73/2673734f025fa484228e34212569c44a.wav'
-
 	import {
 		swiper,
 		swiperSlide
@@ -209,6 +208,7 @@
 				// data_rautoplay: this.rautoplay,
 				// radioaaa: '',
 				TabsValue:[],
+				TabsValue2:'0',
 				dialogTableVisible: false,
 				task_result: {id:this.words.id,name:this.words.name,word1:[],fx_time:[],word2:[]},
 				// task_result: null,
@@ -288,20 +288,20 @@
 								if(parseInt(self.TabsValue[this.realIndex])>0){
 									// console.log(333)
 									let t = parseInt(self.TabsValue[this.realIndex])-1
-									self.TabsValue[this.realIndex]=t.toString()
+									self.$set(self.TabsValue,this.realIndex,t.toString())
 								}
-								console.log(self.TabsValue[this.realIndex])	
+								// console.log(self.TabsValue[this.realIndex])	
 								
 							} else if (event == 40) { //下 按键
 								
-								self.TabsValue[0]='2'
-								
-								// if(parseInt(self.TabsValue[this.realIndex])<2){
-								// 	// console.log(333)
-								// 	let t = parseInt(self.TabsValue[this.realIndex])+1
-								// 	self.TabsValue[this.realIndex]=t.toString()
-								// }
-								console.log(self.TabsValue[this.realIndex])	
+								// self.TabsValue[0]='2'
+								// self.TabsValue2 = '2'
+								if(parseInt(self.TabsValue[this.realIndex])<2){
+									// console.log(333)
+									let t = parseInt(self.TabsValue[this.realIndex])+1
+									self.$set(self.TabsValue,this.realIndex,t.toString())
+								}
+								// console.log(self.TabsValue[this.realIndex])	
 							}
 						},
 						slideChange: function() {
@@ -345,7 +345,7 @@
 				_.set(selfmain.task_result, "[fx_time]"+key, '');
 				_.set(selfmain.task_result, "[word2]"+key, '');
 				
-				// _.set(selfmain.TabsValue, key, "0");
+				_.set(selfmain.TabsValue, key, "0");
 				
 				
 				
@@ -398,10 +398,9 @@
 				this.swiper.slideTo(index+1, 500, false)
 			},
 			help_sy(){
-				
-				
+				// this.$set(this.TabsValue,0,'2')
+				// this.TabsValue[0]='0'
 				// console.log(this.$refs.mytimea.all_second)
-				console.log(this.TabsValue)
 			},
 			getDataFromChild(data){
 				this.xx_time =data

@@ -6,7 +6,9 @@
 </template>
 
 <script>
-import screenfull from 'screenfull'
+	const remote = require('electron').remote
+// const { BrowserWindow } = require('electron').remote
+// import screenfull from 'screenfull'
 
 export default {
   name: 'Screenfull',
@@ -15,27 +17,39 @@ export default {
       isFullscreen: false
     }
   },
+	watch:{
+		 // isFullscreen(newValue, oldValue) {
+			// 	console.log(newValue)
+		 // }
+		 'isFullscreen': {
+		   deep: true,
+		   handler: function(val, oldVal) {
+		     // console.log(111)
+		     // console.log(val)
+		   }
+		 }
+	},
+	created() {
+		// let win=BrowserWindow.getFocusedWindow()
+		// let win=remote.getCurrentWindow()
+		// console.log(win.isFullScreen())
+		// console.log(BrowserWindow)
+	},
   mounted() {
+		
     this.init()
   },
   methods: {
     click() {
-			// console.log(1111)
-      if (!screenfull.enabled) {
-        this.$message({
-          message: 'you browser can not work',
-          type: 'warning'
-        })
-        return false
-      }
-      screenfull.toggle()
+			// console.log(remote.getCurrentWindow().isFullScreen())
+			  this.isFullscreen = !remote.getCurrentWindow().isFullScreen()
+				remote.getCurrentWindow().setFullScreen(this.isFullscreen)
+				// this.isFullscreen = !this.isFullscreen
     },
     init() {
-      if (screenfull.enabled) {
-        screenfull.on('change', () => {
-          this.isFullscreen = screenfull.isFullscreen
-        })
-      }
+      
+       this.isFullscreen = remote.getCurrentWindow().isFullScreen()
+      
     }
   }
 }
