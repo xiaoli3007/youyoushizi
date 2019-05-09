@@ -33,7 +33,11 @@ export default {
 		playnow:{
             type:Boolean,
             default:false
-        }
+        },
+		tabvalue:{
+		    type:String,
+		    default:'0'
+		}
     },
     data(){
         return{
@@ -87,6 +91,8 @@ export default {
             }else{
                 this.audio.pause()
             }
+			
+			this.$emit("passtoparenttabvlue", this.tabvalue)
         },
         format(s){
             var t='';

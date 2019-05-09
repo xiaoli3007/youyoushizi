@@ -1,14 +1,16 @@
 <template>
 	<div>
-			<el-row>
+		<el-row>
 			<el-col :span="20" :offset="2" justify="center" align="center">
 				<div class="" style="margin-top: 15px;">
 					<el-tag type="info"> {{words.name}}</el-tag>
-					<el-tag type="info"> <mytime :autoStart="true" :sendSync="true" ref="mytimea" v-on:getDataFromChild="getDataFromChild"></mytime> </el-tag>
+					<el-tag type="info">
+						<mytime :autoStart="true" :sendSync="true" ref="mytimea" v-on:getDataFromChild="getDataFromChild"></mytime>
+					</el-tag>
 					<!-- <el-tag type="info"> <mytime :autoStart="false" :sendSync="false" ref="mytimea2"></mytime> </el-tag> -->
 					<!-- <el-tag type="info" @click.native="help_sy"> ddd</el-tag> -->
 					<el-tag type="success"> {{swiper_index}}/{{swiper_length}} </el-tag>
-					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true" >使用帮助</el-tag>
+					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true">使用帮助</el-tag>
 					<el-tag type="info">
 						<screenfull style="display: inline;" />
 					</el-tag>
@@ -16,67 +18,78 @@
 				</div>
 			</el-col>
 		</el-row>
-		
+
 		<swiper :options="swiperOption" ref="mySwiper">
 			<!-- slides -->
 			<swiper-slide v-for="(slide, index) in words.word1" :key="index">
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						
-						<div class="tasktext" v-if="type===1"><svg-icon  icon-class="erji2" ></svg-icon></div>
-						
-						
-						
-						 <el-tabs  v-model="TabsValue[index]" tab-position="right" style=" margin-top: 15px;" v-if="type===2"> 
-							<el-tab-pane label="字" name='0'><div class="tasktext" v-if="type===2">{{slide.sw}}</div></el-tab-pane>
-							<el-tab-pane label="词" name='1'><div class="tasktext_ci" v-if="type===2">{{slide.dw}}</div></el-tab-pane>
-							<el-tab-pane label="句" name='2'><div class="tasktext_ju" v-if="type===2">{{slide.lw}}</div></el-tab-pane>
-						  </el-tabs>
+
+						<div class="tasktext" v-if="type===1">
+							<svg-icon icon-class="erji2"></svg-icon>
+						</div>
+
+
+
+						<el-tabs v-model="TabsValue[index]" tab-position="right" style=" margin-top: 15px;" v-if="type===2">
+							<el-tab-pane label="字" name='0'>
+								<div class="tasktext" v-if="type===2">{{slide.sw}}</div>
+							</el-tab-pane>
+							<el-tab-pane label="词" name='1'>
+								<div class="tasktext_ci" v-if="type===2">{{slide.dw}}</div>
+							</el-tab-pane>
+							<el-tab-pane label="句" name='2'>
+								<div class="tasktext_ju" v-if="type===2">{{slide.lw}}</div>
+							</el-tab-pane>
+						</el-tabs>
 					</el-col>
 				</el-row>
 
-				<el-row v-if="type===2"> 
+				<el-row v-if="type===2">
 					<el-col :span="20" :offset="2" justify="center" align="center">
-							<el-radio v-model="task_result.word1[index]" label="1" @change="know(index,'1')" border>认识</el-radio>
-							<el-radio v-model="task_result.word1[index]" label="2" @change="know(index,'2')" border>不认识</el-radio>
+						<el-radio v-model="task_result.word1[index]" label="1" @change="know(index,'1')" border>认识</el-radio>
+						<el-radio v-model="task_result.word1[index]" label="2" @change="know(index,'2')" border>不认识</el-radio>
 					</el-col>
 				</el-row>
-				
-				<el-row v-if="type===2"> 
+
+				<el-row v-if="type===2">
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<el-tag type="info"> 下次复习时间</el-tag>
-							<el-radio v-model="task_result.fx_time[index]" label="600"  border>10分钟</el-radio>
-							<el-radio v-model="task_result.fx_time[index]" label="3600"  border>1小时</el-radio>
-							<el-radio v-model="task_result.fx_time[index]" label="86400"  border>1天</el-radio>
-							<el-radio v-model="task_result.fx_time[index]" label="345600"  border>4天</el-radio>
+						<el-radio v-model="task_result.fx_time[index]" label="600" border>10分钟</el-radio>
+						<el-radio v-model="task_result.fx_time[index]" label="3600" border>1小时</el-radio>
+						<el-radio v-model="task_result.fx_time[index]" label="86400" border>1天</el-radio>
+						<el-radio v-model="task_result.fx_time[index]" label="345600" border>4天</el-radio>
 					</el-col>
 				</el-row>
-				
-				
+
+
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						
-					
+
+
 
 						<el-tooltip content="键盘:Home" placement="bottom" effect="light">
-						<el-button size="small" @click.native="swiper_slideTo(0)" round>首字</el-button>
+							<el-button size="small" @click.native="swiper_slideTo(0)" round>首字</el-button>
 						</el-tooltip>
 						<el-tooltip content="字音(键盘:空格)" placement="bottom" effect="light">
-						<m-audio :show-duration="false" text="字" :src="slide.local_sw_sound" :block="false" ref="myaudio_zi"></m-audio>
-</el-tooltip>
-<el-tooltip content="词音(键盘:T)" placement="bottom" effect="light">
-						<m-audio :show-duration="false" text="词语" :src="slide.local_dw_sound" :block="false" ref="myaudio_ci"></m-audio>
-</el-tooltip>
+							<m-audio :show-duration="false" text="字" :src="slide.local_sw_sound" :block="false" ref="myaudio_zi" tabvalue="0"
+							 v-on:passtoparenttabvlue="passtoparenttabvlue"></m-audio>
+						</el-tooltip>
+						<el-tooltip content="词音(键盘:T)" placement="bottom" effect="light">
+							<m-audio :show-duration="false" text="词语" :src="slide.local_dw_sound" :block="false" ref="myaudio_ci" tabvalue="1"
+							 v-on:passtoparenttabvlue="passtoparenttabvlue"></m-audio>
+						</el-tooltip>
 						<el-tooltip content="句音(键盘:S)" placement="bottom" effect="light">
-						<m-audio :show-duration="false" text="例句" :src="slide.local_lw_sound" :block="false" ref="myaudio_ju"></m-audio>
+							<m-audio :show-duration="false" text="例句" :src="slide.local_lw_sound" :block="false" ref="myaudio_ju" tabvalue="2"
+							 v-on:passtoparenttabvlue="passtoparenttabvlue"></m-audio>
 						</el-tooltip>
 						<el-tooltip content="键盘:End" placement="bottom" effect="light">
-						<el-button size="small" @click.native="swiper_slideTo(1)" round>尾字</el-button>
+							<el-button size="small" @click.native="swiper_slideTo(1)" round>尾字</el-button>
 						</el-tooltip>
 						<!-- <myaudio :show-duration="false" text="字" :block="false" :src="slide.local_sw_sound" ref="myaudio_ju"></myaudio> -->
 					</el-col>
 				</el-row>
-				
+
 				<!-- 	<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						 <el-tooltip :content="slide.dw" placement="bottom" effect="light">
@@ -87,7 +100,7 @@
 						 </el-tooltip>
 					</el-col>
 				</el-row> -->
-				
+
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<el-button type="primary" v-if="index===words.word1.length-1 && type===1" @click="gotojc()">听写检查</el-button>
@@ -103,74 +116,45 @@
 			<div class="swiper-button-next" slot="button-next"></div>
 			<!--<div class="swiper-scrollbar" slot="scrollbar"></div> -->
 		</swiper>
-		
-		
+
+
 		<el-dialog title="使用帮助" :visible.sync="dialogTableVisible">
- <el-alert
-    title="识字模式"
-    type="success" :closable="false"
-    description="1. 点击右侧 '字' '词' '句'，显示对应字,词语,例句 ">
-  </el-alert>
-   <el-alert
-     title=""
-     type="success" :closable="false"
-     description="2. 选择不认识，则会被加入到错字本 ">
-   </el-alert>
-    <el-alert
-      title=""
-      type="success" :closable="false"
-      description=" 3. 在跳转过程中，每个字的检查结果保留">
-    </el-alert>
-	
-	 <el-alert
-	   title="键盘快捷键"
-	   type="warning" :closable="false"
-	   description="←:上一个字 ">
-	 </el-alert>
-	 
-	 <el-alert
-	   title=""
-	   type="warning" :closable="false"
-	   description="→:下一个字 ">
-	 </el-alert>
-	  <el-alert
-	   title=""
-	   type="warning" :closable="false"
-	   description="Home:转到第一个字 ">
-	 </el-alert>
-	 
-	 <el-alert
-	   title=""
-	   type="warning" :closable="false"
-	   description="End: 转到最后一个字">
-	 </el-alert>
-	 <el-alert
-	   title=""
-	   type="warning" :closable="false"
-	   description="空格: 字发音">
-	 </el-alert>
-	 <el-alert
-	   title=""
-	   type="warning" :closable="false"
-	   description="T: 词语发音">
-	 </el-alert>
-	 <el-alert
-	   title=""
-	   type="warning" :closable="false"
-	   description="S: 句子发音">
-	 </el-alert>
-	 
-	 <!-- <el-alert
+			<el-alert title="识字模式" type="success" :closable="false" description="1. 点击右侧 '字' '词' '句' 或 点击相应读音时， 显示对应字,词语,例句 ">
+			</el-alert>
+
+			<el-alert title="" type="success" :closable="false" description="2. 选择不认识，则会被加入到错字本 ">
+			</el-alert>
+			<el-alert title="" type="success" :closable="false" description=" 3. 在跳转过程中，每个字的检查结果保留">
+			</el-alert>
+
+			<el-alert title="键盘快捷键" type="warning" :closable="false" description="←:上一个字 ">
+			</el-alert>
+
+			<el-alert title="" type="warning" :closable="false" description="→:下一个字 ">
+			</el-alert>
+			<el-alert title="" type="warning" :closable="false" description="Home:转到第一个字 ">
+			</el-alert>
+
+			<el-alert title="" type="warning" :closable="false" description="End: 转到最后一个字">
+			</el-alert>
+			<el-alert title="" type="warning" :closable="false" description="空格: 字发音">
+			</el-alert>
+			<el-alert title="" type="warning" :closable="false" description="T: 词语发音">
+			</el-alert>
+			<el-alert title="" type="warning" :closable="false" description="S: 句子发音">
+			</el-alert>
+
+			<!-- <el-alert
 	   title=""
 	   type="warning" :closable="false"
 	   description="F11: 全屏幕">
 	 </el-alert> -->
-	 
-</el-dialog>
+
+		</el-dialog>
 
 
-  
-		
+
+
 	</div>
 </template>
 
@@ -207,17 +191,23 @@
 				// wavv,
 				// data_rautoplay: this.rautoplay,
 				// radioaaa: '',
-				TabsValue:[],
-				TabsValue2:'0',
+				TabsValue: [],
+				TabsValue2: '0',
 				dialogTableVisible: false,
-				task_result: {id:this.words.id,name:this.words.name,word1:[],fx_time:[],word2:[]},
+				task_result: {
+					id: this.words.id,
+					name: this.words.name,
+					word1: [],
+					fx_time: [],
+					word2: []
+				},
 				// task_result: null,
 				resource: '',
 				isplaynow: false,
 				thistype: this.words,
-				swiper_index:1,
-				swiper_length:0,
-				xx_time:0,
+				swiper_index: 1,
+				swiper_length: 0,
+				xx_time: 0,
 				swiperOption: {
 					// some swiper options/callbacks
 					// 所有的参数同 swiper 官方 api 参数
@@ -267,13 +257,25 @@
 								// this.audio.play()
 								// console.log(this.wordsdata.word1[this.realIndex].sw_sound);
 								// console.log(this.realIndex);
+								if (self.type == 2) {
+									self.$set(self.TabsValue, this.realIndex, "0")
+								}
+
 							} else if (event == 84) { // 按键T 读词
 
 								self.$refs.myaudio_ci[this.realIndex].play()
 
+								if (self.type == 2) {
+									self.$set(self.TabsValue, this.realIndex, "1")
+								}
+
 							} else if (event == 83) { // 按键S 读句子
 
 								self.$refs.myaudio_ju[this.realIndex].play()
+
+								if (self.type == 2) {
+									self.$set(self.TabsValue, this.realIndex, "2")
+								}
 
 							} else if (event == 36) { //home 按键
 
@@ -282,24 +284,24 @@
 							} else if (event == 35) { //end 按键
 
 								this.slideTo(this.slides.length, 1000, false)
-								
+
 							} else if (event == 38) { //上 按键
-							
-								if(parseInt(self.TabsValue[this.realIndex])>0){
+
+								if (parseInt(self.TabsValue[this.realIndex]) > 0) {
 									// console.log(333)
-									let t = parseInt(self.TabsValue[this.realIndex])-1
-									self.$set(self.TabsValue,this.realIndex,t.toString())
+									let t = parseInt(self.TabsValue[this.realIndex]) - 1
+									self.$set(self.TabsValue, this.realIndex, t.toString())
 								}
 								// console.log(self.TabsValue[this.realIndex])	
-								
+
 							} else if (event == 40) { //下 按键
-								
+
 								// self.TabsValue[0]='2'
 								// self.TabsValue2 = '2'
-								if(parseInt(self.TabsValue[this.realIndex])<2){
+								if (parseInt(self.TabsValue[this.realIndex]) < 2) {
 									// console.log(333)
-									let t = parseInt(self.TabsValue[this.realIndex])+1
-									self.$set(self.TabsValue,this.realIndex,t.toString())
+									let t = parseInt(self.TabsValue[this.realIndex]) + 1
+									self.$set(self.TabsValue, this.realIndex, t.toString())
 								}
 								// console.log(self.TabsValue[this.realIndex])	
 							}
@@ -307,7 +309,7 @@
 						slideChange: function() {
 							// console.log('改变了')
 							// console.log(this.realIndex);
-							self.swiper_index = this.realIndex+1
+							self.swiper_index = this.realIndex + 1
 							setTimeout(() => {
 								if (self.rautoplay) {
 									self.$refs.myaudio_zi[this.realIndex].play()
@@ -331,24 +333,24 @@
 				let c = new Audio()
 				c.src = require('@/assets/' + value.lw_sound)
 				// this.audiolist.push(a)
-				_.set(temp, key+"[sw_audio]", a);
-				_.set(temp, key+"[dw_audio]", b);
-				_.set(temp, key+"[lw_audio]", c);
-				_.set(temp, key+"[local_sw_sound]", require('@/assets/' + value.sw_sound));
-				_.set(temp, key+"[local_dw_sound]", require('@/assets/' + value.dw_sound));
-				_.set(temp, key+"[local_lw_sound]", require('@/assets/' + value.lw_sound));
-				
+				_.set(temp, key + "[sw_audio]", a);
+				_.set(temp, key + "[dw_audio]", b);
+				_.set(temp, key + "[lw_audio]", c);
+				_.set(temp, key + "[local_sw_sound]", require('@/assets/' + value.sw_sound));
+				_.set(temp, key + "[local_dw_sound]", require('@/assets/' + value.dw_sound));
+				_.set(temp, key + "[local_lw_sound]", require('@/assets/' + value.lw_sound));
+
 				// _.set(selfmain.task_result, "[word1]"+key+"[text]", value.sw);
 				// _.set(selfmain.task_result, "[word2]"+key+"[text]", value.sw);
-				
-				_.set(selfmain.task_result, "[word1]"+key, '');
-				_.set(selfmain.task_result, "[fx_time]"+key, '');
-				_.set(selfmain.task_result, "[word2]"+key, '');
-				
+
+				_.set(selfmain.task_result, "[word1]" + key, '');
+				_.set(selfmain.task_result, "[fx_time]" + key, '');
+				_.set(selfmain.task_result, "[word2]" + key, '');
+
 				_.set(selfmain.TabsValue, key, "0");
-				
-				
-				
+
+
+
 			});
 			// console.log(11111111)
 			// console.log(this.TabsValue)
@@ -368,8 +370,8 @@
 			this.swiper.wordsdata = this.words
 			// this.audiolist = new Audio() swiper_length
 			// console.log(this.swiper)
-			this.swiper_index = this.swiper.realIndex+1
-			this.swiper_length = this.swiper.slides.length 
+			this.swiper_index = this.swiper.realIndex + 1
+			this.swiper_length = this.swiper.slides.length
 			// this.swiper.audiolist = temp
 		},
 		methods: {
@@ -385,51 +387,62 @@
 			},
 			swiper_slideTo(data) {
 				// console.log(this.words);
-				if(data===0){
+				if (data === 0) {
 					this.swiper.slideTo(0, 1000, false)
-				}else{
-					this.swiper.slideTo(this.swiper.slides.length-1, 1000, false)
+				} else {
+					this.swiper.slideTo(this.swiper.slides.length - 1, 1000, false)
 				}
 			},
-			know(index,knowtype) {
-				console.log("索引"+index);
-				console.log("字type"+knowtype);
+			know(index, knowtype) {
+				console.log("索引" + index);
+				console.log("字type" + knowtype);
 				console.log(this.task_result)
-				this.swiper.slideTo(index+1, 500, false)
+				this.swiper.slideTo(index + 1, 500, false)
 			},
-			help_sy(){
+			passtoparenttabvlue(index) {
+				// console.log("索引" + index);
+				if (this.type == 2) {
+					this.$set(this.TabsValue, this.swiper.realIndex, index)
+				}
+			},
+			help_sy() {
 				// this.$set(this.TabsValue,0,'2')
 				// this.TabsValue[0]='0'
 				// console.log(this.$refs.mytimea.all_second)
 			},
-			getDataFromChild(data){
-				this.xx_time =data
+			getDataFromChild(data) {
+				this.xx_time = data
 				// console.log("getDataFromChild"+this.xx_time);
 			}
-			
+
 		}
 	}
 </script>
 
 <style>
-	.tasktext ,.tasktext_ci, .tasktext_ju{
+	.tasktext,
+	.tasktext_ci,
+	.tasktext_ju {
 		/* width: 500px; height: 300px; */
 		font-size: 500px;
 		/* text-align: center; */
 		margin-top: 1rem;
 		user-select: none;
 	}
-	
-	.tasktext_ci{
-		
+
+	.tasktext_ci {
+
 		font-size: 300px;
-		
+
 	}
-	.tasktext_ju{
-		
-		font-size: 100px;text-align: left;
-	
+
+	.tasktext_ju {
+
+		font-size: 100px;
+		text-align: left;
+
 	}
+
 	.el-row {
 		margin-bottom: 20px;
 
@@ -437,7 +450,8 @@
 			margin-bottom: 0;
 		}
 	}
-	.backbutton{
+
+	.backbutton {
 		cursor: pointer;
 	}
 </style>
