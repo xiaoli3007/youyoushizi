@@ -417,6 +417,7 @@
 				}
 			},
 			help_sy() {
+				console.log(this.task_result.word1);
 				// this.$set(this.TabsValue,0,'2')
 				// this.TabsValue[0]='0'
 				// console.log(this.$refs.mytimea.all_second)
@@ -429,6 +430,7 @@
 			},
 			passtoparentradio(data) {
 				console.log("passtoparentradio"+data);
+				this.$set(this.task_result.word1, this.swiper.realIndex, data)
 				this.swiper.slideTo(this.swiper.realIndex +1<this.swiper.slides.length?this.swiper.realIndex + 1:this.swiper.slides.length, 500, false)
 			}
 
