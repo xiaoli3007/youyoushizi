@@ -49,7 +49,7 @@
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<!-- <el-radio ref='elradio' v-model="task_result.word1[index]" label="1" @change="know(this,index,'1')" border>认识</el-radio>
 						<el-radio v-model="task_result.word1[index]" label="2" @change="know(this,index,'2')" border>不认识</el-radio> -->
-						
+
 						<myradio :listdata="RadioclassArr" v-on:passtoparentradio="passtoparentradio" v-model="task_result.word1[index]"></myradio>
 					</el-col>
 				</el-row>
@@ -57,9 +57,9 @@
 				<el-row v-if="type===2">
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<el-tag type="info"> 下次复习时间</el-tag>
-						
-						
-						<myradio :listdata="RadiofuxiArr" v-on:passtoparentradio="passtoparentradio2" v-model="task_result.fx_time[index]"></myradio>
+
+
+						<myradio :listdata="RadiofuxiArr[index]" v-on:passtoparentradio="passtoparentradio2" v-model="task_result.fx_time[index]"></myradio>
 						<!-- <el-radio v-model="task_result.fx_time[index]" label="600" border>10分钟</el-radio>
 						<el-radio v-model="task_result.fx_time[index]" label="3600" border>1小时</el-radio>
 						<el-radio v-model="task_result.fx_time[index]" label="86400" border>1天</el-radio>
@@ -94,7 +94,7 @@
 						<!-- <myaudio :show-duration="false" text="字" :block="false" :src="slide.local_sw_sound" ref="myaudio_ju"></myaudio> -->
 					</el-col>
 				</el-row>
-			 
+
 
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
@@ -139,11 +139,8 @@
 			<el-alert title="" type="warning" :closable="false" description="S: 句子发音">
 			</el-alert>
 
-			<!-- <el-alert
-	   title=""
-	   type="warning" :closable="false"
-	   description="F11: 全屏幕">
-	 </el-alert> -->
+			<el-alert title="" type="warning" :closable="false" description="F1: 全屏幕">
+			</el-alert>
 
 		</el-dialog>
 
@@ -155,7 +152,7 @@
 
 <script>
 	// import wavv from '@/assets/voice/26/73/2673734f025fa484228e34212569c44a.wav'
-		const remote = require('electron').remote
+	const remote = require('electron').remote
 	import {
 		swiper,
 		swiperSlide
@@ -196,19 +193,7 @@
 					name: "不认识",
 					value: "2"
 				}],
-				RadiofuxiArr: [{
-					name: "10分钟",
-					value: "600"
-				}, {
-					name: "1小时",
-					value: "3600"
-				}, {
-					name: "1天",
-					value: "86400"
-				}, {
-					name: "4天",
-					value: "345600"
-				}],
+				RadiofuxiArr: [],
 				dialogTableVisible: false,
 				task_result: {
 					id: this.words.id,
@@ -229,7 +214,7 @@
 					// 所有的参数同 swiper 官方 api 参数
 					// ...
 					// effect : 'flip',
-					 
+
 					navigation: {
 						nextEl: '.swiper-button-next',
 						prevEl: '.swiper-button-prev',
@@ -321,6 +306,9 @@
 									self.$set(self.TabsValue, this.realIndex, t.toString())
 								}
 								// console.log(self.TabsValue[this.realIndex])	
+							} else if (event == 112) { //F1 按键
+
+								remote.getCurrentWindow().setFullScreen(!remote.getCurrentWindow().isFullScreen())
 							}
 						},
 						slideChange: function() {
@@ -367,8 +355,19 @@
 				_.set(selfmain.task_result, "[word2]" + key, '');
 
 				_.set(selfmain.TabsValue, key, "0");
-
-
+				_.set(selfmain.RadiofuxiArr, key, [{
+					name: "10分钟",
+					value: "600"
+				}, {
+					name: "1小时",
+					value: "3600"
+				}, {
+					name: "1天",
+					value: "86400"
+				}, {
+					name: "4天",
+					value: "345600"
+				}]);
 
 			});
 			// console.log(11111111)
@@ -413,8 +412,8 @@
 					this.swiper.slideTo(this.swiper.slides.length - 1, 1000, false)
 				}
 			},
-			know(that,index, knowtype) {
-				
+			know(that, index, knowtype) {
+
 				// console.log("字type" + knowtype);
 				// console.log(this.task_result)
 				// this.swiper.slideTo(this.swiper.realIndex + 1, 500, false)
@@ -442,12 +441,13 @@
 				// console.log("getDataFromChild"+this.xx_time);
 			},
 			passtoparentradio(data) {
-				console.log("passtoparentradio---"+data);
+				console.log("passtoparentradio---" + data);
 				this.$set(this.task_result.word1, this.swiper.realIndex, data)
-				this.swiper.slideTo(this.swiper.realIndex +1<this.swiper.slides.length?this.swiper.realIndex + 1:this.swiper.slides.length, 500, false)
+				this.swiper.slideTo(this.swiper.realIndex + 1 < this.swiper.slides.length ? this.swiper.realIndex + 1 : this.swiper
+					.slides.length, 500, false)
 			},
 			passtoparentradio2(data) {
-				console.log("passtoparentradio2---"+data);
+				console.log("passtoparentradio2---" + data);
 				this.$set(this.task_result.fx_time, this.swiper.realIndex, data)
 			}
 
