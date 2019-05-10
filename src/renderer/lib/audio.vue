@@ -84,7 +84,9 @@ export default {
     methods:{
         play(){
             window.audioList.forEach(audio=>{//开始前先关闭所有可能正在运行的实例
-                audio.pause()
+                // audio.load()
+				// audio.fastSeek(0)
+				audio.pause()
             })
             if(this.audio.paused){
                 this.audio.play()

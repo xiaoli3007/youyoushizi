@@ -1,9 +1,9 @@
 <template>
-	<div style="display: inline;">
+	<div style="display: inline;" class="myradio">
 		<!-- <el-button v-for="(item,index) in classArr" :key="index" @click="result(index)" :type="resultNum === index?'success':''">{{item.name}}</el-button>
  -->
 		<ul style="display: inline;">
-			<li v-for="(item,index) in classArr" :key="index" @click="result(index)" :class="resultNum === index?'active':''">
+			<li v-for="(item,index) in listdata" :key="index" @click="result(index)" :class="resultNum === index?'active':''">
 				{{item.name}}
 			</li>
 		</ul>
@@ -34,13 +34,13 @@
 		},
 		data() {
 			return {
-				classArr: [{
-					name: "认识",
-					value: "1"
-				}, {
-					name: "不认识",
-					value: "2"
-				}],
+				// classArr: [{
+				// 	name: "认识",
+				// 	value: "1"
+				// }, {
+				// 	name: "不认识",
+				// 	value: "2"
+				// }],
 				num: "",
 			}
 		},
@@ -50,7 +50,7 @@
 				// console.log(this.v_model_value)
 				// this.v_model_value = this.classArr[index].value
 				// this.$emit("passtoparentradio", this.v_model_value)
-				this.$emit("passtoparentradio", this.classArr[index].value)
+				this.$emit("passtoparentradio", this.listdata[index].value)
 			}
 		},
 		watch: {
@@ -67,6 +67,9 @@
 </script>
 
 <style lang="scss">
+.myradio{
+	
+	ul{margin: 0;padding: 0;}
 	li {
 		list-style: none;
 		margin: 0 5px 0 0;
@@ -88,13 +91,15 @@
 
 		&:hover {
 			cursor: pointer;
-			background-color: #67C23A;
-			color: #fff;
+			border-color: #409EFF;
+			color: #409EFF;
 		}
 	}
 
 	.active {
-		background-color: #67C23A;
-		color: #fff;
+		// background-color: #67C23A;
+		border-color: #409EFF;
+		color: #409EFF;
 	}
+}		
 </style>

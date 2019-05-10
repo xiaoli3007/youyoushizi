@@ -8,7 +8,7 @@
 						<mytime :autoStart="true" :sendSync="true" ref="mytimea" v-on:getDataFromChild="getDataFromChild"></mytime>
 					</el-tag>
 					<!-- <el-tag type="info"> <mytime :autoStart="false" :sendSync="false" ref="mytimea2"></mytime> </el-tag> -->
-					<el-tag type="info" @click.native="help_sy"> 测试按钮</el-tag>
+					<el-tag type="info" @click.native="help_sy"> 调试按钮</el-tag>
 					<el-tag type="success"> {{swiper_index}}/{{swiper_length}} </el-tag>
 					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true">使用帮助</el-tag>
 					<el-tag type="info">
@@ -47,20 +47,23 @@
 
 				<el-row v-if="type===2">
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						<el-radio ref='elradio' v-model="task_result.word1[index]" label="1" @change="know(this,index,'1')" border>认识</el-radio>
-						<el-radio v-model="task_result.word1[index]" label="2" @change="know(this,index,'2')" border>不认识</el-radio>
+						<!-- <el-radio ref='elradio' v-model="task_result.word1[index]" label="1" @change="know(this,index,'1')" border>认识</el-radio>
+						<el-radio v-model="task_result.word1[index]" label="2" @change="know(this,index,'2')" border>不认识</el-radio> -->
 						
-						<myradio v-on:passtoparentradio="passtoparentradio" v-model="task_result.word1[index]"></myradio>
+						<myradio :listdata="RadioclassArr" v-on:passtoparentradio="passtoparentradio" v-model="task_result.word1[index]"></myradio>
 					</el-col>
 				</el-row>
 
 				<el-row v-if="type===2">
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<el-tag type="info"> 下次复习时间</el-tag>
-						<el-radio v-model="task_result.fx_time[index]" label="600" border>10分钟</el-radio>
+						
+						
+						<myradio :listdata="RadiofuxiArr" v-on:passtoparentradio="passtoparentradio2" v-model="task_result.fx_time[index]"></myradio>
+						<!-- <el-radio v-model="task_result.fx_time[index]" label="600" border>10分钟</el-radio>
 						<el-radio v-model="task_result.fx_time[index]" label="3600" border>1小时</el-radio>
 						<el-radio v-model="task_result.fx_time[index]" label="86400" border>1天</el-radio>
-						<el-radio v-model="task_result.fx_time[index]" label="345600" border>4天</el-radio>
+						<el-radio v-model="task_result.fx_time[index]" label="345600" border>4天</el-radio> -->
 					</el-col>
 				</el-row>
 
@@ -91,17 +94,7 @@
 						<!-- <myaudio :show-duration="false" text="字" :block="false" :src="slide.local_sw_sound" ref="myaudio_ju"></myaudio> -->
 					</el-col>
 				</el-row>
-
-				<!-- 	<el-row>
-					<el-col :span="20" :offset="2" justify="center" align="center">
-						 <el-tooltip :content="slide.dw" placement="bottom" effect="light">
-						 <el-button size="small"  round>词语提示</el-button>
-						 </el-tooltip>
-						 <el-tooltip :content="slide.lw" placement="bottom" effect="light">
-						 <el-button size="small" round>句子提示</el-button>
-						 </el-tooltip>
-					</el-col>
-				</el-row> -->
+			 
 
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
@@ -196,6 +189,26 @@
 				// radioaaa: '',
 				TabsValue: [],
 				TabsValue2: '0',
+				RadioclassArr: [{
+					name: "认识",
+					value: "1"
+				}, {
+					name: "不认识",
+					value: "2"
+				}],
+				RadiofuxiArr: [{
+					name: "10分钟",
+					value: "600"
+				}, {
+					name: "1小时",
+					value: "3600"
+				}, {
+					name: "1天",
+					value: "86400"
+				}, {
+					name: "4天",
+					value: "345600"
+				}],
 				dialogTableVisible: false,
 				task_result: {
 					id: this.words.id,
@@ -429,9 +442,13 @@
 				// console.log("getDataFromChild"+this.xx_time);
 			},
 			passtoparentradio(data) {
-				console.log("passtoparentradio"+data);
+				console.log("passtoparentradio---"+data);
 				this.$set(this.task_result.word1, this.swiper.realIndex, data)
 				this.swiper.slideTo(this.swiper.realIndex +1<this.swiper.slides.length?this.swiper.realIndex + 1:this.swiper.slides.length, 500, false)
+			},
+			passtoparentradio2(data) {
+				console.log("passtoparentradio2---"+data);
+				this.$set(this.task_result.fx_time, this.swiper.realIndex, data)
 			}
 
 		}
