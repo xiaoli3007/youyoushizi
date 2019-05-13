@@ -10128,6 +10128,11 @@ sumchecker@^2.0.2:
   dependencies:
     debug "^2.2.0"
 
+supermemo2@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/supermemo2/-/supermemo2-1.0.1.tgz#912d10d9e8c3116332e146144d9afeb6936d9a57"
+  integrity sha1-kS0Q2ejDEWMy4UYUTZr+tpNtmlc=
+
 supports-color@5.4.0:
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"

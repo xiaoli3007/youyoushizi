@@ -121,8 +121,11 @@
 			</el-alert>
 			<el-alert title="" type="success" :closable="false" description=" 3. 在跳转过程中，每个字的检查结果保留">
 			</el-alert>
-
-			<el-alert title="键盘快捷键" type="warning" :closable="false" description="←:上一个字 ">
+			
+			<el-alert title="键盘快捷键" type="warning" :closable="false" description="↑ ↓:切换字词句 ">
+			</el-alert>
+			
+			<el-alert title="" type="warning" :closable="false" description="←:上一个字 ">
 			</el-alert>
 
 			<el-alert title="" type="warning" :closable="false" description="→:下一个字 ">

@@ -3,7 +3,7 @@
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
 		<div class="right-menu">
-		<!-- <screenfull class="right-menu-item hover-effect"/> -->
+		<screenfull class="right-menu-item hover-effect"/>
 		
     <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
       <div class="avatar-wrapper">
