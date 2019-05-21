@@ -41,6 +41,9 @@
 </template>
 
 <script>
+
+import supermemo2 from '@/lib/supermemo2'
+
 import { getjiaocaiList } from '@/api/table'
 
 export default {
@@ -61,6 +64,17 @@ export default {
     }
   },
   created() {
+	  let quality =4  // 表示审核质量的介于0和5之间的数字。0是最差的，5是最好的。.
+	  let lastSchedule= 5 // 上次审阅空间的持续时间
+	  let lastFactor =1 // 用于计算上一个计划的因素。
+	  let ret = supermemo2(quality, lastSchedule, lastFactor)
+	  // {
+	  //     schedule: Number, // 下一个评论空间。
+	  //     factor: Number, // 在下一轮计算中应该使用的因素。
+	  //     isRepeatAgain: Boolean // 如果是真的，应重新检查项目，直到质量不低于4。
+	  // }
+	  console.log(ret)
+	  
     this.fetchData()
   },
   methods: {
