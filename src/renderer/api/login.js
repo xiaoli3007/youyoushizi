@@ -4,19 +4,22 @@ export function login(username, password) {
   return request({
     url: '?s=User.Member.login',
     method: 'post',
-    // data: {
-    //   username,
-    //   password
-    // }
-		params: { username ,password}
+    data: {
+      username,
+      password
+    },
+		 // params: { username ,password}
   })
 }
 
 export function getInfo(token) {
   return request({
     url: '?s=User.Member.userinfo',
-    method: 'get',
-    params: { token }
+    method: 'post',
+		data: {
+		  token
+		},
+    // params: { token }
   })
 }
 
@@ -24,6 +27,9 @@ export function logout(token) {
   return request({
     url: '?s=User.Member.logout',
     method: 'post',
-		params: { token }
+		data: {
+		  token
+		},
+		// params: { token }
   })
 }

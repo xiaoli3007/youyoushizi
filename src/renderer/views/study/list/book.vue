@@ -6,32 +6,22 @@
           {{scope.$index}}
         </template>
       </el-table-column>
-      <el-table-column label="Title">
+      <el-table-column label="name">
         <template slot-scope="scope">
-          {{scope.row.title}}
+          {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
+      <el-table-column label="lesson_no" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{scope.row.author}}</span>
+          <span>{{scope.row.lesson_no}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
+      <el-table-column label="cat_id" width="110" align="center">
         <template slot-scope="scope">
-          {{scope.row.pageviews}}
+          {{scope.row.cat_id}}
         </template>
       </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span>{{scope.row.display_time}}</span>
-        </template>
-      </el-table-column>
+
     </el-table>
   </div>
 </template>

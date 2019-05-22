@@ -1,12 +1,18 @@
 import axios from 'axios'
 import { Message, MessageBox } from 'element-ui'
 import store from '../store'
-
+import qs from 'qs'
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 15000 // 请求超时时间
+  timeout: 15000 ,// 请求超时时间
+	transformRequest: [function(data) {
+		// 对 data 进行任意转换处理
+		return qs.stringify(data);
+	}],
 })
+
+service.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 // request拦截器
 service.interceptors.request.use(config => {

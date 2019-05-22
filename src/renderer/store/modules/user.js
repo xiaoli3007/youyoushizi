@@ -1,5 +1,5 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken ,setName,removeName} from '@/utils/auth'
 
 const user = {
   state: {
@@ -33,7 +33,9 @@ const user = {
           const data = response.data
 					// console.log(data)
           setToken(data.token)
+					setName(data.username)
           commit('SET_TOKEN', data.token)
+					commit('SET_NAME', data.username)
           resolve()
         }).catch(error => {
           reject(error)
@@ -51,7 +53,8 @@ const user = {
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
-          commit('SET_NAME', data.username)
+          // commit('SET_NAME', data.username)
+          commit('SET_TOKEN', data.token)
           commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {
@@ -66,7 +69,9 @@ const user = {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
+					commit('SET_NAME', '')
           removeToken()
+					removeName()
           resolve()
         }).catch(error => {
           reject(error)
@@ -79,6 +84,8 @@ const user = {
       return new Promise(resolve => {
         removeToken()
         commit('SET_TOKEN', '')
+				removeName()
+				commit('SET_NAME', '')
         resolve()
       })
     }

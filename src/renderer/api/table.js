@@ -2,14 +2,14 @@ import request from '@/utils/request'
 
 export function getList(params) {
   return request({
-    url: '/table/list',
+    url: '?s=User.YouYouMain.list',
     method: 'get',
     params
   })
 }
 export function getjiaocaiList(params) {
   return request({
-    url: '/table/jiaocaiList',
+    url: '?s=User.YouYouMain.jiaocaiList',
     method: 'get',
     params
   })
