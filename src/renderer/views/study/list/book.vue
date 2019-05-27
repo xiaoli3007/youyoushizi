@@ -1,5 +1,27 @@
 <template>
   <div class="app-container">
+	  
+	  <el-form :inline="true"  class="demo-form-inline">
+		     <el-form-item>
+		   <el-select v-model="value" placeholder="分类">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+   </el-form-item>
+  
+	    <el-form-item>
+	  	<el-input v-model="keywords" placeholder="关键词"></el-input>
+	    </el-form-item>
+	    <el-form-item>
+	  	<el-button type="primary" @click="search()">查询</el-button>
+	    </el-form-item>
+	  </el-form>
+	  
+	  
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
       <el-table-column align="center" label='ID' width="95">
         <template slot-scope="scope">
@@ -11,18 +33,32 @@
           {{scope.row.name}}
         </template>
       </el-table-column>
-      <el-table-column label="lesson_no" width="110" align="center">
+      <el-table-column label="pinyin" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{scope.row.lesson_no}}</span>
+          <span>{{scope.row.pinyin}}</span>
         </template>
       </el-table-column>
-      <el-table-column label="cat_id" width="110" align="center">
+      <el-table-column label="zixing" width="110" align="center">
         <template slot-scope="scope">
-          {{scope.row.cat_id}}
+          {{scope.row.zixing}}
         </template>
       </el-table-column>
 
     </el-table>
+	
+	
+	<div class="block pages">
+					<el-pagination
+					@current-change="handleCurrentChange"
+					background
+					layout="prev, pager, next"
+					:page-size="pagesize"
+					:current-page="currentPage"
+					:total="dataCount">
+					</el-pagination>
+				</div>
+				
+				
   </div>
 </template>
 
@@ -33,7 +69,21 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+	  loading:false,
+	  dataCount: null,
+	  currentPage: null,
+	  keywords: '',
+	  multipleSelection: [],
+	  pagesize: 12,
+	  options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }],
+		value: ''
     }
   },
   filters: {
@@ -47,15 +97,59 @@ export default {
     }
   },
   created() {
-    this.fetchData()
+    this.init()
   },
   methods: {
+	  search() {
+	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: 1 }})
+	  },
+	   handleCurrentChange(page) {
+	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: page }})
+	  },
     fetchData() {
       this.listLoading = true
-      getList(this.listQuery).then(response => {
+	  const params = {
+	      keywords: this.keywords,
+	      page: this.currentPage,
+	      pagesize: this.pagesize
+	  }
+      getList(params).then(response => {
         this.list = response.data.items
+		this.dataCount = parseInt(response.data.dataCount)
         this.listLoading = false
       })
+	  this.listLoading = false
+    },
+	 getCurrentPage() {
+	  let data = this.$route.query
+	  if (data) {
+	    if (data.page) {
+	      this.currentPage = parseInt(data.page)
+	    } else {
+	      this.currentPage = 1
+	    }
+	  }
+	},
+	getKeywords() {
+	  let data = this.$route.query
+	  if (data) {
+	    if (data.keywords) {
+	      this.keywords = data.keywords
+	    } else {
+	      this.keywords = ''
+	    }
+	  }
+	},
+	init() {
+	  this.getKeywords()
+	  this.getCurrentPage()
+	  this.fetchData()
+	},
+	
+  },
+  watch: {
+    '$route' (to, from) {
+      this.init()
     }
   }
 }
