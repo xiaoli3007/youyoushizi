@@ -64,6 +64,7 @@
 
 <script>
 import { getList } from '@/api/table'
+import _g from '@/utils/global.js'
 
 export default {
   data() {
@@ -107,6 +108,7 @@ export default {
 	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: page }})
 	  },
     fetchData() {
+	  _g.openGlobalLoading()
       this.listLoading = true
 	  const params = {
 	      keywords: this.keywords,
@@ -114,6 +116,7 @@ export default {
 	      pagesize: this.pagesize
 	  }
       getList(params).then(response => {
+		  _g.closeGlobalLoading()
         this.list = response.data.items
 		this.dataCount = parseInt(response.data.dataCount)
         this.listLoading = false
