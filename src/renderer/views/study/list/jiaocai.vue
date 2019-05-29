@@ -64,16 +64,16 @@ export default {
     }
   },
   created() {
-	  let quality =4  // 表示审核质量的介于0和5之间的数字。0是最差的，5是最好的。.
-	  let lastSchedule= 5 // 上次审阅空间的持续时间
-	  let lastFactor =1 // 用于计算上一个计划的因素。
-	  let ret = supermemo2(quality, lastSchedule, lastFactor)
+	  // let quality =4  // 表示审核质量的介于0和5之间的数字。0是最差的，5是最好的。.
+	  // let lastSchedule= 5 // 上次审阅空间的持续时间
+	  // let lastFactor =1 // 用于计算上一个计划的因素。
+	  // let ret = supermemo2(quality, lastSchedule, lastFactor)
 	  // {
 	  //     schedule: Number, // 下一个评论空间。
 	  //     factor: Number, // 在下一轮计算中应该使用的因素。
 	  //     isRepeatAgain: Boolean // 如果是真的，应重新检查项目，直到质量不低于4。
 	  // }
-	  console.log(ret)
+	  // console.log(ret)
 	  
     this.fetchData()
   },
@@ -84,22 +84,23 @@ export default {
     fetchData() {
       this.listLoading = true
       getjiaocaiList(this.listQuery).then(response => {
-        this.list = response.data.chapter
-				var temp = this.list
-				_(temp).forEach(function(value,key) {
-					// console.log(value.word1);
-						 var s = []
-						_(value.word1).forEach(function(value2,key2) {
-							s.push(value2.sw)
-						});
-						  s=_.join(s, '~')
-						// console.log(typeof temp);
-						// console.log(temp[key].name);
-						// this.list['sss']=s  
-						_.set(temp, key+'.s', s);
-						
-				});
-				this.list = temp
+        // this.list = response.data.chapter
+        this.list = response.data.items
+				// var temp = this.list
+				// _(temp).forEach(function(value,key) {
+				// 	// console.log(value.word1);
+				// 		 var s = []
+				// 		_(value.word1).forEach(function(value2,key2) {
+				// 			s.push(value2.sw)
+				// 		});
+				// 		  s=_.join(s, '~')
+				// 		// console.log(typeof temp);
+				// 		// console.log(temp[key].name);
+				// 		// this.list['sss']=s  
+				// 		_.set(temp, key+'.s', s);
+				// 		
+				// });
+				// this.list = temp
 				// console.log(temp);
 				
         this.listLoading = false

@@ -432,7 +432,7 @@
 				}
 			},
 			help_sy() {
-				console.log(this.task_result.word1);
+				console.log(this.task_result);
 				// this.$set(this.TabsValue,0,'2')
 				// this.TabsValue[0]='0'
 				// console.log(this.$refs.mytimea.all_second)
