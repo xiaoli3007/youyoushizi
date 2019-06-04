@@ -164,7 +164,9 @@
 	import Screenfull from '@/components/Screenfull'
 	import mytime from '@/components/mytime'
 	import myradio from '@/components/myradio'
-
+	
+	import { taskin , taskindata } from '@/api/task'
+	
 	export default {
 		name: 'read-task',
 		props: {
@@ -432,7 +434,15 @@
 				}
 			},
 			help_sy() {
-				console.log(this.task_result);
+				console.log(typeof this.task_result);
+				
+				var str = JSON.stringify(this.task_result);
+				
+				taskindata(15,str).then(response => {
+						console.log(response.data)
+				})
+				
+				
 				// this.$set(this.TabsValue,0,'2')
 				// this.TabsValue[0]='0'
 				// console.log(this.$refs.mytimea.all_second)
@@ -446,6 +456,12 @@
 			passtoparentradio(data) {
 				console.log("passtoparentradio---" + data);
 				this.$set(this.task_result.word1, this.swiper.realIndex, data)
+				
+				//发送请求记录当前字的 学习状态 计算难度因子
+				taskin(15,str).then(response => {
+						console.log(response.data)
+				})
+				
 				this.swiper.slideTo(this.swiper.realIndex + 1 < this.swiper.slides.length ? this.swiper.realIndex + 1 : this.swiper
 					.slides.length, 500, false)
 			},
