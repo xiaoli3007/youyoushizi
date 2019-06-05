@@ -165,7 +165,7 @@
 	import mytime from '@/components/mytime'
 	import myradio from '@/components/myradio'
 	
-	import { taskin , taskindata } from '@/api/task'
+	import { taskin , taskindata ,taskinwcell } from '@/api/task'
 	
 	export default {
 		name: 'read-task',
@@ -361,17 +361,21 @@
 
 				_.set(selfmain.TabsValue, key, "0");
 				_.set(selfmain.RadiofuxiArr, key, [{
-					name: "10分钟",
-					value: "600"
+					name: "6天",
+					value: "6",
+					quality:2
 				}, {
-					name: "1小时",
-					value: "3600"
+					name: "14天",
+					value: "14",
+					quality:3
 				}, {
-					name: "1天",
-					value: "86400"
+					name: "15天",
+					value: "15",
+					quality:4
 				}, {
-					name: "4天",
-					value: "345600"
+					name: "16天",
+					value: "16",
+					quality:5
 				}]);
 
 			});
@@ -458,7 +462,7 @@
 				this.$set(this.task_result.word1, this.swiper.realIndex, data)
 				
 				//发送请求记录当前字的 学习状态 计算难度因子
-				taskin(15,str).then(response => {
+				taskinwcell(15,12,11,data).then(response => {
 						console.log(response.data)
 				})
 				
