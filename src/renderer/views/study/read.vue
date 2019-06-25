@@ -111,8 +111,8 @@
 			// type 0 听写 1 认字 2 复习
 			this.rautoplay = this.$route.query.rautoplay==0?false:true
 			this.type = this.$route.query.type==1?1:2
-			this.showid = this.$route.query.showid
-			this.cat = this.$route.query.cat
+			this.relation_id = this.$route.query.relation_id
+			this.relation_type = this.$route.query.relation_type
 			
 		   const loading = this.$loading({
 			  lock: true,
@@ -121,7 +121,7 @@
 			  background: 'rgba(0, 0, 0, 0.7)'
 			});
 		
-			taskin(this.$store.state.user.userid, 0, this.type, this.showid, this.cat).then(response => {
+			taskin(this.$store.state.user.userid, 0, this.type, this.relation_id, this.relation_type).then(response => {
 				loading.close();
 				console.log(response)
 			})	

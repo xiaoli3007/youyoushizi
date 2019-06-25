@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function taskin(userid, status, type, showid, cat) {
+export function taskin(userid, status, type, relation_id, relation_type) {
 	return request({
 		url: '?act=taskin',
 		method: 'post',
@@ -8,8 +8,8 @@ export function taskin(userid, status, type, showid, cat) {
 			userid,
 			status,
 			type,
-			showid,
-			cat
+			relation_id,
+			relation_type
 		},
 		// params: { username ,password}
 	})

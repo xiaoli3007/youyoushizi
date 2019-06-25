@@ -132,7 +132,7 @@ export default {
         console.log(value);
       },
 		 read(a,b,c,d) {
-			this.$router.replace({ name: 'Read' , query:{  rautoplay: a ,type: b,showid: c, cat: d}})
+			this.$router.replace({ name: 'Read' , query:{  rautoplay: a ,type: b,relation_id: c, relation_type: d}})
 		},
 	  search() {
 	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: 1 }})
