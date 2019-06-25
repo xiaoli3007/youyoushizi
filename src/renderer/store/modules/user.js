@@ -1,9 +1,10 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken ,setName,removeName} from '@/utils/auth'
+import { getToken, setToken, removeToken ,setName,removeName,getUserid,setUserid,removeUserid} from '@/utils/auth'
 
 const user = {
   state: {
     token: getToken(),
+		userid: getUserid(),
     name: '',
     avatar: '',
     roles: []
@@ -13,6 +14,9 @@ const user = {
     SET_TOKEN: (state, token) => {
       state.token = token
     },
+		SET_USERID: (state, userid) => {
+		  state.userid = userid
+		},
     SET_NAME: (state, name) => {
       state.name = name
     },
@@ -34,8 +38,10 @@ const user = {
 					// console.log(response)
           setToken(data.token)
 					setName(data.username)
+					setUserid(data.userid)
           commit('SET_TOKEN', data.token)
 					commit('SET_NAME', data.username)
+					commit('SET_USERID', data.userid)
           resolve()
         }).catch(error => {
           reject(error)
@@ -70,8 +76,10 @@ const user = {
           commit('SET_TOKEN', '')
           commit('SET_ROLES', [])
 					commit('SET_NAME', '')
+					commit('SET_USERID', 0)
           removeToken()
 					removeName()
+					removeUserid()
           resolve()
         }).catch(error => {
           reject(error)
@@ -86,6 +94,8 @@ const user = {
         commit('SET_TOKEN', '')
 				removeName()
 				commit('SET_NAME', '')
+				removeUserid()
+				commit('SET_USERID', 0)
         resolve()
       })
     }

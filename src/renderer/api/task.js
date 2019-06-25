@@ -1,14 +1,15 @@
 import request from '@/utils/request'
 
-export function taskin(name, status, type, userid) {
+export function taskin(userid, status, type, showid, cat) {
 	return request({
 		url: '?act=taskin',
 		method: 'post',
 		data: {
-			name,
+			userid,
 			status,
 			type,
-			userid
+			showid,
+			cat
 		},
 		// params: { username ,password}
 	})

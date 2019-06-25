@@ -1,12 +1,27 @@
 <template>
 	<div>
-		<read-task :words="words" :rautoplay="rautoplay" :type="type"></read-task>
+		
+	
+	<!-- <el-row>
+  <el-col :span="24" v-loading="loading"
+    element-loading-text="拼命加载中"
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)" > 
+	
+		
+		
+	</el-col>
+</el-row> -->
+<read-task :words="words" :rautoplay="rautoplay" :type="type"></read-task>
+		
 	</div>
 </template>
 
 <script>
 	import ReadTask from '@/components/ReadTask'
-
+	
+	import { taskin  } from '@/api/task'
+	
 	export default {
 		data() {
 			return {
@@ -91,11 +106,29 @@
 
 		},
 		created() {
-		this.rautoplay = this.$route.query.rautoplay==0?false:true
-		this.type = this.$route.query.type==1?1:2
+			//  status 0 未开始 1进行中	2初次完成	第一次复习，可能有错字，会进入后续复习 3	复习错字 	4	全部完成
 			
-			// console.log(this.$route.query.rautoplay)
-			// console.log(this.rautoplay)
+			// type 0 听写 1 认字 2 复习
+			this.rautoplay = this.$route.query.rautoplay==0?false:true
+			this.type = this.$route.query.type==1?1:2
+			this.showid = this.$route.query.showid
+			this.cat = this.$route.query.cat
+			
+		   const loading = this.$loading({
+			  lock: true,
+			  text: '创建任务中...',
+			  spinner: 'el-icon-loading',
+			  background: 'rgba(0, 0, 0, 0.7)'
+			});
+		
+			taskin(this.$store.state.user.userid, 0, this.type, this.showid, this.cat).then(response => {
+				loading.close();
+				console.log(response)
+			})	
+			
+			loading.close();
+				console.log(this.$store.state.user.userid)
+				// console.log(this.rautoplay)
 		},
 		methods: {
 			fetchData() {

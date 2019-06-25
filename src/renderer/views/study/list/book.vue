@@ -2,7 +2,7 @@
   <div class="app-container">
 	  
 	  <el-form :inline="true"  class="demo-form-inline">
-		     <el-form-item>
+	<!-- 	     <el-form-item>
 		   <el-select v-model="value" placeholder="分类">
     <el-option
       v-for="item in options"
@@ -11,7 +11,7 @@
       :value="item.value">
     </el-option>
   </el-select>
-   </el-form-item>
+   </el-form-item> -->
   
 	    <el-form-item>
 	  	<el-input v-model="keywords" placeholder="关键词"></el-input>
@@ -33,12 +33,12 @@
           {{scope.row.title}}
         </template>
       </el-table-column>
-   <!--   <el-table-column label="pinyin" width="110" align="center">
+  <!--   <el-table-column label="pinyin" width="110" align="center">
         <template slot-scope="scope">
           <span>{{scope.row.pinyin}}</span>
         </template>
-      </el-table-column>
-      <el-table-column label="zixing" width="110" align="center">
+      </el-table-column> -->
+     <!--  <el-table-column label="zixing" width="110" align="center">
         <template slot-scope="scope">
           {{scope.row.zixing}}
         </template>
