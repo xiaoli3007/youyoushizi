@@ -2,7 +2,7 @@ import request from '@/utils/request'
 
 export function taskin(name, status, type, userid) {
 	return request({
-		url: '?s=User.YouYouMain.taskin',
+		url: '?act=taskin',
 		method: 'post',
 		data: {
 			name,
@@ -16,7 +16,7 @@ export function taskin(name, status, type, userid) {
 
 export function taskinwcell(taskid, userid, wcellid, status) {
 	return request({
-		url: '?s=User.YouYouMain.taskinwcell',
+		url: '?act=taskinwcell',
 		method: 'post',
 		data: {
 			taskid,
@@ -30,7 +30,7 @@ export function taskinwcell(taskid, userid, wcellid, status) {
 
 export function taskindata(taskid,taskdata) {
 	return request({
-		url: '?s=User.YouYouMain.taskindata',
+		url: '?act=taskindata',
 		method: 'post',
 		data: {
 			taskid,

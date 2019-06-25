@@ -28,12 +28,12 @@
           {{scope.$index}}
         </template>
       </el-table-column>
-      <el-table-column label="name">
+      <el-table-column label="标题">
         <template slot-scope="scope">
-          {{scope.row.name}}
+          {{scope.row.title}}
         </template>
       </el-table-column>
-      <el-table-column label="pinyin" width="110" align="center">
+   <!--   <el-table-column label="pinyin" width="110" align="center">
         <template slot-scope="scope">
           <span>{{scope.row.pinyin}}</span>
         </template>
@@ -42,7 +42,17 @@
         <template slot-scope="scope">
           {{scope.row.zixing}}
         </template>
-      </el-table-column>
+      </el-table-column> -->
+			
+				<el-table-column label="操作" width="410" align="center">
+			  <template slot-scope="scope">
+				  
+				  <el-col :span="8"><el-button type="primary" v-on:click="read(0,1)">手动听写</el-button></el-col>
+				  <el-col :span="8"><el-button type="success" v-on:click="read(1,1)">自动听写</el-button> </el-col>
+				  <el-col :span="8"><el-button type="warning" v-on:click="read(0,2)">识字</el-button> </el-col>
+			  	
+			  </template>
+			</el-table-column>
 
     </el-table>
 	
@@ -101,6 +111,9 @@ export default {
     this.init()
   },
   methods: {
+		 read(a,b) {
+			this.$router.replace({ name: 'Read' , query:{  rautoplay: a ,type: b}})
+		},
 	  search() {
 	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: 1 }})
 	  },
@@ -111,14 +124,15 @@ export default {
 	  _g.openGlobalLoading()
       this.listLoading = true
 	  const params = {
+			  booktype: 910,
 	      keywords: this.keywords,
 	      page: this.currentPage,
 	      pagesize: this.pagesize
 	  }
       getList(params).then(response => {
 		  _g.closeGlobalLoading()
-        this.list = response.data.items
-		this.dataCount = parseInt(response.data.dataCount)
+        this.list = response.items
+		this.dataCount = parseInt(response.dataCount)
         this.listLoading = false
       })
 	  this.listLoading = false

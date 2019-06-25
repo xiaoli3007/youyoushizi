@@ -1,56 +1,100 @@
 <template>
   <div class="app-container">
+	  
+	  <el-form :inline="true"  class="demo-form-inline">
+		     <el-form-item>
+		   <el-select v-model="value" placeholder="分类">
+    <el-option
+      v-for="item in options"
+      :key="item.value"
+      :label="item.label"
+      :value="item.value">
+    </el-option>
+  </el-select>
+   </el-form-item>
+  
+	    <el-form-item>
+	  	<el-input v-model="keywords" placeholder="关键词"></el-input>
+	    </el-form-item>
+	    <el-form-item>
+	  	<el-button type="primary" @click="search()">查询</el-button>
+	    </el-form-item>
+	  </el-form>
+	  
+	  
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
       <el-table-column align="center" label='ID' width="95">
         <template slot-scope="scope">
           {{scope.$index}}
         </template>
       </el-table-column>
-      <el-table-column label="教材">
+      <el-table-column label="标题">
         <template slot-scope="scope">
-         人教版三年级下册
+          {{scope.row.title}}
         </template>
       </el-table-column>
-      <el-table-column label="课时" width="110" align="center">
+   <!--   <el-table-column label="pinyin" width="110" align="center">
         <template slot-scope="scope">
-          <span>{{scope.row.name}}</span>
+          <span>{{scope.row.pinyin}}</span>
         </template>
       </el-table-column>
+      <el-table-column label="zixing" width="110" align="center">
+        <template slot-scope="scope">
+          {{scope.row.zixing}}
+        </template>
+      </el-table-column> -->
 			
-			 <el-table-column label="字" width="110" align="center">
-			  <template slot-scope="scope">
-			    <span>{{scope.row.s}}</span>
-			  </template>
-			</el-table-column>
-			
-			<el-table-column label="操作" width="410" align="center">
+				<el-table-column label="操作" width="410" align="center">
 			  <template slot-scope="scope">
 				  
 				  <el-col :span="8"><el-button type="primary" v-on:click="read(0,1)">手动听写</el-button></el-col>
 				  <el-col :span="8"><el-button type="success" v-on:click="read(1,1)">自动听写</el-button> </el-col>
 				  <el-col :span="8"><el-button type="warning" v-on:click="read(0,2)">识字</el-button> </el-col>
-  
-				 
-				
+			  	
 			  </template>
 			</el-table-column>
-			
-     
+
     </el-table>
+	
+	
+	<div class="block pages">
+					<el-pagination
+					@current-change="handleCurrentChange"
+					background
+					layout="prev, pager, next"
+					:page-size="pagesize"
+					:current-page="currentPage"
+					:total="dataCount">
+					</el-pagination>
+				</div>
+				
+				
   </div>
 </template>
 
 <script>
-
-import supermemo2 from '@/lib/supermemo2'
-
 import { getjiaocaiList } from '@/api/table'
+import _g from '@/utils/global.js'
 
 export default {
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: true,
+	  loading:false,
+	  dataCount: null,
+	  currentPage: null,
+	  keywords: '',
+	  multipleSelection: [],
+	  pagesize: 12,
+	  options: [{
+          value: '选项1',
+          label: '黄金糕'
+        }, {
+          value: '选项2',
+          label: '双皮奶'
+        }],
+		value: ''
     }
   },
   filters: {
@@ -64,47 +108,65 @@ export default {
     }
   },
   created() {
-	  // let quality =4  // 表示审核质量的介于0和5之间的数字。0是最差的，5是最好的。.
-	  // let lastSchedule= 5 // 上次审阅空间的持续时间
-	  // let lastFactor =1 // 用于计算上一个计划的因素。
-	  // let ret = supermemo2(quality, lastSchedule, lastFactor)
-	  // {
-	  //     schedule: Number, // 下一个评论空间。
-	  //     factor: Number, // 在下一轮计算中应该使用的因素。
-	  //     isRepeatAgain: Boolean // 如果是真的，应重新检查项目，直到质量不低于4。
-	  // }
-	  // console.log(ret)
-	  
-    this.fetchData()
+    this.init()
   },
   methods: {
-	  read(a,b) {
-	  	this.$router.replace({ name: 'Read' , query:{  rautoplay: a ,type: b}})
+		 read(a,b) {
+			this.$router.replace({ name: 'Read' , query:{  rautoplay: a ,type: b}})
+		},
+	  search() {
+	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: 1 }})
+	  },
+	   handleCurrentChange(page) {
+	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: page }})
 	  },
     fetchData() {
+	  _g.openGlobalLoading()
       this.listLoading = true
-      getjiaocaiList(this.listQuery).then(response => {
-        // this.list = response.data.chapter
-        this.list = response.data.items
-				// var temp = this.list
-				// _(temp).forEach(function(value,key) {
-				// 	// console.log(value.word1);
-				// 		 var s = []
-				// 		_(value.word1).forEach(function(value2,key2) {
-				// 			s.push(value2.sw)
-				// 		});
-				// 		  s=_.join(s, '~')
-				// 		// console.log(typeof temp);
-				// 		// console.log(temp[key].name);
-				// 		// this.list['sss']=s  
-				// 		_.set(temp, key+'.s', s);
-				// 		
-				// });
-				// this.list = temp
-				// console.log(temp);
-				
+	  const params = {
+			  
+	      keywords: this.keywords,
+	      page: this.currentPage,
+	      pagesize: this.pagesize
+	  }
+      getjiaocaiList(params).then(response => {
+		  _g.closeGlobalLoading()
+        this.list = response.items
+		this.dataCount = parseInt(response.dataCount)
         this.listLoading = false
       })
+	  this.listLoading = false
+    },
+	 getCurrentPage() {
+	  let data = this.$route.query
+	  if (data) {
+	    if (data.page) {
+	      this.currentPage = parseInt(data.page)
+	    } else {
+	      this.currentPage = 1
+	    }
+	  }
+	},
+	getKeywords() {
+	  let data = this.$route.query
+	  if (data) {
+	    if (data.keywords) {
+	      this.keywords = data.keywords
+	    } else {
+	      this.keywords = ''
+	    }
+	  }
+	},
+	init() {
+	  this.getKeywords()
+	  this.getCurrentPage()
+	  this.fetchData()
+	},
+	
+  },
+  watch: {
+    '$route' (to, from) {
+      this.init()
     }
   }
 }
