@@ -333,24 +333,32 @@
 			}
 		},
 		created() {
-			// console.log(this.rautoplay);
+			console.log(this.words);
 			let temp = this.words.word1
 			const selfmain = this
 			_(temp).forEach(function(value, key) {
 				// console.log(value);
 				let a = new Audio()
-				a.src = require('@/assets/' + value.sw_sound)
+				// a.src = require('@/assets/' + value.sw_sound)
+				a.src = value.sw_sound
 				let b = new Audio()
-				b.src = require('@/assets/' + value.dw_sound)
+				// b.src = require('@/assets/' + value.dw_sound)
+				b.src = value.sw_sound
 				let c = new Audio()
-				c.src = require('@/assets/' + value.lw_sound)
+				// c.src = require('@/assets/' + value.lw_sound)
+				c.src = value.sw_sound
 				// this.audiolist.push(a)
 				_.set(temp, key + "[sw_audio]", a);
 				_.set(temp, key + "[dw_audio]", b);
 				_.set(temp, key + "[lw_audio]", c);
-				_.set(temp, key + "[local_sw_sound]", require('@/assets/' + value.sw_sound));
-				_.set(temp, key + "[local_dw_sound]", require('@/assets/' + value.dw_sound));
-				_.set(temp, key + "[local_lw_sound]", require('@/assets/' + value.lw_sound));
+				// _.set(temp, key + "[local_sw_sound]", require('@/assets/' + value.sw_sound));
+				// _.set(temp, key + "[local_dw_sound]", require('@/assets/' + value.dw_sound));
+				// _.set(temp, key + "[local_lw_sound]", require('@/assets/' + value.lw_sound));
+				
+				_.set(temp, key + "[local_sw_sound]", value.sw_sound);
+				_.set(temp, key + "[local_dw_sound]", value.dw_sound);
+				_.set(temp, key + "[local_lw_sound]", value.lw_sound);
+				
 
 				// _.set(selfmain.task_result, "[word1]"+key+"[text]", value.sw);
 				// _.set(selfmain.task_result, "[word2]"+key+"[text]", value.sw);
@@ -394,7 +402,7 @@
 		},
 		mounted() {
 			// 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
-			// console.log(this.words);
+			console.log(this.words);
 			this.swiper.wordsdata = this.words
 			// this.audiolist = new Audio() swiper_length
 			// console.log(this.swiper)

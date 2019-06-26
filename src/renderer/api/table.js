@@ -14,3 +14,21 @@ export function getjiaocaiList(params) {
     params
   })
 }
+
+
+export function tasklist(params) {
+  return request({
+    url: '?act=tasklist',
+    method: 'get',
+    params
+  })
+}
+
+
+export function taskone(params) {
+  return request({
+    url: '?act=taskone',
+    method: 'get',
+    params
+  })
+}
