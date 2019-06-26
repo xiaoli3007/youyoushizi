@@ -2,6 +2,9 @@
 	<div></div>
 </template>
 <script>
+	
+	import router from '@/router'
+	
 export default {
   created() {
     if (this.$route.query.name) {

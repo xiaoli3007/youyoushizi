@@ -20,7 +20,7 @@ const commonFn = {
   cloneJson(obj) {
     return JSON.parse(JSON.stringify(obj))
   },
-  toastMsg(type, msg) {
+  toastMsg(type, msg,bus) {
     switch (type) {
       case 'normal':
         bus.$message(msg)

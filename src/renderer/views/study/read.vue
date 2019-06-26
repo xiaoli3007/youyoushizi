@@ -117,7 +117,7 @@
 			this.taskid = this.$route.query.taskid
 			
 			if(this.taskid==0){
-				    
+				     
 					this.rautoplay = this.$route.query.rautoplay==0?false:true
 					this.type = this.$route.query.type==1?1:2
 					this.relation_id = this.$route.query.relation_id
@@ -129,7 +129,7 @@
 								  background: '#000'
 								});
 							
-					taskin(this.$store.state.user.userid, 0, this.type, this.relation_id, this.relation_type, this.rautoplay).then(response => {
+					taskin(this.$store.state.user.userid, 0, this.type, this.relation_id, this.relation_type, this.$route.query.rautoplay).then(response => {
 						loading.close();
 						// console.log(response.word1)
 						// console.log(response.word_data)
@@ -139,6 +139,8 @@
 					})	
 				
 			}else{
+				 
+				 console.log(this.taskid)
 				 
 				 const loading = this.$loading({
 				 			  lock: true,
@@ -150,12 +152,16 @@
 				 taskone({taskid:this.taskid}).then(response => {
 				 	loading.close();
 				 	
-					this.rautoplay = response.taskinfo.autoplay
-					this.type = response.taskinfo.type
+					console.log(response.word_data)
+					
+					this.rautoplay = response.taskinfo.autoplay==0?false:true
+					this.type = parseInt(response.taskinfo.type)
 					this.relation_id = response.taskinfo.relation_id
 					this.relation_type = response.taskinfo.relation_type
 				 	this.words = response.word_data
 				 	this.taskin = true
+					
+					
 				 })	
 				
 				

@@ -6,6 +6,7 @@ Vue.use(Router)
 import Layout from '../views/layout/Layout'
 
 export const constantRouterMap = [
+	{ path: '/refresh',component: require('@/components/refresh').default,name: 'refresh',hidden: true },
   { path: '/read', name: 'Read', component:  require('@/views/study/read').default, hidden: true },
   { path: '/readcheck', name: 'ReadCheck', component:  require('@/views/study/readcheck').default, hidden: true },
   { path: '/login', component:  require('@/views/login/index').default, hidden: true },

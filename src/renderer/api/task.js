@@ -41,3 +41,15 @@ export function taskindata(taskid,taskdata) {
 		// params: { username ,password}
 	})
 }
+
+
+export function task_delete(taskid) {
+	return request({
+		url: '?act=task_delete',
+		method: 'post',
+		data: {
+			taskid
+		},
+		// params: { username ,password}
+	})
+}
