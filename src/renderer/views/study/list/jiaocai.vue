@@ -6,7 +6,8 @@
 	  <el-form :inline="true"  class="demo-form-inline">
 		     <el-form-item>
 		    <el-cascader
-		    v-model="value"
+				placeholder="课程分类"
+		    v-model="linkageid"
 		    :options="options"
 		    :props="props"
 		    @change="handleChange"></el-cascader>
@@ -22,11 +23,11 @@
 	  
 	  
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
-<!--      <el-table-column align="center" label='ID' width="95">
+      <el-table-column align="center" label='类别' >
         <template slot-scope="scope">
-          {{scope.$index}}
+    <el-tag>  {{scope.row.catinfotext}}</el-tag>    
         </template>
-      </el-table-column> -->
+      </el-table-column> 
       <el-table-column label="标题">
         <template slot-scope="scope">
           {{scope.row.title}}
@@ -46,9 +47,9 @@
 				<el-table-column label="操作"   align="center">
 			  <template slot-scope="scope">
 				  
-				  <el-col :span="8"><el-button type="primary" v-on:click="read(0,1,scope.row.id,'lesson',0)">手动听写</el-button></el-col>
-				  <el-col :span="8"><el-button type="success" v-on:click="read(1,1,scope.row.id,'lesson',0)">自动听写</el-button> </el-col>
-				  <el-col :span="8"><el-button type="warning" v-on:click="read(0,2,scope.row.id,'lesson',0)">识字</el-button> </el-col>
+				  <el-col :span="8"><el-button type="primary" size="medium" v-on:click="read(0,1,scope.row.id,'lesson',0)">手动听写</el-button></el-col>
+				  <el-col :span="8"><el-button type="success" size="medium" v-on:click="read(1,1,scope.row.id,'lesson',0)">自动听写</el-button> </el-col>
+				  <el-col :span="8"><el-button type="warning" size="medium" v-on:click="read(0,2,scope.row.id,'lesson',0)">识字</el-button> </el-col>
 			  	
 			  </template>
 			</el-table-column>
@@ -72,13 +73,13 @@
 </template>
 
 <script>
-import { getjiaocaiList } from '@/api/table'
+import { getjiaocaiList ,getjiaocai_cat_List} from '@/api/table'
 import _g from '@/utils/global.js'
 
 export default {
   data() {
     return {
-			props: { expandTrigger: 'hover' },
+			props: { expandTrigger: 'hover' ,emitPath:false ,checkStrictly:false},
       list: null,
       listLoading: true,
 	  loading:false,
@@ -87,7 +88,7 @@ export default {
 	  keywords: '',
 	  multipleSelection: [],
 	  pagesize: 12,
-	    value: [],
+	    linkageid: 0,
         options: [{
           value: 'zhinan',
           label: '指南',
@@ -126,6 +127,12 @@ export default {
   },
   created() {
     this.init()
+		
+		 getjiaocai_cat_List().then(response => {
+				this.options = response.items
+		    // console.log(this.options);
+		 })
+		
   },
   methods: {
 		 handleChange(value) {
@@ -135,25 +142,27 @@ export default {
 			this.$router.replace({ name: 'Read' , query:{  rautoplay: a ,type: b,relation_id: c, relation_type: d, taskid: e}})
 		},
 	  search() {
-	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: 1 }})
+			
+	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: 1 ,linkageid: this.linkageid}})
 	  },
 	   handleCurrentChange(page) {
-	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: page }})
+	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: page ,linkageid: this.linkageid}})
 	  },
     fetchData() {
 	    _g.openGlobalLoading()
-      this.listLoading = true
+      // this.listLoading = true
 			const params = {
 					
 					keywords: this.keywords,
 					page: this.currentPage,
-					pagesize: this.pagesize
+					pagesize: this.pagesize,
+					linkageid: this.linkageid
 			}
       getjiaocaiList(params).then(response => {
 		     _g.closeGlobalLoading()
         this.list = response.items
 		    this.dataCount = parseInt(response.dataCount)
-        this.listLoading = false
+        // this.listLoading = false
 					
 					var temp = this.list
 					_(temp).forEach(function(value,key) {

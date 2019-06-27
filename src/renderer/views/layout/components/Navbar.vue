@@ -2,10 +2,21 @@
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
     <breadcrumb></breadcrumb>
-		<div class="right-menu">
-		<screenfull class="right-menu-item hover-effect"/>
 		
+				
+		<div style="    display: inline-block;
+    font-size: 14px;     float: left;
+    line-height: 50px;
+    margin-left: 10px; margin-right: 20px;">您好! {{name}}</div>
+		
+		<div class="right-menu">
+		
+		<screenfull class="right-menu-item hover-effect"/>
+	
     <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
+			
+		
+	
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
         <i class="el-icon-caret-bottom"></i>
@@ -40,7 +51,8 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
+      'avatar',
+			'name'
     ])
   },
   methods: {

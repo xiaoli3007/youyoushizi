@@ -59,9 +59,9 @@ const user = {
           } else {
             reject('getInfo: roles must be a non-null array !')
           }
-          // commit('SET_NAME', data.username)
           commit('SET_TOKEN', data.token)
           commit('SET_AVATAR', data.avatar)
+					commit('SET_NAME', data.username)
           resolve(response)
         }).catch(error => {
           reject(error)

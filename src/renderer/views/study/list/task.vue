@@ -42,7 +42,9 @@
 			
       <el-table-column label="任务类别"  align="center">
         <template slot-scope="scope">
-          {{scope.row.type_text}}
+          
+					
+					<el-tag :type="scope.row.type_text | statusFilter">{{scope.row.type_text}}</el-tag>
         </template>
       </el-table-column> 
 			
@@ -117,9 +119,8 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
+        '听写': 'success',
+        '识字': 'warning',
       }
       return statusMap[status]
     }

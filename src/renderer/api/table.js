@@ -15,6 +15,14 @@ export function getjiaocaiList(params) {
   })
 }
 
+export function getjiaocai_cat_List(params) {
+  return request({
+    url: '?act=getjiaocai_cat_List',
+    method: 'get',
+    params
+  })
+}
+
 
 export function tasklist(params) {
   return request({
