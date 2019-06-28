@@ -173,10 +173,10 @@
 			words: {
 				type: Object
 			},
-			rautoplay: {
-				type: Boolean,
-				default: false
-			},
+			// rautoplay: {
+			// 	type: Boolean,
+			// 	default: false
+			// },
 			type: {
 				type: Number,
 				default: 1
@@ -189,6 +189,7 @@
 				// wavv,
 				// data_rautoplay: this.rautoplay,
 				// radioaaa: '',
+				rautoplay:false,
 				TabsValue: [],
 				TabsValue2: '0',
 				RadioclassArr: [{
@@ -240,6 +241,10 @@
 						onlyInViewport: true,
 					},
 					on: {
+						autoplayStart:function(){
+						 
+						 console.log('开启自动切换')
+					  },
 						init: function() {
 							//Swiper初始化了
 							// console.log(self.rautoplay);	
@@ -333,7 +338,7 @@
 			}
 		},
 		created() {
-			console.log(this.words);
+			// console.log(this.words);
 			let temp = this.words.word1
 			const selfmain = this
 			_(temp).forEach(function(value, key) {
@@ -413,12 +418,13 @@
 		methods: {
 			gotoback() {
 				this.$router.replace({
-					name: 'Jiaocai'
+					name: 'Task'
 				})
 			},
 			gotojc() {
 				this.$router.replace({
-					name: 'ReadCheck'
+					name: 'ReadCheck',
+					query: { words: this.words}
 				})
 			},
 			swiper_slideTo(data) {
@@ -446,13 +452,26 @@
 				}
 			},
 			help_sy() {
-				console.log(typeof this.task_result);
-				
-				var str = JSON.stringify(this.task_result);
-				
-				taskindata(15,str).then(response => {
-						console.log(response.data)
-				})
+				console.log(this.rautoplay);
+				 this.rautoplay = !this.rautoplay
+				 
+				 console.log(this.rautoplay);
+				 
+				 if(this.rautoplay){
+					 this.swiper.autoplay.delay = 50000
+					this.swiper.autoplay.start() 
+				 }else{
+					this.swiper.autoplay.stop()  
+				 }
+				 
+				 
+				// console.log(typeof this.task_result);
+				// 
+				// var str = JSON.stringify(this.task_result);
+				// 
+				// taskindata(15,str).then(response => {
+				// 		console.log(response.data)
+				// })
 				
 				
 				// this.$set(this.TabsValue,0,'2')
@@ -470,8 +489,8 @@
 				this.$set(this.task_result.word1, this.swiper.realIndex, data)
 				
 				//发送请求记录当前字的 学习状态 计算难度因子
-				taskinwcell(15,12,11,data).then(response => {
-						console.log(response.data)
+				taskinwcell(this.words.taskid,this.$store.state.user.userid,this.words.word1[this.swiper.realIndex].wcellid,data).then(response => {
+						console.log(response)
 				})
 				
 				this.swiper.slideTo(this.swiper.realIndex + 1 < this.swiper.slides.length ? this.swiper.realIndex + 1 : this.swiper

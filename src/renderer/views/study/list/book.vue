@@ -36,9 +36,9 @@
 				<el-table-column label="操作"   align="center">
 			  <template slot-scope="scope">
 				  
-				  <el-col :span="8"><el-button type="primary" size="medium" v-on:click="read(0,1,scope.row.id,'lesson',0)">手动听写</el-button></el-col>
-				  <el-col :span="8"><el-button type="success" size="medium" v-on:click="read(1,1,scope.row.id,'lesson',0)">自动听写</el-button> </el-col>
-				  <el-col :span="8"><el-button type="warning" size="medium" v-on:click="read(0,2,scope.row.id,'lesson',0)">识字</el-button> </el-col>
+				  <el-col :span="12"><el-button type="success" size="medium" v-on:click="read(1,scope.row.id,'lesson',0)">听写</el-button></el-col>
+				  <!-- <el-col :span="8"><el-button type="success" size="medium" v-on:click="read(1,1,scope.row.id,'lesson',0)">自动听写</el-button> </el-col> -->
+				  <el-col :span="12"><el-button type="warning" size="medium" v-on:click="read(2,scope.row.id,'lesson',0)">识字</el-button> </el-col>
 			  	
 			  </template>
 			</el-table-column>
@@ -95,8 +95,8 @@ export default {
   },
   methods: {
 		
-		 read(a,b,c,d,e) {
-			this.$router.replace({ name: 'Read' , query:{  rautoplay: a ,type: b,relation_id: c, relation_type: d, taskid: e}})
+		 read(b,c,d,e) {
+			this.$router.replace({ name: 'Read' , query:{ type: b,relation_id: c, relation_type: d, taskid: e}})
 		},
 	  search() {
 			
@@ -134,7 +134,7 @@ export default {
 							_.set(temp, key+'.s', s);
 					});
 					this.list = temp
-					console.log(temp);
+					// console.log(temp);
       })
 	    this.listLoading = false
     },

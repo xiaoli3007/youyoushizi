@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function taskin(userid, status, type, relation_id, relation_type,autoplay) {
+export function taskin(userid, status, type, relation_id, relation_type) {
 	return request({
 		url: '?act=taskin',
 		method: 'post',
@@ -9,14 +9,13 @@ export function taskin(userid, status, type, relation_id, relation_type,autoplay
 			status,
 			type,
 			relation_id,
-			relation_type,
-			autoplay
+			relation_type
 		},
 		// params: { username ,password}
 	})
 }
 
-export function taskinwcell(taskid, userid, wcellid, status) {
+export function taskinwcell(taskid, userid, wcellid, know) {
 	return request({
 		url: '?act=taskinwcell',
 		method: 'post',
@@ -24,7 +23,7 @@ export function taskinwcell(taskid, userid, wcellid, status) {
 			taskid,
 			userid,
 			wcellid,
-			status
+			know
 		},
 		// params: { username ,password}
 	})
