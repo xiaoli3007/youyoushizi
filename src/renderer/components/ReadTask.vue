@@ -189,7 +189,7 @@
 				// wavv,
 				// data_rautoplay: this.rautoplay,
 				// radioaaa: '',
-				rautoplay:false,
+				rautoplay:true,
 				TabsValue: [],
 				TabsValue2: '0',
 				RadioclassArr: [{
@@ -231,11 +231,17 @@
 						type: 'progressbar'
 					},
 					simulateTouch: false, //禁止鼠标模拟
-					autoplay: self.rautoplay ? {
+					// autoplay: self.rautoplay ? {
+					// 	delay: 5000,
+					// 	stopOnLastSlide: true,
+					// 	disableOnInteraction: true,
+					// 	waitForTransition: true,
+					// } : false,
+					autoplay:  {
 						delay: 5000,
 						stopOnLastSlide: true,
 						disableOnInteraction: true,
-					} : false,
+					} ,
 					keyboard: { //键盘打开
 						enabled: true,
 						onlyInViewport: true,
@@ -407,13 +413,16 @@
 		},
 		mounted() {
 			// 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
-			console.log(this.words);
+			console.log(this.rautoplay);
 			this.swiper.wordsdata = this.words
 			// this.audiolist = new Audio() swiper_length
 			// console.log(this.swiper)
 			this.swiper_index = this.swiper.realIndex + 1
 			this.swiper_length = this.swiper.slides.length
 			// this.swiper.audiolist = temp
+			
+			this.swiper.autoplay.stop()  
+			this.rautoplay = false 
 		},
 		methods: {
 			gotoback() {
@@ -452,13 +461,12 @@
 				}
 			},
 			help_sy() {
-				console.log(this.rautoplay);
 				 this.rautoplay = !this.rautoplay
 				 
-				 console.log(this.rautoplay);
 				 
 				 if(this.rautoplay){
 					 this.swiper.autoplay.delay = 50000
+					 console.log(this.swiper.autoplay);
 					this.swiper.autoplay.start() 
 				 }else{
 					this.swiper.autoplay.stop()  

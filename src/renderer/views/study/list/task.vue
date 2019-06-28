@@ -184,7 +184,8 @@ export default {
 			  booktype: 910,
 	      keywords: this.keywords,
 	      page: this.currentPage,
-	      pagesize: this.pagesize
+	      pagesize: this.pagesize,
+				userid:this.$store.state.user.userid
 	  }
       tasklist(params).then(response => {
 					_g.closeGlobalLoading()
