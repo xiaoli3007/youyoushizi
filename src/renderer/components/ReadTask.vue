@@ -9,6 +9,13 @@
 					</el-tag>
 					<!-- <el-tag type="info"> <mytime :autoStart="false" :sendSync="false" ref="mytimea2"></mytime> </el-tag> -->
 					<el-tag type="info" @click.native="help_sy"> 调试按钮</el-tag>
+					<el-tag type="info" v-if="type===1" >
+						<el-switch
+						  @change="s_autoplay"
+						  v-model="rautoplay"
+						  active-text="自动"
+						  inactive-text="手动">
+						</el-switch></el-tag>
 					<el-tag type="success"> {{swiper_index}}/{{swiper_length}} </el-tag>
 					<el-tag type="info" class="backbutton" @click.native="dialogTableVisible = true">使用帮助</el-tag>
 					<el-tag type="info">
@@ -249,7 +256,7 @@
 					on: {
 						autoplayStart:function(){
 						 
-						 console.log('开启自动切换')
+						 // console.log('开启自动切换')
 					  },
 						init: function() {
 							//Swiper初始化了
@@ -413,7 +420,7 @@
 		},
 		mounted() {
 			// 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
-			console.log(this.rautoplay);
+			// console.log(this.rautoplay);
 			this.swiper.wordsdata = this.words
 			// this.audiolist = new Audio() swiper_length
 			// console.log(this.swiper)
@@ -460,19 +467,15 @@
 					this.$set(this.TabsValue, this.swiper.realIndex, index)
 				}
 			},
-			help_sy() {
-				 this.rautoplay = !this.rautoplay
-				 
-				 
+			s_autoplay(){
+				 // console.log(this.rautoplay);
 				 if(this.rautoplay){
-					 this.swiper.autoplay.delay = 50000
-					 console.log(this.swiper.autoplay);
-					this.swiper.autoplay.start() 
+				 	this.swiper.autoplay.start() 
 				 }else{
-					this.swiper.autoplay.stop()  
+				 	this.swiper.autoplay.stop()  
 				 }
-				 
-				 
+			},
+			help_sy() {
 				// console.log(typeof this.task_result);
 				// 
 				// var str = JSON.stringify(this.task_result);
@@ -480,13 +483,6 @@
 				// taskindata(15,str).then(response => {
 				// 		console.log(response.data)
 				// })
-				
-				
-				// this.$set(this.TabsValue,0,'2')
-				// this.TabsValue[0]='0'
-				// console.log(this.$refs.mytimea.all_second)
-				// console.log(this.$refs.elradio[this.swiper.realIndex].focus);
-				// this.swiper.slideTo(this.swiper.realIndex + 1, 500, false)
 			},
 			getDataFromChild(data) {
 				this.xx_time = data

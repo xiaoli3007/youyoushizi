@@ -45,6 +45,7 @@ export default {
             animate:false,
             timer:null,
             duration:null,
+            ended:false,
 			// playnowdata:this.playnow
         }
     },
@@ -70,16 +71,19 @@ export default {
         this.audio.onended=()=>{
             this.animate=false
             this.timer&&clearInterval( this.timer)
+			this.ended = true 
         }
+		// this.ended = this.audio.ended 
+		// console.log(this.ended)
         window.audioList.push(this.audio)//所有实例加入全局变量
 		if(this.autoplay){
 			this.audio.play()
 		}
     },
 	watch:{
-     playnow(newValue, oldValue) {
+     ended(newValue, oldValue) {
         console.log(newValue)
-    }
+     }
     },
     methods:{
         play(){
@@ -93,7 +97,7 @@ export default {
             }else{
                 this.audio.pause()
             }
-			
+			// console.log(this.ended)
 			this.$emit("passtoparenttabvlue", this.tabvalue)
         },
         format(s){
