@@ -55,7 +55,7 @@
 				<el-col :span="20" :offset="2" justify="center" align="center">
 					<el-button type="primary" @click="gotoback()">检查完成</el-button>
 					
-					<el-button type="primary" @click="cs()">cs</el-button>
+					<!-- <el-button type="primary" @click="cs()">cs</el-button> -->
 					
 				</el-col>
 			</el-row>
@@ -68,7 +68,7 @@
 <script>
 
 import { taskindata  } from '@/api/task'
-	
+import _g from '@/utils/global.js'	
 	// import ReadTask from '@/components/ReadTask'
 import Screenfull from '@/components/Screenfull'
 	export default {
@@ -82,6 +82,9 @@ import Screenfull from '@/components/Screenfull'
 		filters: {
 
 		},
+		computed: {
+		　　 
+		},
 		created() {
 			// console.log(this.$route.query.words);
 			
@@ -89,50 +92,70 @@ import Screenfull from '@/components/Screenfull'
 			let temp = this.words.word1
 			const selfmain = this
 			_(temp).forEach(function(value, key) {
-				
-				
 				// _.set(selfmain.task_result, "[word1]" + key+"[status]", '');
-			
 				_.set(selfmain.task_result, key+"[wcellid]", value.wcellid);
 				 
 				_.set(selfmain.task_result, key+"[status]", '');
 				// _.set(selfmain.words.word1, key+"[check]", '');
-				
 				//selfmain.$set(selfmain.task_result, "status", 0);
-				
 			});
 			
 		 
 			// console.log(11111111)
-			console.log(this.task_result)
+			// console.log(this.task_result)
+			this.task_result = Object.assign({},this.task_result)
+
+			// console.log(typeof this.task_result );
 		},
 		methods: {
 			know( index, knowtype) {
 			
-				console.log("字type" + knowtype);
-				console.log("字22222type" + this.task_result[index].status);
+				//console.log("字type" + knowtype);
+				//console.log("字22222type" + this.task_result[index].status);
 				 
 				// this.$set(this.task_result[index], "status", knowtype);
 				
 				  
-				this.task_result = Object.assign({},this.task_result)
-				console.log(this.task_result)
+				//this.task_result = Object.assign({},this.task_result)
+				//console.log(this.task_result)
 			},
 			gotoback() {
-				this.$router.replace({
-					name: 'Task'
+				
+				var str = JSON.stringify(this.task_result);
+				
+				 const loading = this.$loading({
+							  lock: true,
+							  text: '记录数据中， 请稍等...',
+							  spinner: 'el-icon-loading',
+							  background: 'rgba(0, 0, 0, 0.7)'
+							});
+				
+				taskindata(this.$store.state.user.userid,this.words.taskid,str).then(response => {
+						// console.log(response)
+						
+						loading.close();
+						
+						if(response.code==20000){
+							
+							_g.toastMsg('success', '记录成功！',this)
+								
+							this.$router.replace({
+								name: 'Task'
+							})
+						}
 				})
+		 		
 			},
 			cs() {
 				//console.log(this.words)
 				console.log(this.words.taskid)
 				console.log(this.task_result)
 				
-				var str = JSON.stringify(this.task_result);
-				
-				taskindata(this.words.taskid,str).then(response => {
-						// console.log(response)
-				})
+				// var str = JSON.stringify(this.task_result);
+				// 
+				// taskindata(this.$store.state.user.userid,this.words.taskid,str).then(response => {
+				// 		// console.log(response)
+				// })
 				
 				
 			}

@@ -29,11 +29,12 @@ export function taskinwcell(taskid, userid, wcellid, status) {
 	})
 }
 
-export function taskindata(taskid,taskdata) {
+export function taskindata(userid,taskid,taskdata) {
 	return request({
 		url: '?act=taskindata',
 		method: 'post',
 		data: {
+			userid,
 			taskid,
 			taskdata
 		},

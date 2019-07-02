@@ -12,11 +12,11 @@
 	  
 	   
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
-     <el-table-column align="center" label='ID' width="95">
+    <!-- <el-table-column align="center" label='ID' width="95">
         <template slot-scope="scope">
           {{scope.row.id}}
         </template>
-      </el-table-column> 
+      </el-table-column> -->
       <el-table-column label="标题">
         <template slot-scope="scope">
           {{scope.row.title}}

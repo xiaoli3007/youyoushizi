@@ -23,11 +23,11 @@
 	  
 	  
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
-      <el-table-column align="center" label='ID' >
+      <!-- <el-table-column align="center" label='ID' >
         <template slot-scope="scope">
           {{scope.row.id}}
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="任务标题">
         <template slot-scope="scope">
           {{scope.row.name}}
@@ -44,13 +44,15 @@
         <template slot-scope="scope">
           
 					
-					<el-tag :type="scope.row.type_text | statusFilter">{{scope.row.type_text}}</el-tag>
+					<el-tag :type="scope.row.type_text | statusFilter" effect="plain">{{scope.row.type_text}}</el-tag>
         </template>
       </el-table-column> 
 			
 			<el-table-column label="任务状态"  align="center">
 			  <template slot-scope="scope">
-			    {{scope.row.status_text}}
+					
+						<el-tag :type="scope.row.status_text | taskstatusFilter" effect="dark">{{scope.row.status_text}}</el-tag>
+						
 			  </template>
 			</el-table-column> 
 			
@@ -124,6 +126,16 @@ export default {
       }
       return statusMap[status]
     }
+		,taskstatusFilter(status) {
+      const statusMap = {
+        '未开始': 'info',
+        '进行中': '',
+        '纠错': 'danger',
+        '全部完成': 'success',
+      }
+      return statusMap[status]
+    }
+		
   },
   created() {
     this.init()
