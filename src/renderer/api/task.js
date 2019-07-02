@@ -15,7 +15,7 @@ export function taskin(userid, status, type, relation_id, relation_type) {
 	})
 }
 
-export function taskinwcell(taskid, userid, wcellid, know) {
+export function taskinwcell(taskid, userid, wcellid, status) {
 	return request({
 		url: '?act=taskinwcell',
 		method: 'post',
@@ -23,7 +23,7 @@ export function taskinwcell(taskid, userid, wcellid, know) {
 			taskid,
 			userid,
 			wcellid,
-			know
+			status
 		},
 		// params: { username ,password}
 	})

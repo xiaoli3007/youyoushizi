@@ -32,8 +32,8 @@
 
 						<el-row>
 							<el-col :span="20" :offset="2" justify="center" align="center">
-								<el-radio v-model="singe.check" label="1" border>正确</el-radio>
-								<el-radio v-model="singe.check" label="2" border>错误</el-radio>
+								<el-radio v-model="task_result[index].status" label="1" border @change="know(index,'1')">正确</el-radio>
+								<el-radio v-model="task_result[index].status" label="2" border @change="know(index,'2')">错误</el-radio>
 							</el-col>
 						</el-row>
 
@@ -55,7 +55,7 @@
 				<el-col :span="20" :offset="2" justify="center" align="center">
 					<el-button type="primary" @click="gotoback()">检查完成</el-button>
 					
-					<!-- <el-button type="primary" @click="cs()">cs</el-button> -->
+					<el-button type="primary" @click="cs()">cs</el-button>
 					
 				</el-col>
 			</el-row>
@@ -66,12 +66,16 @@
 </template>
 
 <script>
+
+import { taskindata  } from '@/api/task'
+	
 	// import ReadTask from '@/components/ReadTask'
 import Screenfull from '@/components/Screenfull'
 	export default {
 		data() {
 			return {
 				words: {},
+				task_result: [],
 			}
 		},
 		components: {Screenfull},
@@ -79,36 +83,58 @@ import Screenfull from '@/components/Screenfull'
 
 		},
 		created() {
-			console.log(this.$route.query.words);
+			// console.log(this.$route.query.words);
 			
 			this.words = this.$route.query.words
 			let temp = this.words.word1
 			const selfmain = this
 			_(temp).forEach(function(value, key) {
 				
-				// _.set(temp, key+"[local_sw_sound]", require('@/assets/' + value.sw_sound));
-				// _.set(temp, key+"[local_dw_sound]", require('@/assets/' + value.dw_sound));
-				// _.set(temp, key+"[local_lw_sound]", require('@/assets/' + value.lw_sound));
-				// 
-				// _.set(selfmain.task_result, "[word1]"+key+"[text]", value.sw);
-				// _.set(selfmain.task_result, "[word2]"+key+"[text]", value.sw);
 				
-				// _.set(selfmain.task_result, "[word1]"+key, '');
-				// _.set(selfmain.task_result, "[fx_time]"+key, '');
-				// _.set(selfmain.task_result, "[word2]"+key, '');
+				// _.set(selfmain.task_result, "[word1]" + key+"[status]", '');
+			
+				_.set(selfmain.task_result, key+"[wcellid]", value.wcellid);
+				 
+				_.set(selfmain.task_result, key+"[status]", '');
+				// _.set(selfmain.words.word1, key+"[check]", '');
+				
+				//selfmain.$set(selfmain.task_result, "status", 0);
 				
 			});
+			
+		 
 			// console.log(11111111)
-			// console.log(this.words.word1)
+			console.log(this.task_result)
 		},
 		methods: {
+			know( index, knowtype) {
+			
+				console.log("字type" + knowtype);
+				console.log("字22222type" + this.task_result[index].status);
+				 
+				// this.$set(this.task_result[index], "status", knowtype);
+				
+				  
+				this.task_result = Object.assign({},this.task_result)
+				console.log(this.task_result)
+			},
 			gotoback() {
 				this.$router.replace({
 					name: 'Task'
 				})
 			},
 			cs() {
-				console.log(this.words.word1)
+				//console.log(this.words)
+				console.log(this.words.taskid)
+				console.log(this.task_result)
+				
+				var str = JSON.stringify(this.task_result);
+				
+				taskindata(this.words.taskid,str).then(response => {
+						// console.log(response)
+				})
+				
+				
 			}
 		}
 	}

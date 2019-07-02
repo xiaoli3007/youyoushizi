@@ -494,7 +494,7 @@
 				
 				//发送请求记录当前字的 学习状态 计算难度因子
 				taskinwcell(this.words.taskid,this.$store.state.user.userid,this.words.word1[this.swiper.realIndex].wcellid,data).then(response => {
-						console.log(response)
+						// console.log(response)
 				})
 				
 				this.swiper.slideTo(this.swiper.realIndex + 1 < this.swiper.slides.length ? this.swiper.realIndex + 1 : this.swiper

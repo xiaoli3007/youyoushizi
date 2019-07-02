@@ -22,6 +22,7 @@ Vue.use(VueAwesomeSwiper, /* { default global options } */)
 import audio from './lib/audio'
 Vue.use(audio)
 
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 

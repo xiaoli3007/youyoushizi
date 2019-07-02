@@ -36,9 +36,9 @@
 				<el-table-column label="操作"   align="center">
 			  <template slot-scope="scope">
 				  
-				  <el-col :span="12"><el-button type="success" size="medium" v-on:click="read(1,scope.row.id,'lesson',0)">听写</el-button></el-col>
+				  <!-- <el-col :span="12"><el-button type="success" size="medium" v-on:click="read(1,scope.row.id,'ebook',0)">听写</el-button></el-col> -->
 				  <!-- <el-col :span="8"><el-button type="success" size="medium" v-on:click="read(1,1,scope.row.id,'lesson',0)">自动听写</el-button> </el-col> -->
-				  <el-col :span="12"><el-button type="warning" size="medium" v-on:click="read(2,scope.row.id,'lesson',0)">识字</el-button> </el-col>
+				  <el-col :span="24"><el-button type="warning" size="medium" v-on:click="read(2,scope.row.id,'ebook',0)">识字</el-button> </el-col>
 			  	
 			  </template>
 			</el-table-column>
