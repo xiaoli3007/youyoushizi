@@ -63,17 +63,31 @@ export const constantRouterMap = [
 //       }
     ]
   },
-  {
+  // {
+  //   path: '/serve',
+  //   component: Layout,
+		// redirect: '/serve/help',
+		// name: 'Serve',
+  //   children: [
+  //     {
+  //       path: 'help',
+  //       name: 'Help',
+  //       component:  require('@/views/help/help').default,
+  //       meta: { title: '帮助', icon: 'help' }
+  //     }
+  //   ]
+  // }, 
+	{
     path: '/serve',
     component: Layout,
-		redirect: '/serve/help',
-		name: 'Serve',
+		redirect: '/serve/setting',
+		name: 'Setting',
     children: [
       {
-        path: 'help',
-        name: 'Help',
-        component:  require('@/views/help/help').default,
-        meta: { title: '帮助', icon: 'help' }
+        path: 'setting',
+        name: 'Setting',
+        component:  require('@/views/help/setting').default,
+        meta: { title: '设置', icon: 'setting' }
       }
     ]
   }, {
