@@ -172,7 +172,7 @@
 	import mytime from '@/components/mytime'
 	import myradio from '@/components/myradio'
 	
-	import { taskin , taskindata ,taskinwcell } from '@/api/task'
+	import { taskin , taskindata ,taskinwcell ,taskinwcell_super} from '@/api/task'
 	
 	export default {
 		name: 'read-task',
@@ -420,7 +420,33 @@
 		},
 		mounted() {
 			// 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
-			// console.log(this.rautoplay);
+			// console.log(this.words);
+			
+			if(this.words.survey){
+				// console.log(this.words.survey.progress_wcellid);
+				
+				let temp_progress_wcellid = this.words.survey.progress_wcellid ;
+				
+				let temp_goto_index = 0 ;
+				//找到上次进行到哪个key
+				if(temp_progress_wcellid){
+					this.words.word1.forEach(function(value,i){
+					　　//console.log('forEach遍历:'+i+'--'+value.wcellid);
+						if(value.wcellid===temp_progress_wcellid){
+						 	 temp_goto_index = i + 1;
+							 // console.log(temp_goto_index);
+						 }
+						// console.log(this.words.survey.progress_wcellid);
+						
+					})
+				}
+				// console.log(temp_goto_index);
+				
+				if(temp_goto_index>0){
+					this.goto_index(temp_goto_index)
+				}
+			}
+			
 			this.swiper.wordsdata = this.words
 			// this.audiolist = new Audio() swiper_length
 			// console.log(this.swiper)
@@ -432,6 +458,26 @@
 			this.rautoplay = false 
 		},
 		methods: {
+			 goto_index(temp_goto_index) {
+				this.$confirm('是否继续上次任务进度?', '提示', {
+				  confirmButtonText: '确定',
+				  cancelButtonText: '取消',
+				  type: 'warning'
+				}).then(() => {
+					
+					this.swiper.slideTo(temp_goto_index, 1000, false)
+				 //  this.$message({
+					// type: 'success',
+					// message: '成功!'
+				 //  });
+				}).catch(() => {
+				 //  this.$message({
+					// type: 'info',
+					// message: '已取消'
+				 //  });          
+				});
+			  }
+			,
 			gotoback() {
 				this.$router.replace({
 					name: 'Task'
@@ -489,7 +535,7 @@
 				// console.log("getDataFromChild"+this.xx_time);
 			},
 			passtoparentradio(data) {
-				console.log("passtoparentradio---" + data);
+				// console.log("passtoparentradio---" + data);
 				this.$set(this.task_result.word1, this.swiper.realIndex, data)
 				
 				//发送请求记录当前字的 学习状态 计算难度因子
@@ -502,6 +548,11 @@
 			},
 			passtoparentradio2(data) {
 				console.log("passtoparentradio2---" + data);
+				
+				taskinwcell_super(this.words.taskid,this.$store.state.user.userid,this.words.word1[this.swiper.realIndex].wcellid,data).then(response => {
+						// console.log(response)
+				})
+				
 				this.$set(this.task_result.fx_time, this.swiper.realIndex, data)
 			}
 
