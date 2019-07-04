@@ -4,6 +4,9 @@ const TokenKey = 'Admin-Token'
 const NameKey = 'Admin-Name'
 const UseridKey = 'Admin-Userid'
 
+const voicetypeKey = 'voicetype-c'
+const autoplay_timeKey = 'autoplay_time-c'
+
 export function getToken() {
   return Cookies.get(TokenKey)
 }
@@ -38,4 +41,22 @@ export function setUserid(Userid) {
 
 export function removeUserid() {
   return Cookies.remove(UseridKey)
+}
+
+
+
+export function getVoicetype() {
+  return Cookies.get(voicetypeKey)
+}
+
+export function setVoicetype(name) {
+  return Cookies.set(voicetypeKey, name)
+}
+
+export function getAutoplay_time() {
+  return Cookies.get(autoplay_timeKey)
+}
+
+export function setAutoplay_time(name) {
+  return Cookies.set(autoplay_timeKey, name)
 }

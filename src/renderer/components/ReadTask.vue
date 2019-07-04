@@ -162,6 +162,9 @@
 
 <script>
 	// import wavv from '@/assets/voice/26/73/2673734f025fa484228e34212569c44a.wav'
+	
+	import { getAutoplay_time} from '@/utils/auth'
+		
 	const remote = require('electron').remote
 	import {
 		swiper,
@@ -245,7 +248,7 @@
 					// 	waitForTransition: true,
 					// } : false,
 					autoplay:  {
-						delay: 5000,
+						delay: getAutoplay_time()?parseInt(getAutoplay_time())*1000:5000,
 						stopOnLastSlide: true,
 						disableOnInteraction: true,
 					} ,
