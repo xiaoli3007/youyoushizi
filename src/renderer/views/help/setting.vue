@@ -1,9 +1,16 @@
 <template>
   <div class="app-container">
 		
+		
 <el-form ref="form" :model="form" label-width="150px">
   
 
+  <el-form-item label="调试窗口">
+   <el-button type="primary" @click="openDev">打开 / 关闭 调试窗口</el-button>
+   
+  </el-form-item>
+	
+	
   <el-form-item label="播放声音">
     <el-radio-group v-model="form.voicetype">
       <el-radio :label="2">女声</el-radio>
@@ -24,6 +31,8 @@
 </template>
 
 <script>
+	const { shell, getCurrentWebContents } = require('electron').remote
+	
 	import { setVoicetype, setAutoplay_time ,getVoicetype ,getAutoplay_time} from '@/utils/auth'
 		import _g from '@/utils/global.js'	
 		
@@ -42,6 +51,9 @@
 			
 		},
     methods: {
+			openDev () {
+			  getCurrentWebContents().toggleDevTools()
+			},
       onSubmit() {
 				const loading = this.$loading({
 														  lock: true,

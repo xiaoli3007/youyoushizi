@@ -1,5 +1,8 @@
 import Cookies from 'js-cookie'
 
+import Lockr from 'lockr'
+
+
 const TokenKey = 'Admin-Token'
 const NameKey = 'Admin-Name'
 const UseridKey = 'Admin-Userid'
@@ -46,17 +49,17 @@ export function removeUserid() {
 
 
 export function getVoicetype() {
-  return Cookies.get(voicetypeKey)
+  return Lockr.get(voicetypeKey)
 }
 
 export function setVoicetype(name) {
-  return Cookies.set(voicetypeKey, name)
+  return Lockr.set(voicetypeKey, name)
 }
 
 export function getAutoplay_time() {
-  return Cookies.get(autoplay_timeKey)
+  return Lockr.get(autoplay_timeKey)
 }
 
 export function setAutoplay_time(name) {
-  return Cookies.set(autoplay_timeKey, name)
+  return Lockr.set(autoplay_timeKey, name)
 }
