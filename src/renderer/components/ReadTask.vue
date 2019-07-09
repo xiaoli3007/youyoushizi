@@ -553,7 +553,7 @@
 				})
 				
 				this.swiper.slideTo(this.swiper.realIndex + 1 < this.swiper.slides.length ? this.swiper.realIndex + 1 : this.swiper
-					.slides.length, 500, false)
+					.slides.length, 1000, false)
 			},
 			passtoparentradio2(data) {
 				console.log("passtoparentradio2---" + data);

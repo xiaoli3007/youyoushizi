@@ -35,6 +35,7 @@
 	
 	import { setVoicetype, setAutoplay_time ,getVoicetype ,getAutoplay_time} from '@/utils/auth'
 		import _g from '@/utils/global.js'	
+		import { setting  } from '@/api/task'
 		
   export default {
     data() {
@@ -65,8 +66,14 @@
         // console.log(this.form);
 				setVoicetype(this.form.voicetype)
 				setAutoplay_time(this.form.autoplay_time)
-				loading.close();
-				_g.toastMsg('success', '保存成功！',this)
+				
+				setting(this.$store.state.user.userid,  this.form.voicetype, this.form.autoplay_time).then(response => {
+					loading.close();
+					console.log(response)
+					_g.toastMsg('success', '保存成功！',this)
+				})	
+				// loading.close();
+				
 				
       }
     }

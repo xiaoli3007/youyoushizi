@@ -36,7 +36,7 @@ service.interceptors.response.use(
     if (res.code !== 20000) {
       Message({
         message: res.message,
-        type: 'error',
+        type: 'warning',
         duration: 5 * 1000
       })
 

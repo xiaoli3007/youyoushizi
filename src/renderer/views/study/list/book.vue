@@ -143,7 +143,7 @@ export default {
 							_.set(temp, key+'.s', s);
 					});
 					this.list = temp
-					console.log(this.list);
+					// console.log(this.list);
       })
 	    this.listLoading = false
     },

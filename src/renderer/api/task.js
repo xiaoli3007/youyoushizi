@@ -68,3 +68,16 @@ export function task_delete(taskid) {
 		// params: { username ,password}
 	})
 }
+
+export function setting(userid,voicetype,autoplay_time) {
+	return request({
+		url: '?act=setting',
+		method: 'post',
+		data: {
+			userid,
+			voicetype,
+			autoplay_time
+		},
+		// params: { username ,password}
+	})
+}
