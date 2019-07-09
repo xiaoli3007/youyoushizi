@@ -59,7 +59,10 @@
 				<el-table-column label="操作"  align="center">
 			  <template slot-scope="scope">
 				  
-				  <el-col :span="12"><el-button  size="small" type="primary" v-on:click="read(scope.row.id)" plain> 开始任务</el-button></el-col>
+				  <el-col :span="12">
+						<el-button  size="small" type="primary" v-on:click="read(scope.row.id)" plain>
+						{{scope.row.status_text | taskstatusFilter2}}</el-button>
+						</el-col>
 				 
 				  <el-col :span="12">
 						
@@ -125,8 +128,8 @@ export default {
         '识字': 'warning',
       }
       return statusMap[status]
-    }
-		,taskstatusFilter(status) {
+    },
+		taskstatusFilter(status) {
       const statusMap = {
         '未开始': 'info',
         '进行中': '',
@@ -134,7 +137,16 @@ export default {
         '全部完成': 'success',
       }
       return statusMap[status]
-    }
+    },
+		taskstatusFilter2(status) {
+		  const statusMap = {
+		    '未开始': '开始',
+		    '进行中': '继续',
+		    '纠错': '纠错',
+		    '全部完成': '再来',
+		  }
+		  return statusMap[status]
+		}
 		
   },
   created() {

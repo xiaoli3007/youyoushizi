@@ -38,7 +38,12 @@
 				  
 				  <!-- <el-col :span="12"><el-button type="success" size="medium" v-on:click="read(1,scope.row.id,'ebook',0)">听写</el-button></el-col> -->
 				  <!-- <el-col :span="8"><el-button type="success" size="medium" v-on:click="read(1,1,scope.row.id,'lesson',0)">自动听写</el-button> </el-col> -->
-				  <el-col :span="24"><el-button type="warning" size="medium" v-on:click="read(2,scope.row.id,'ebook',0)">识字</el-button> </el-col>
+		 <el-col :span="24">
+			 
+			 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid===0" v-on:click="read(2,scope.row.id,'ebook',0)">识字</el-button> 
+			 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid!=0" v-on:click="readtask(scope.row.shizi_taskid)">识字</el-button> 
+			 
+			 </el-col>
 			  	
 			  </template>
 			</el-table-column>
@@ -94,7 +99,10 @@ export default {
 		
   },
   methods: {
-		
+		 readtask(a) {
+			 // console.log(a);
+			this.$router.replace({ name: 'Read' , query:{  taskid: a }})
+		},
 		 read(b,c,d,e) {
 			this.$router.replace({ name: 'Read' , query:{ type: b,relation_id: c, relation_type: d, taskid: e}})
 		},
@@ -113,6 +121,7 @@ export default {
 					keywords: this.keywords,
 					page: this.currentPage,
 					pagesize: this.pagesize,
+					userid: this.$store.state.user.userid,
 			}
       getList(params).then(response => {
 		     _g.closeGlobalLoading()
@@ -134,7 +143,7 @@ export default {
 							_.set(temp, key+'.s', s);
 					});
 					this.list = temp
-					// console.log(temp);
+					console.log(this.list);
       })
 	    this.listLoading = false
     },

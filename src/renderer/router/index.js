@@ -36,6 +36,12 @@ export const constantRouterMap = [
 			  component:  require('@/views/study/list/task').default,
 			  meta: { title: '历史任务', icon: 'tasklist' }
 			},
+			 {
+			  path: 'review',
+			  name: 'Review',
+			  component:  require('@/views/study/list/review').default,
+			  meta: { title: '复习', icon: 'review' }
+			},
       {
         path: 'jiaocai',
         name: 'Jiaocai',
