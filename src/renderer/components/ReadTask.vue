@@ -57,16 +57,15 @@
 						<!-- <el-radio ref='elradio' v-model="task_result.word1[index]" label="1" @change="know(this,index,'1')" border>认识</el-radio>
 						<el-radio v-model="task_result.word1[index]" label="2" @change="know(this,index,'2')" border>不认识</el-radio> -->
 
-						<myradio :listdata="RadioclassArr" v-on:passtoparentradio="passtoparentradio" v-model="task_result.word1[index]"></myradio>
+						<myradio :listdata="RadioclassArr" v-on:passtoparentradio="passtoparentradio" v-model="task_result[index].status"></myradio>
 					</el-col>
 				</el-row>
 
-				<el-row v-if="type===2">
+				<el-row v-if="type===2 && review===1">
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<el-tag type="info"> 下次复习时间</el-tag>
 
-
-						<myradio :listdata="RadiofuxiArr[index]" v-on:passtoparentradio="passtoparentradio2" v-model="task_result.fx_time[index]"></myradio>
+						<myradio :listdata="RadiofuxiArr[index]" v-on:passtoparentradio="passtoparentradio2" v-model="task_result[index].fx_time"></myradio>
 						<!-- <el-radio v-model="task_result.fx_time[index]" label="600" border>10分钟</el-radio>
 						<el-radio v-model="task_result.fx_time[index]" label="3600" border>1小时</el-radio>
 						<el-radio v-model="task_result.fx_time[index]" label="86400" border>1天</el-radio>
@@ -191,6 +190,10 @@
 				type: Number,
 				default: 1
 			},
+			review: {
+				type: Number,
+				default: 0
+			},
 			// audiolist:[]
 		},
 		data() {
@@ -212,13 +215,13 @@
 				RadiofuxiArr: [],
 				dialogTableVisible: false,
 				task_result: {
-					id: this.words.id,
+					taskid: this.words.taskid,
 					name: this.words.name,
-					word1: [],
+					status: [],
 					fx_time: [],
-					word2: []
 				},
-				// task_result: null,
+				task_result_status: [],
+			 
 				resource: '',
 				isplaynow: false,
 				thistype: this.words,
@@ -356,17 +359,16 @@
 		created() {
 			// console.log(this.words);
 			let temp = this.words.word1
+			let task_word_data_items = this.words.task_word_data_items
 			const selfmain = this
+			//语音文件加载==========================================================
 			_(temp).forEach(function(value, key) {
 				// console.log(value);
 				let a = new Audio()
-				// a.src = require('@/assets/' + value.sw_sound)
 				a.src = value.sw_sound
 				let b = new Audio()
-				// b.src = require('@/assets/' + value.dw_sound)
 				b.src = value.sw_sound
 				let c = new Audio()
-				// c.src = require('@/assets/' + value.lw_sound)
 				c.src = value.sw_sound
 				// this.audiolist.push(a)
 				_.set(temp, key + "[sw_audio]", a);
@@ -380,15 +382,17 @@
 				_.set(temp, key + "[local_dw_sound]", value.dw_sound);
 				_.set(temp, key + "[local_lw_sound]", value.lw_sound);
 				
-
-				// _.set(selfmain.task_result, "[word1]"+key+"[text]", value.sw);
-				// _.set(selfmain.task_result, "[word2]"+key+"[text]", value.sw);
-
-				_.set(selfmain.task_result, "[word1]" + key, '');
-				_.set(selfmain.task_result, "[fx_time]" + key, '');
-				_.set(selfmain.task_result, "[word2]" + key, '');
-
 				_.set(selfmain.TabsValue, key, "0");
+			 
+			});
+			//字的状态加载==========================================================
+			_(task_word_data_items).forEach(function(value, key) {
+				
+				// _.set(selfmain.task_result_status,  key, "1");
+				_.set(selfmain.task_result, key+"[id]", value.id);
+				_.set(selfmain.task_result, key+"[wcellid]", value.wcellid);
+				_.set(selfmain.task_result, key+"[status]", value.status);
+				_.set(selfmain.task_result, key+"[fx_time]", '');
 				_.set(selfmain.RadiofuxiArr, key, [{
 					name: "6天",
 					value: "6",
@@ -406,10 +410,10 @@
 					value: "16",
 					quality:5
 				}]);
-
 			});
-			// console.log(11111111)
-			// console.log(this.TabsValue)
+			// this.task_result = Object.assign({},this.task_result)
+			// console.log(this.task_result);
+			
 		},
 		components: {
 			Screenfull,
@@ -525,6 +529,7 @@
 				 }
 			},
 			help_sy() {
+				console.log( this.task_result);
 				// console.log(typeof this.task_result);
 				// 
 				// var str = JSON.stringify(this.task_result);
@@ -539,7 +544,8 @@
 			},
 			passtoparentradio(data) {
 				// console.log("passtoparentradio---" + data);
-				this.$set(this.task_result.word1, this.swiper.realIndex, data)
+				this.task_result[this.swiper.realIndex].status = data
+				// this.$set(this.task_result[this.swiper.realIndex].status, this.swiper.realIndex, data)
 				
 				//发送请求记录当前字的 学习状态 计算难度因子
 				taskinwcell(this.words.taskid,this.$store.state.user.userid,this.words.word1[this.swiper.realIndex].wcellid,data).then(response => {
@@ -555,8 +561,8 @@
 				taskinwcell_super(this.words.taskid,this.$store.state.user.userid,this.words.word1[this.swiper.realIndex].wcellid,data).then(response => {
 						// console.log(response)
 				})
-				
-				this.$set(this.task_result.fx_time, this.swiper.realIndex, data)
+				this.task_result[this.swiper.realIndex].fx_time = data
+				// this.$set(this.task_result.fx_time, this.swiper.realIndex, data)
 			}
 
 		}

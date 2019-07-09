@@ -3,7 +3,7 @@
 		<!-- <el-button v-for="(item,index) in classArr" :key="index" @click="result(index)" :type="resultNum === index?'success':''">{{item.name}}</el-button>
  -->
 		<ul style="display: inline;">
-			<li v-for="(item,index) in listdata" :key="index" @click="result(index)" :class="resultNum === index?'active':''">
+			<li v-for="(item,index) in listdata" :key="index" @click="result(index)" :class="resultNum === index || v_v=== item.value?'active':''">
 				{{item.name}}
 			</li>
 		</ul>
@@ -44,6 +44,12 @@
 				num: "",
 			}
 		},
+		created() {
+			// console.log('ddd')
+			// console.log(this.v_model_value)
+			// console.log(this.listdata)
+			// this.num = this.v_model_value
+		},
 		methods: {
 			result(index) {
 				this.num = index;
@@ -61,6 +67,14 @@
 		computed: {
 			resultNum() {
 				return this.num;
+			}
+			,
+			v_v() {
+				if(this.num===''){
+					return this.v_model_value;
+				}else{
+					return ''
+				}
 			}
 		}
 	}

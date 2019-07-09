@@ -5,10 +5,10 @@
 <el-form ref="form" :model="form" label-width="150px">
   
 
-  <el-form-item label="调试窗口">
+<!--  <el-form-item label="调试窗口">
    <el-button type="primary" @click="openDev">打开 / 关闭 调试窗口</el-button>
    
-  </el-form-item>
+  </el-form-item> -->
 	
 	
   <el-form-item label="播放声音">
