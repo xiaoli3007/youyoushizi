@@ -52,7 +52,7 @@
 					</el-col>
 				</el-row>
 
-				<el-row v-if="type===2">
+				<el-row v-if="type===2 && review!=1">
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<!-- <el-radio ref='elradio' v-model="task_result.word1[index]" label="1" @change="know(this,index,'1')" border>认识</el-radio>
 						<el-radio v-model="task_result.word1[index]" label="2" @change="know(this,index,'2')" border>不认识</el-radio> -->
@@ -60,7 +60,14 @@
 						<myradio :listdata="RadioclassArr" v-on:passtoparentradio="passtoparentradio" v-model="task_result[index].status"></myradio>
 					</el-col>
 				</el-row>
-
+				
+				<el-row v-if="type===2 && review===1">
+					<el-col :span="20" :offset="2" justify="center" align="center">
+						<el-tag type="warning"> 出自：{{slide.chuchu}}</el-tag>
+			
+					</el-col>
+				</el-row>
+					
 				<el-row v-if="type===2 && review===1">
 					<el-col :span="20" :offset="2" justify="center" align="center">
 						<el-tag type="info"> 下次复习时间</el-tag>
@@ -104,8 +111,9 @@
 
 				<el-row>
 					<el-col :span="20" :offset="2" justify="center" align="center">
-						<el-button type="primary" v-if="index===words.word1.length-1 && type===1" @click="gotojc()">听写检查</el-button>
-						<el-button type="primary" v-if="index===words.word1.length-1 && type===2" @click="gotoback()">认字完成</el-button>
+						<el-button type="primary" v-if="index===words.word1.length-1 && type===1 && review!=1" @click="gotojc()">听写检查</el-button>
+						<el-button type="primary" v-if="index===words.word1.length-1 && type===2 && review!=1" @click="gotoback()">认字完成</el-button>
+						<el-button type="primary" v-if="index===words.word1.length-1 && type===2 && review===1" @click="gotoReview()">复习完成</el-button>
 					</el-col>
 				</el-row>
 
@@ -383,33 +391,38 @@
 				_.set(temp, key + "[local_lw_sound]", value.lw_sound);
 				
 				_.set(selfmain.TabsValue, key, "0");
-			 
+				
+				// _.set(selfmain.RadiofuxiArr, key, [{
+				// 	name: "6天",
+				// 	value: "6",
+				// 	quality:2
+				// }, {
+				// 	name: "14天",
+				// 	value: "14",
+				// 	quality:3
+				// }, {
+				// 	name: "15天",
+				// 	value: "15",
+				// 	quality:4
+				// }, {
+				// 	name: "16天",
+				// 	value: "16",
+				// 	quality:5
+				// }]);
+				_.set(selfmain.RadiofuxiArr, key, value.review_select_days);
+				
 			});
+			console.log(selfmain.RadiofuxiArr);
 			//字的状态加载==========================================================
 			_(task_word_data_items).forEach(function(value, key) {
+				
 				
 				// _.set(selfmain.task_result_status,  key, "1");
 				_.set(selfmain.task_result, key+"[id]", value.id);
 				_.set(selfmain.task_result, key+"[wcellid]", value.wcellid);
 				_.set(selfmain.task_result, key+"[status]", value.status);
 				_.set(selfmain.task_result, key+"[fx_time]", '');
-				_.set(selfmain.RadiofuxiArr, key, [{
-					name: "6天",
-					value: "6",
-					quality:2
-				}, {
-					name: "14天",
-					value: "14",
-					quality:3
-				}, {
-					name: "15天",
-					value: "15",
-					quality:4
-				}, {
-					name: "16天",
-					value: "16",
-					quality:5
-				}]);
+				
 			});
 			// this.task_result = Object.assign({},this.task_result)
 			// console.log(this.task_result);
@@ -490,6 +503,11 @@
 					name: 'Task'
 				})
 			},
+			gotoReview() {
+				this.$router.replace({
+					name: 'Reviewlist'
+				})
+			},
 			gotojc() {
 				this.$router.replace({
 					name: 'ReadCheck',
@@ -557,12 +575,26 @@
 			},
 			passtoparentradio2(data) {
 				console.log("passtoparentradio2---" + data);
+				// console.log(typeof data.toString());
+				//console.log(this.RadiofuxiArr[this.swiper.realIndex]);
+				let temp_fact =null 
+				this.RadiofuxiArr[this.swiper.realIndex].forEach(function(value,i){
+				　　console.log('forEach遍历:'+i+'--'+value);
+					if(value.value===data){
+						
+						temp_fact= value
+					}
+
+				})
 				
-				taskinwcell_super(this.words.taskid,this.$store.state.user.userid,this.words.word1[this.swiper.realIndex].wcellid,data).then(response => {
+				console.log(temp_fact);
+				
+				taskinwcell_super(this.$store.state.user.userid,this.words.word1[this.swiper.realIndex].task_wcell_id,temp_fact.value,temp_fact.quality,temp_fact.factor).then(response => {
 						// console.log(response)
 				})
-				this.task_result[this.swiper.realIndex].fx_time = data
-				// this.$set(this.task_result.fx_time, this.swiper.realIndex, data)
+				this.task_result[this.swiper.realIndex].fx_time = data.toString()
+				this.swiper.slideTo(this.swiper.realIndex + 1 < this.swiper.slides.length ? this.swiper.realIndex + 1 : this.swiper
+					.slides.length, 1000, false)
 			}
 
 		}

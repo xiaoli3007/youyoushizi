@@ -29,19 +29,7 @@ export function taskinwcell(taskid, userid, wcellid, status) {
 	})
 }
 
-export function taskinwcell_super(taskid, userid, wcellid, day) {
-	return request({
-		url: '?act=taskinwcell_super',
-		method: 'post',
-		data: {
-			taskid,
-			userid,
-			wcellid,
-			day
-		},
-		// params: { username ,password}
-	})
-}
+
 
 
 export function taskindata(userid,taskid,taskdata) {
@@ -77,6 +65,21 @@ export function setting(userid,voicetype,autoplay_time) {
 			userid,
 			voicetype,
 			autoplay_time
+		},
+		// params: { username ,password}
+	})
+}
+
+export function taskinwcell_super(userid, task_wcell_id, day,quality,factor ) {
+	return request({
+		url: '?act=taskinwcell_super',
+		method: 'post',
+		data: {
+			userid,
+			task_wcell_id,
+			day,
+			quality,
+			factor
 		},
 		// params: { username ,password}
 	})

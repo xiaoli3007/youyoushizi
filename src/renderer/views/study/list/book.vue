@@ -41,7 +41,7 @@
 		 <el-col :span="24">
 			 
 			 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid===0" v-on:click="read(2,scope.row.id,'ebook',0)">识字</el-button> 
-			 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid!=0" v-on:click="readtask(scope.row.shizi_taskid)">识字</el-button> 
+			 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid!=0" v-on:click="readtask(scope.row.shizi_taskid)" plain>识字</el-button> 
 			 
 			 </el-col>
 			  	

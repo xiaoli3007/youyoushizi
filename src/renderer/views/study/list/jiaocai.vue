@@ -45,13 +45,13 @@
 					<el-col :span="12">
 
 						<el-button type="success" size="medium" v-if="scope.row.tingxie_taskid===0" v-on:click="read(1,scope.row.id,'lesson',0)">听写</el-button>
-						<el-button type="success" size="medium" v-if="scope.row.tingxie_taskid!=0" v-on:click="readtask(scope.row.tingxie_taskid)">听写</el-button>
+						<el-button type="success" size="medium" v-if="scope.row.tingxie_taskid!=0" v-on:click="readtask(scope.row.tingxie_taskid)" plain>听写</el-button>
 					</el-col>
 					<!-- <el-col :span="8"><el-button type="success" size="medium" v-on:click="read(1,1,scope.row.id,'lesson',0)">自动听写</el-button> </el-col> -->
 					<el-col :span="12">
 
 						<el-button type="warning" v-if="scope.row.shizi_taskid===0" size="medium" v-on:click="read(2,scope.row.id,'lesson',0)">识字</el-button>
-						<el-button type="warning" size="medium" v-if="scope.row.shizi_taskid!=0" v-on:click="readtask(scope.row.shizi_taskid)">识字</el-button>
+						<el-button type="warning" size="medium" v-if="scope.row.shizi_taskid!=0" v-on:click="readtask(scope.row.shizi_taskid)" plain>识字</el-button>
 
 
 					</el-col>

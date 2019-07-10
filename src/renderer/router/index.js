@@ -9,6 +9,7 @@ export const constantRouterMap = [
 	{ path: '/refresh',component: require('@/components/refresh').default,name: 'refresh',hidden: true },
   { path: '/read', name: 'Read', component:  require('@/views/study/read').default, hidden: true },
   { path: '/readcheck', name: 'ReadCheck', component:  require('@/views/study/readcheck').default, hidden: true },
+  { path: '/review', name: 'Review', component:  require('@/views/study/review').default, hidden: true },
   { path: '/login', component:  require('@/views/login/index').default, hidden: true },
   { path: '/404', component:  require('@/views/404').default, hidden: true },
   {
@@ -37,11 +38,13 @@ export const constantRouterMap = [
 			  meta: { title: '历史任务', icon: 'tasklist' }
 			},
 			 {
-			  path: 'review',
-			  name: 'Review',
-			  component:  require('@/views/study/list/review').default,
+			  path: 'reviewlist',
+			  name: 'Reviewlist',
+			  component:  require('@/views/study/list/reviewlist').default,
 			  meta: { title: '复习', icon: 'review' }
 			},
+	
+			
       {
         path: 'jiaocai',
         name: 'Jiaocai',
