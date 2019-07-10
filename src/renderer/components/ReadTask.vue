@@ -21,7 +21,8 @@
 					<el-tag type="info">
 						<screenfull style="display: inline;" />
 					</el-tag>
-					<el-tag type="warning" @click.native="gotoback" class="backbutton">退出</el-tag>
+					<el-tag type="warning" @click.native="gotoback" class="backbutton" v-if="review!=1">退出</el-tag>
+					<el-tag type="warning" @click.native="gotoReview" class="backbutton" v-if="review===1">退出</el-tag>
 				</div>
 			</el-col>
 		</el-row>
