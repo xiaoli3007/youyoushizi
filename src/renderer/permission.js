@@ -5,6 +5,7 @@ import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 
 const whiteList = ['/login'] // 不重定向白名单
+const blockList = ['Read','Review','ReadCheck'] // 必须加载个人信息的页面
 router.beforeEach((to, from, next) => {
   NProgress.start()
   if (store.getters.token) {
@@ -12,7 +13,8 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
     } else {
-      // if (store.getters.roles.length === 0) {
+			// console.log(to.name)
+       if (blockList.indexOf(to.name) !== -1) {
         store.dispatch('GetInfo').then(res => { // 拉取用户信息
           next()
         }).catch((err) => {
@@ -21,9 +23,9 @@ router.beforeEach((to, from, next) => {
             next({ path: '/' })
           })
         })
-      // } else {
-      //   next()
-      // }
+       } else {
+         next()
+       }
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {
