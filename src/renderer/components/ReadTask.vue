@@ -413,7 +413,7 @@
 				_.set(selfmain.RadiofuxiArr, key, value.review_select_days);
 				
 			});
-			console.log(selfmain.RadiofuxiArr);
+			// console.log(selfmain.RadiofuxiArr);
 			//字的状态加载==========================================================
 			_(task_word_data_items).forEach(function(value, key) {
 				
@@ -541,11 +541,21 @@
 			},
 			s_autoplay(){
 				 // console.log(this.rautoplay);
-				 if(this.rautoplay){
-				 	this.swiper.autoplay.start() 
-				 }else{
-				 	this.swiper.autoplay.stop()  
-				 }
+				 
+				 setTimeout(() => {
+				 	// 								console.log('当前的slide序号是' + this.activeIndex);
+				 	// 								console.log('当前的slide序号是' + this.realIndex);
+				 	 
+				 	 if(this.rautoplay){
+				 		this.$refs.myaudio_zi[this.swiper.realIndex].play()
+				 		this.swiper.autoplay.start() 
+				 	}else{
+				 		this.swiper.autoplay.stop()  
+				 	}
+				 	 
+				 }, 1000)
+				 
+				
 			},
 			help_sy() {
 				console.log( this.task_result);
