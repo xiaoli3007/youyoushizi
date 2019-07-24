@@ -52,6 +52,15 @@ export default {
     mounted(){
         this.audio=new Audio()
         this.audio.src=this.src
+		
+		 //var start = 0;
+		// this.audio.addEventListener("ended",function() {
+		// 	//start++;
+		// 	//start == times && this.audio.pause();
+		// 	console.log("ended ---")
+		// 	console.log(this.ended )
+		// });
+		
         this.audio.addEventListener('canplaythrough',()=>{
             this.duration=this.format(this.audio.duration)
         })
@@ -82,7 +91,10 @@ export default {
     },
 	watch:{
      ended(newValue, oldValue) {
-        console.log(newValue)
+		 // console.log(oldValue)
+       //console.log(newValue)
+        
+		this.$emit("passtoparent_ennd", newValue)
      }
     },
     methods:{
@@ -100,6 +112,40 @@ export default {
 			// console.log(this.ended)
 			this.$emit("passtoparenttabvlue", this.tabvalue)
         },
+		 playtimes(times){
+		    window.audioList.forEach(audio=>{//开始前先关闭所有可能正在运行的实例
+		        // audio.load()
+				// audio.fastSeek(0)
+				audio.pause()
+		    })
+			// for(var i=0;i<times;i++){
+			// 	console.log(i)
+			// 	this.audio.play()
+			// 	if(this.ended){
+			// 		continue;
+			// 	}
+			// }
+			// this.audio.loop = true
+			 // console.log(this.audio.ended)
+			var start = 0;
+			// console.log(times)
+			var a = this.audio
+			 this.audio.addEventListener('ended', function () {  
+					setTimeout(function () {
+						if(start<times-1)
+						{ 
+							// console.log(start)
+							 a.play();
+							 start++
+						}
+						}, 3000);  
+			}, false);  
+			this.audio.play(); 
+			//  
+		    
+			// console.log(this.ended)
+			// this.$emit("passtoparenttabvlue", this.tabvalue)
+		},
         format(s){
             var t='';
             if(s > -1){

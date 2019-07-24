@@ -92,7 +92,7 @@
 						</el-tooltip>
 						<el-tooltip content="字音(键盘:空格)" placement="bottom" effect="light">
 							<m-audio :show-duration="false" text="字" :src="slide.local_sw_sound" :block="false" ref="myaudio_zi" tabvalue="0"
-							 v-on:passtoparenttabvlue="passtoparenttabvlue"></m-audio>
+							 v-on:passtoparenttabvlue="passtoparenttabvlue" v-on:passtoparent_ennd="passtoparent_ennd"></m-audio>
 						</el-tooltip>
 						<el-tooltip content="词音(键盘:T)" placement="bottom" effect="light">
 							<m-audio :show-duration="false" text="词语" :src="slide.local_dw_sound" :block="false" ref="myaudio_ci" tabvalue="1"
@@ -534,10 +534,14 @@
 				// console.log(this.swiper.$wrapperEl[0])
 			},
 			passtoparenttabvlue(index) {
-				// console.log("索引" + index);
+				 //console.log("11索引" + index);
 				if (this.type == 2) {
 					this.$set(this.TabsValue, this.swiper.realIndex, index)
 				}
+			},
+			passtoparent_ennd(isend) {
+				// console.log("当前的播放音频是否结束" );
+				// console.log(isend);
 			},
 			s_autoplay(){
 				 // console.log(this.rautoplay);
@@ -558,7 +562,10 @@
 				
 			},
 			help_sy() {
-				console.log( this.task_result);
+				
+				this.$refs.myaudio_zi[this.swiper.realIndex].playtimes(5)
+				
+				//console.log( this.task_result);
 				// console.log(typeof this.task_result);
 				// 
 				// var str = JSON.stringify(this.task_result);
