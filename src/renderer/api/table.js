@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+export function getbookshow(params) {
+  return request({
+    url: '?act=ebook_show',
+    method: 'get',
+    params
+  })
+}
+
 export function getList(params) {
   return request({
     url: '?act=list',

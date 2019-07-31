@@ -22,11 +22,11 @@
           {{scope.row.title}}
         </template>
       </el-table-column>
-      <el-table-column label="字"   align="center">
+     <!-- <el-table-column label="字"   align="center">
         <template slot-scope="scope">
           <span>{{scope.row.s}}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
      <!-- <el-table-column label="zixing" width="110" align="center">
         <template slot-scope="scope">
           {{scope.row.zixing}}
@@ -40,8 +40,12 @@
 				  <!-- <el-col :span="8"><el-button type="success" size="medium" v-on:click="read(1,1,scope.row.id,'lesson',0)">自动听写</el-button> </el-col> -->
 		 <el-col :span="24">
 			 
-			 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid===0" v-on:click="read(2,scope.row.id,'ebook',0)">识字</el-button> 
+			<!-- <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid===0" v-on:click="read(2,scope.row.id,'ebook',0)">识字</el-button> 
 			 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid!=0" v-on:click="readtask(scope.row.shizi_taskid)" plain>识字</el-button> 
+			 -->
+			 
+			 <el-button type="success" size="medium"  v-on:click="gotoBookShow(scope.row.id)">详情</el-button>
+			 
 			 
 			 </el-col>
 			  	
@@ -99,6 +103,13 @@ export default {
 		
   },
   methods: {
+	  
+	  gotoBookShow(a) {
+	  	this.$router.replace({
+	  		name: 'BookShow',
+	  		query: { ebookid: a}
+	  	})
+	  },
 		 readtask(a) {
 			 // console.log(a);
 			this.$router.replace({ name: 'Read' , query:{  taskid: a }})
@@ -129,20 +140,20 @@ export default {
 		    this.dataCount = parseInt(response.dataCount)
         this.listLoading = false
 					
-					var temp = this.list
-					_(temp).forEach(function(value,key) {
-						// console.log(value.word1);
-							 var s = []
-							_(value.wcell_list).forEach(function(value2,key2) {
-								s.push(value2.word)
-							});
-							  s=_.join(s, ',')
-							// console.log(typeof temp);
-							// console.log(temp[key].name);
-							// this.list['sss']=s  
-							_.set(temp, key+'.s', s);
-					});
-					this.list = temp
+					// var temp = this.list
+					// _(temp).forEach(function(value,key) {
+					// 	// console.log(value.word1);
+					// 		 var s = []
+					// 		_(value.wcell_list).forEach(function(value2,key2) {
+					// 			s.push(value2.word)
+					// 		});
+					// 		  s=_.join(s, ',')
+					// 		// console.log(typeof temp);
+					// 		// console.log(temp[key].name);
+					// 		// this.list['sss']=s  
+					// 		_.set(temp, key+'.s', s);
+					// });
+					// this.list = temp
 					// console.log(this.list);
       })
 	    this.listLoading = false
