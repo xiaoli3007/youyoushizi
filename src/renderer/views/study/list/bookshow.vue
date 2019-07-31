@@ -1,73 +1,41 @@
 <template>
 	<div class="app-container">
 
-		<el-row>
+		<el-row v-if="taskin">
 			<el-col :span="20" :offset="2" justify="center" align="center">
 				<div class="" style="margin-top: 15px;">
-					<el-tag type="success">标题撒发顺丰那卡死发卡方</el-tag>
+					<span>{{program.title}}</span>
 					<el-tag type="info" @click.native="gotoback"  class="backbutton"> 返回</el-tag>
 				</div>
 			</el-col>
 		</el-row>
 		
 		
-		<el-row>
+		<el-row v-if="taskin">
 			<el-col :span="20" :offset="2" justify="left" align="left">
 				<div class="" style="margin-top: 15px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);padding: 10px;font-size: 12px; line-height: 20px;">
 					
-					<p>作者：张三</p>
-    <p>简介：啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥
-					 法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨
-					 芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法
-					 萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬啊啥法萨芬</p>
+					<p v-if="program.author!=''">作者：{{program.author}}</p>
+					<p v-if="program.subject!=''">主题：{{program.subject}}</p>
+    <p v-if="program.description!=''">简介：{{program.description}}</p>
 				</div>
 			</el-col>
 		</el-row>
 		
 		
-			<el-row>
+			<el-row v-if="taskin" v-for="(slide, index) in data" :key="index">
 				<el-col :span="20" :offset="2" justify="left" align="left">
 					<div class="" style="margin-top: 15px;">
-						<span><el-tag type="warning">分类1</el-tag></span>
+						<span><el-tag type="warning">{{slide.name}}</el-tag></span>
 						<el-divider></el-divider>
-						<span>雨纷纷</span>
-						<el-divider direction="vertical"></el-divider>
-						<span>旧故里</span>
-						<el-divider direction="vertical"></el-divider>
-						<span>草木深</span>
+						<template v-for="sub in slide.wcell_list">
+						
+						<span > {{sub.word}}</span> <el-divider direction="vertical"></el-divider>
+						 </template>
 					</div>
 				</el-col>
 			</el-row>
-			
-			<el-row>
-				<el-col :span="20" :offset="2" justify="left" align="left">
-					<div class="" style="margin-top: 15px;">
-						<span><el-tag type="warning">分类1</el-tag></span>
-						<el-divider></el-divider>
-						<span>雨纷纷</span>
-						<el-divider direction="vertical"></el-divider>
-						<span>旧故里</span>
-						<el-divider direction="vertical"></el-divider>
-						<span>草木深</span>
-					</div>
-				</el-col>
-			</el-row>
-			<el-row>
-				<el-col :span="20" :offset="2" justify="left" align="left">
-					<div class="" style="margin-top: 15px;">
-						<span><el-tag type="warning">分类1</el-tag></span>
-						<el-divider></el-divider>
-						<span>雨纷纷</span>
-						<el-divider direction="vertical"></el-divider>
-						<span>旧故里</span>
-						<el-divider direction="vertical"></el-divider>
-						<span>草木深</span>
-					</div>
-				</el-col>
-			</el-row>
-		
-		
-
+	
 	</div>
 </template>
 
@@ -81,8 +49,9 @@
 		data() {
 			return {
 				ebookid: 0,
-				detaile: null,
-				listLoading: true,
+				program: null,
+				data: null,
+				taskin:false,
 			}
 		},
 		filters: {
@@ -91,9 +60,10 @@
 		created() {
 			
 			this.ebookid = this.$route.query.ebookid
+			// this.ebookid = 446654
 			console.log(this.ebookid );
 			this.init()
-
+   
 		},
 		methods: {
 				 gotoback(a) {
@@ -101,16 +71,23 @@
 					this.$router.replace({ name: 'Book'})
 				},
 			fetchData() {
-				// this.listLoading = true
-				// const params = {
-				// 	keywords: this.keywords,
-				// }
-				// getbookshow(params).then(response => {
-				// 	// this.detaile = response.items
-				// 	this.listLoading = false
-				// 	console.log(response);
-				// })
-				// this.listLoading = false
+				const loading = this.$loading({
+							  lock: true,
+							  text: '加载中...',
+							  spinner: 'el-icon-loading',
+							  background: '#000'
+							});
+
+				const params = {
+					ebookid: this.ebookid,
+				}
+				getbookshow(params).then(response => {
+					loading.close();
+					this.data = response.items
+					this.program = response.program
+					console.log(response);
+					this.taskin = true
+				})
 			},
 
 			init() {
