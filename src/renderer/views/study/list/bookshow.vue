@@ -27,7 +27,7 @@
 			<el-col :span="20" :offset="2" justify="left" align="left">
 				<div class="" style="margin-top: 15px;">
 					<span>
-						<el-tag type="warning">{{slide.obj.name}}</el-tag>
+						<el-tag type="success" effect="dark">{{slide.obj.name}}</el-tag>
 					</span>
 					<el-divider></el-divider>
 
@@ -36,10 +36,10 @@
 						<el-tab-pane v-for="(sub, index2) in slide.wcell_list" :key="index2" :label="sub.name" :name="sub.md5">
 							<el-tag v-for="(sub2, index3) in sub.data" :key="index3">{{sub2.word}}</el-tag>
 								
-								<p> <el-button type="warning">开始识字</el-button></p>
+								<div><p style="float: right;"> <el-button type="warning">开始识字</el-button></p></div>
 								 
 						</el-tab-pane>
-
+  
 					</el-tabs>
 					<!-- <el-tag type="info" v-for="(sub, index2) in slide.wcell_list" :key="index2">{{sub.name}}</el-tag> -->
 					<!-- 	<span > {{sub.word}}</span> <el-divider direction="vertical"></el-divider> -->
