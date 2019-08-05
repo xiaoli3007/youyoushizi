@@ -25,7 +25,7 @@
     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
       <!-- <el-table-column align="center" label='ID' >
         <template slot-scope="scope">
-          {{scope.row.id}}
+          {{scope.row.id}}  
         </template>
       </el-table-column> -->
 	  

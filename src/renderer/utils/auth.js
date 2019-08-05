@@ -5,6 +5,7 @@ import Lockr from 'lockr'
 
 const TokenKey = 'Admin-Token'
 const NameKey = 'Admin-Name'
+const AvatarKey = 'Admin-Avatar'
 const UseridKey = 'Admin-Userid'
 
 const voicetypeKey = 'voicetype-c'
@@ -44,6 +45,18 @@ export function setUserid(Userid) {
 
 export function removeUserid() {
   return Cookies.remove(UseridKey)
+}
+
+export function getAvatar() {
+  return Cookies.get(AvatarKey)
+}
+
+export function setAvatar(name) {
+  return Cookies.set(AvatarKey, name)
+}
+
+export function removeAvatar() {
+  return Cookies.remove(AvatarKey)
 }
 
 

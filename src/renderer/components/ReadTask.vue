@@ -41,7 +41,8 @@
 
 						<el-tabs v-model="TabsValue[index]" tab-position="right" style=" margin-top: 15px;" v-if="type===2">
 							<el-tab-pane label="字" name='0'>
-								<div class="tasktext" v-if="type===2">{{slide.sw}}</div>
+								<div class="tasktext" v-if="type===2 && slide.sw.length===1">{{slide.sw}}</div>
+								<div class="tasktext_ci" v-if="type===2 && slide.sw.length>1">{{slide.sw}}</div>
 							</el-tab-pane>
 							<el-tab-pane label="词" name='1'>
 								<div class="tasktext_ci" v-if="type===2">{{slide.dw}}</div>

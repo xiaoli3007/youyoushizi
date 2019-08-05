@@ -27,7 +27,7 @@ export const constantRouterMap = [
   {
     path: '/study',
     component: Layout,
-    redirect: '/study/jiaocai',
+    redirect: '/study/task',
     name: 'Study',
     meta: { title: '学习', icon: 'study' },
     children: [

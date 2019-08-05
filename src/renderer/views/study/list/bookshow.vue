@@ -120,7 +120,7 @@
 					this.data = response.items
 					this.program = response.program
 					this.activetablist = JSON.parse(JSON.stringify(response.datas_tab)); 
-					console.log(response);
+					// console.log(response);
 					this.taskin = true
 					
 					console.log(this.activetablist);
