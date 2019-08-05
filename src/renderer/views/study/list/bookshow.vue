@@ -36,10 +36,19 @@
 						<el-tab-pane v-for="(sub, index2) in slide.wcell_list" :key="index2" :label="sub.name" :name="sub.md5">
 							<el-tag v-for="(sub2, index3) in sub.data" :key="index3">{{sub2.word}}</el-tag>
 								
-								<div><p style="float: right;"> <el-button type="warning">开始识字</el-button></p></div>
+								<div><p style="float: right;"> 
+								
+								<!-- <el-button type="warning">开始识字</el-button>
+								 -->
+								
+								<el-button type="warning" v-if="sub.shizi_taskid===0"  v-on:click="read(2,program.id,'ebook',0,index2,index)">识字</el-button> 
+								<el-button type="warning" v-if="sub.shizi_taskid!=0"  v-on:click="readtask(sub.shizi_taskid)" plain>识字</el-button>
+								
+								 
+								</p></div>
 								 
 						</el-tab-pane>
-  
+   
 					</el-tabs>
 					<!-- <el-tag type="info" v-for="(sub, index2) in slide.wcell_list" :key="index2">{{sub.name}}</el-tag> -->
 					<!-- 	<span > {{sub.word}}</span> <el-divider direction="vertical"></el-divider> -->
@@ -80,6 +89,14 @@
 			
 		},
 		methods: {
+			 readtask(a) {
+				 // console.log(a);
+				this.$router.replace({ name: 'Read' , query:{  taskid: a }})
+			},
+			read(b,c,d,e,f,g) {
+				//console.log({ type: b,relation_id: c, relation_type: d, taskid: e, gid: f,wcell_type:g})
+				this.$router.replace({ name: 'Read' , query:{ type: b,relation_id: c, relation_type: d, taskid: e, gid: f,wcell_type:g}})
+			},
 			gotoback(a) {
 				// console.log(a);
 				this.$router.replace({
@@ -96,6 +113,7 @@
 
 				const params = {
 					ebookid: this.ebookid,
+					userid:this.$store.state.user.userid
 				}
 				getbookshow(params).then(response => {
 					loading.close();

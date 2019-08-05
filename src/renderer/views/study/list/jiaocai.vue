@@ -199,7 +199,7 @@
 					pagesize: this.pagesize,
 					linkageid: this.linkageid,
 					userid: this.$store.state.user.userid,
-				}
+				} 
 				getjiaocaiList(params).then(response => {
 					_g.closeGlobalLoading()
 					this.list = response.items
@@ -209,7 +209,7 @@
 					var temp = this.list
 					_(temp).forEach(function(value, key) {
 						// console.log(value.word1);
-						var s = []
+						var s = [] 
 						_(value.wcell_list).forEach(function(value2, key2) {
 							s.push(value2.word)
 						});
@@ -219,7 +219,7 @@
 						// this.list['sss']=s  
 						_.set(temp, key + '.s', s);
 					});
-					this.list = temp
+					this.list = temp 
 					// console.log(temp);
 				})
 				this.listLoading = false

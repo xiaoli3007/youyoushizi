@@ -122,6 +122,8 @@
 					this.type = this.$route.query.type==1?1:2
 					this.relation_id = this.$route.query.relation_id
 					this.relation_type = this.$route.query.relation_type
+					this.gid = this.$route.query.gid
+					this.wcell_type = this.$route.query.wcell_type
 					const loading = this.$loading({
 								  lock: true,
 								  text: '创建任务中...',
@@ -129,7 +131,7 @@
 								  background: '#000'
 								});
 							
-					taskin(this.$store.state.user.userid, 0, this.type, this.relation_id, this.relation_type).then(response => {
+					taskin(this.$store.state.user.userid, 0, this.type, this.relation_id, this.relation_type, this.gid, this.wcell_type).then(response => {
 						loading.close();
 						// console.log(response.word1)
 						// console.log(response.word_data)

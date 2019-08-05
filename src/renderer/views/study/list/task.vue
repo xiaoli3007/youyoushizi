@@ -28,6 +28,13 @@
           {{scope.row.id}}
         </template>
       </el-table-column> -->
+	  
+	  <el-table-column label="任务类别">
+	    <template slot-scope="scope">
+	      {{scope.row.taskinfotext}}
+	    </template>
+	  </el-table-column>
+	  
       <el-table-column label="任务标题">
         <template slot-scope="scope">
           {{scope.row.name}}
