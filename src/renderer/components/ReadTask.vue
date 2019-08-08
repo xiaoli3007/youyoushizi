@@ -546,54 +546,57 @@
 			},
 			s_autoplay(){
 				 // console.log(this.rautoplay);
+				 // setTimeout(() => {
+				 // 	// 								console.log('当前的slide序号是' + this.activeIndex);
+				 // 	// 								console.log('当前的slide序号是' + this.realIndex);
+				 // 	 
+				 // 	 if(this.rautoplay){
+				 // 		this.$refs.myaudio_zi[this.swiper.realIndex].play()
+				 // 		this.swiper.autoplay.start() 
+				 // 	}else{
+				 // 		this.swiper.autoplay.stop()  
+				 // 	}
+				 // 	 
+				 // }, 1000)
+				 const selfmains = this
+				 // this.$refs.myaudio_zi[this.swiper.realIndex].playtimes(5)
+				 let autotime=getAutoplay_time()?parseInt(getAutoplay_time())*1000:5000
+				 let times = 2
+				 let jg_times = 2000*times
+				 // console.log( autotime);
 				 
-				 setTimeout(() => {
-				 	// 								console.log('当前的slide序号是' + this.activeIndex);
-				 	// 								console.log('当前的slide序号是' + this.realIndex);
-				 	 
-				 	 if(this.rautoplay){
-				 		this.$refs.myaudio_zi[this.swiper.realIndex].play()
-				 		this.swiper.autoplay.start() 
+				 var f = function(a,l){
+					
+				 	// return a;
+				 	if(a===l){
+				 		console.log('end2');
+				 		return
 				 	}else{
-				 		this.swiper.autoplay.stop()  
+				 		
+				 		let t = Math.ceil(selfmains.$refs.myaudio_zi[a].durationtime*1000)*times+jg_times+500
+				 		let tp =t>autotime?t:autotime
+				 		// console.log( a);
+				 		// console.log( tp);
+				 		selfmains.$refs.myaudio_zi[a].playtimes(times)
+				 		a++
+				 		setTimeout(() => {
+							 if(!selfmains.rautoplay){
+								console.log('end1');
+								return
+							}
+				 			console.log( a);
+				 			selfmains.swiper.slideTo(a, 500, false)
+				 			f(a,l);
+				 		}, tp)
 				 	}
-				 	 
-				 }, 1000)
+				 	
+				 }
+				 f(this.swiper.realIndex,this.$refs.myaudio_zi.length)
 				 
 				
 			},
 			help_sy() {
-				
-				const selfmains = this
-				// this.$refs.myaudio_zi[this.swiper.realIndex].playtimes(5)
-				let autotime=getAutoplay_time()?parseInt(getAutoplay_time())*1000:5000
-				let times = 3
-				let jg_times = 2000*times
-				// console.log( autotime);
-				
-				var f = function(a,l){
-					// return a;
-					if(a===l){
-						console.log('end');
-						return
-					}else{
-						console.log( a);
-						let t = Math.ceil(selfmains.$refs.myaudio_zi[a].durationtime*1000)*times+jg_times+500
-						let tp =t>autotime?t:autotime
-						// console.log( a);
-						// console.log( tp);
-						selfmains.$refs.myaudio_zi[a].playtimes(times)
-						a++
-						setTimeout(() => {
-							selfmains.swiper.slideTo(a, 500, false)
-							f(a,l);
-						}, tp)
-					}
 					
-				}
-				f(this.swiper.realIndex,this.$refs.myaudio_zi.length)
-				
-				
 				// for(let i=this.swiper.realIndex;i<this.$refs.myaudio_zi.length;i++){
 				// 	let t = Math.ceil(this.$refs.myaudio_zi[i].durationtime*100)*times+jg_times
 				// 	let tp =t>autotime?t:autotime
