@@ -172,7 +172,7 @@
 <script>
 	// import wavv from '@/assets/voice/26/73/2673734f025fa484228e34212569c44a.wav'
 	
-	import { getAutoplay_time} from '@/utils/auth'
+	import { getAutoplay_time,getAutoplay_repeat} from '@/utils/auth'
 		
 	const remote = require('electron').remote
 	import {
@@ -561,7 +561,7 @@
 				 const selfmains = this
 				 // this.$refs.myaudio_zi[this.swiper.realIndex].playtimes(5)
 				 let autotime=getAutoplay_time()?parseInt(getAutoplay_time())*1000:5000
-				 let times = 2
+				 let times = getAutoplay_repeat()?parseInt(getAutoplay_repeat()):1
 				 let jg_times = 2000*times
 				 // console.log( autotime);
 				 
@@ -569,6 +569,7 @@
 					
 				 	// return a;
 				 	if(a===l){
+						selfmains.rautoplay = false
 				 		console.log('end2');
 				 		return
 				 	}else{

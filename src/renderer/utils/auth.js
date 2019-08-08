@@ -10,6 +10,7 @@ const UseridKey = 'Admin-Userid'
 
 const voicetypeKey = 'voicetype-c'
 const autoplay_timeKey = 'autoplay_time-c'
+const autoplay_repeatKey = 'autoplay_repeat-c'
 
 export function getToken() {
   return Cookies.get(TokenKey)
@@ -75,4 +76,12 @@ export function getAutoplay_time() {
 
 export function setAutoplay_time(name) {
   return Lockr.set(autoplay_timeKey, name)
+}
+
+export function getAutoplay_repeat() {
+  return Lockr.get(autoplay_repeatKey)
+}
+
+export function setAutoplay_repeat(name) {
+  return Lockr.set(autoplay_repeatKey, name)
 }

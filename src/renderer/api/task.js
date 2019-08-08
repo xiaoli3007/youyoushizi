@@ -59,14 +59,15 @@ export function task_delete(taskid) {
 	})
 }
 
-export function setting(userid,voicetype,autoplay_time) {
+export function setting(userid,voicetype,autoplay_time,autoplay_repeat) {
 	return request({
 		url: '?act=setting',
 		method: 'post',
 		data: {
 			userid,
 			voicetype,
-			autoplay_time
+			autoplay_time,
+			autoplay_repeat
 		},
 		// params: { username ,password}
 	})
