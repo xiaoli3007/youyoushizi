@@ -45,6 +45,7 @@ export default {
             animate:false,
             timer:null,
             duration:null,
+            durationtime:null,
             ended:false,
 			// playnowdata:this.playnow
         }
@@ -63,6 +64,7 @@ export default {
 		
         this.audio.addEventListener('canplaythrough',()=>{
             this.duration=this.format(this.audio.duration)
+            this.durationtime=this.audio.duration
         })
         this.audio.onplay=()=>{
             this.animate=true
@@ -138,7 +140,7 @@ export default {
 							 a.play();
 							 start++
 						}
-						}, 3000);  
+						}, 2000);  
 			}, false);  
 			this.audio.play(); 
 			//  
