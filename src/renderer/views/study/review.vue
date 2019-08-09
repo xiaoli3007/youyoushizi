@@ -47,7 +47,7 @@
 			
 			 	 
 			 // console.log(this.taskid)
-			 
+			 const selfmains = this
 			 const loading = this.$loading({
 						  lock: true,
 						  text: '进入复习任务中...',
@@ -58,14 +58,18 @@
 			 review_list({userid:this.$store.state.user.userid,nums:this.$route.query.nums}).then(response => {
 				loading.close();
 				
-				// console.log(response.word_data)
-				
-				// this.rautoplay = response.taskinfo.autoplay==0?false:true
-				this.type = 2
-				//this.relation_id = response.taskinfo.relation_id
-				//this.relation_type = response.taskinfo.relation_type
-				this.words = response.word_data
-				this.taskin = true
+				console.log(response.code)
+				if(response.code===20001){
+					
+					selfmains.$router.replace({ name: 'Reviewlist' })
+				}else{
+					// this.rautoplay = response.taskinfo.autoplay==0?false:true
+					this.type = 2
+					//this.relation_id = response.taskinfo.relation_id
+					//this.relation_type = response.taskinfo.relation_type
+					this.words = response.word_data
+					this.taskin = true
+				}
 				
 			 })	
 				
