@@ -41,28 +41,26 @@
 
 						<el-tabs v-model="TabsValue[index]" tab-position="right" style=" margin-top: 15px;" v-if="type===2">
 							<el-tab-pane label="字" name='0'>
-								<div style="display: flex;flex-direction: row;justify-content: center;">
+								<div style="">
+									
 									<div class="tasktext" v-if="type===2 && slide.sw.length===1">
-									<!-- <el-popover
+									  <el-popover
 										placement="right"
 										width="300"
 										trigger="hover"
 										>
-										 <div>这是一段内容这是一段内容确定删除吗？<br>dasdas多个</div></el-popover> -->
-										<span slot="reference">	{{slide.sw}}</span>
-									  
-									</div>
-									<div class="zi_info" style=" ">
-									
-										<p><span>部首：扌 </span> <span>字形：左中右结构 </span></p>
-										<p><span>笔画：7 </span><span>笔顺：一丨一ノフフ丨 </span></p>
-										<p><span>拼音：yì </span> <span>注音：ㄧˋ </span></p>
-										<p>释义：1. 压，压制：～制。～止。压～。～强扶弱。～扬（a.音调的高低起伏；b.沉浮；c.褒贬）。",
-										2. 忧闷：～郁。～塞（sè）。,
-										3. 文言连词（a.表选择，相当于或是、还是，如“～或”；b.表转折，
-										相当于可是、但是，如“多则多矣，～君似鼠”）。4. 文言发语词
-										：“～齐人不盟，若之何”。  5. 古同“噫”，叹词。</p>
-										
+											<div class="zi_info" style=" ">
+											<p><span>部首：扌</span><span>字形：左中右结构 </span></p>
+											<p><span>笔画：7 </span><span>笔顺：一丨一ノフフ丨 </span></p>
+											<p><span>拼音：yì </span><span>注音：ㄧˋ </span></p>
+											<p>释义：1. 压，压制：～制。～止。压～。～强扶弱。～扬（a.音调的高低起伏；b.沉浮；c.褒贬）。",
+											2. 忧闷：～郁。～塞（sè）。,
+											3. 文言连词（a.表选择，相当于或是、还是，如“～或”；b.表转折，
+											相当于可是、但是，如“多则多矣，～君似鼠”）。4. 文言发语词
+											：“～齐人不盟，若之何”。  5. 古同“噫”，叹词。</p>
+										</div>
+									<span slot="reference">	{{slide.sw}}</span>
+									</el-popover>  
 									</div>
 								</div>
 						 
@@ -723,11 +721,15 @@
 		cursor: pointer;
 	}
 	
-	.zi_info{ display: none;
+	.zi_main{ 
+		display: flex;flex-direction: row;justify-content: center;
+	}
+	
+	.zi_info{ display: none; /* */
 		align-self: flex-end; text-align: left;    margin-bottom: 15px; max-width:300px;
 		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);padding: 10px;font-size: 12px;
 	}
 	.zi_info span{
-		margin-right: 15px;
+		margin-right: 15px;  
 	}
 </style>
