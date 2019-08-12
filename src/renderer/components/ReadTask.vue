@@ -30,47 +30,86 @@
 		<swiper :options="swiperOption" ref="mySwiper">
 			<!-- slides -->
 			<swiper-slide v-for="(slide, index) in words.word1" :key="index">
-				<el-row>
+				<el-row style="min-height: 650px;">
 					<el-col :span="20" :offset="2" justify="center" align="center">
 
 						<div class="tasktext" v-if="type===1">
 							<svg-icon icon-class="erji2"></svg-icon>
 						</div>
-
-
-
 						<el-tabs v-model="TabsValue[index]" tab-position="right" style=" margin-top: 15px;" v-if="type===2">
 							<el-tab-pane label="字" name='0'>
-								<div style="">
+								<div style="" class="zi_main">
 									
 									<div class="tasktext" v-if="type===2 && slide.sw.length===1">
-									  <el-popover
+									<!--  <el-popover
 										placement="right"
 										width="300"
 										trigger="hover"
 										>
-											<div class="zi_info" style=" ">
-											<p><span>部首：扌</span><span>字形：左中右结构 </span></p>
-											<p><span>笔画：7 </span><span>笔顺：一丨一ノフフ丨 </span></p>
-											<p><span>拼音：yì </span><span>注音：ㄧˋ </span></p>
-											<p>释义：1. 压，压制：～制。～止。压～。～强扶弱。～扬（a.音调的高低起伏；b.沉浮；c.褒贬）。",
-											2. 忧闷：～郁。～塞（sè）。,
-											3. 文言连词（a.表选择，相当于或是、还是，如“～或”；b.表转折，
-											相当于可是、但是，如“多则多矣，～君似鼠”）。4. 文言发语词
-											：“～齐人不盟，若之何”。  5. 古同“噫”，叹词。</p>
+											<div  style=" " class="zi_info_p">
+											<p><span>笔顺：
+											<el-image style="width: 50px; height: 50px" :src="slide.word_show_detail.bihua_img" :fit="fit">
+												
+											</el-image></span>
+											<span> 
+											
+											<m-audio :show-duration="false" text="读音" :src="slide.word_show_detail.pyaudio" :block="false" ></m-audio>
+											</span>
+											</p>
+											<p><span>部首：{{slide.word_show_detail.bushou}}</span><span>字形：{{slide.word_show_detail.zixing}}</span></p>
+											<p><span>笔画：{{slide.word_show_detail.bihuaw}} </span><span>笔顺：{{slide.word_show_detail.bishun}} </span></p>
+											<p><span>拼音：{{slide.word_show_detail.pinyin}} </span><span>注音：{{slide.word_show_detail.zhuyin}} </span></p>
+											<p>释义：
+											<span v-for="(shiyi, indexsy) in slide.word_show_detail.submean_list" :key="indexsy">
+												{{shiyi}}
+											</span>
+												
+											</p>
 										</div>
 									<span slot="reference">	{{slide.sw}}</span>
-									</el-popover>  
+									</el-popover>  -->{{slide.sw}}
 									</div>
+									 <transition name="el-zoom-in-center">
+									<div class="zi_info" style=""  v-if="zi_info">
+										<p><span>笔顺： 
+										<el-image style="width: 50px; height: 50px" :src="slide.word_show_detail.bihua_img" fit="fill">
+											
+										</el-image></span>
+										<span> 
+										
+										<m-audio :show-duration="false" text="读音" :src="slide.word_show_detail.pyaudio" :block="false" ></m-audio>
+										</span>
+										</p>
+										<p><span>部首：{{slide.word_show_detail.bushou}}</span><span>字形：{{slide.word_show_detail.zixing}}</span></p>
+										<p><span>笔画：{{slide.word_show_detail.bihuaw}} </span><span>笔顺：{{slide.word_show_detail.bishun}} </span></p>
+										<p><span>拼音：{{slide.word_show_detail.pinyin}} </span><span>注音：{{slide.word_show_detail.zhuyin}} </span></p>
+										<p>释义：
+										<span v-for="(shiyi, indexsy) in slide.word_show_detail.submean_list" :key="indexsy">
+											{{shiyi}}
+										</span>
+											
+										</p>
+										<el-alert
+										    title="按E关闭此框"
+										    type="warning"
+										    close-text="知道了">
+										  </el-alert>
+									</div>
+									</transition>
+									
 								</div>
 						 
 								<div class="tasktext_ci" v-if="type===2 && slide.sw.length>1">{{slide.sw}}</div>
 							</el-tab-pane>
 							<el-tab-pane label="词" name='1'>
-								<div class="tasktext_ci" v-if="type===2">{{slide.dw}}</div>
+								<div class="tasktext_ci" v-if="type===2" 
+								style=" ">
+									<p style=" "> {{slide.dw}} </p></div>
 							</el-tab-pane>
 							<el-tab-pane label="句" name='2'>
-								<div class="tasktext_ju" v-if="type===2">{{slide.lw}}</div>
+								<div class="tasktext_ju" v-if="type===2">
+								
+								<p style=" ">{{slide.lw}}</p></div>
 							</el-tab-pane>
 						</el-tabs>
 					</el-col>
@@ -234,6 +273,7 @@
 				// wavv,
 				// data_rautoplay: this.rautoplay,
 				// radioaaa: '',
+				zi_info:true,
 				rautoplay:true,
 				TabsValue: [],
 				TabsValue2: '0',
@@ -308,7 +348,7 @@
 							}, 1000)
 						},
 						keyPress: function(event) {
-							// console.log('你按了键盘' + event)
+							console.log('你按了键盘' + event)
 							if (event == 32) {
 								//空格控制语音
 								// console.log(this.audiolist)
@@ -370,6 +410,9 @@
 							} else if (event == 112) { //F1 按键
 
 								remote.getCurrentWindow().setFullScreen(!remote.getCurrentWindow().isFullScreen())
+							}else if (event == 69) { //E 按键  字的释义
+								
+								self.zi_info = !self.zi_info
 							}
 						},
 						slideChange: function() {
@@ -389,7 +432,7 @@
 			}
 		},
 		created() {
-			// console.log(this.words);
+			console.log(this.words); 
 			let temp = this.words.word1
 			let task_word_data_items = this.words.task_word_data_items
 			const selfmain = this
@@ -697,18 +740,20 @@
 	}
 
 	.tasktext_ci {
-
-		font-size: 300px;
+		display: flex;min-height: 600px;flex-direction: row;justify-content: center;
+		font-size: 200px;text-align: left;
 
 	}
 
 	.tasktext_ju {
-
-		font-size: 100px;
+		display: flex;min-height: 600px;flex-direction: row;justify-content: center;
+		font-size: 80px;
 		text-align: left;
 
 	}
-
+	.tasktext_ci p,.tasktext_ju p{
+		margin: 0;align-self: center;
+	}
 	.el-row {
 		margin-bottom: 20px;
 
@@ -724,12 +769,25 @@
 	.zi_main{ 
 		display: flex;flex-direction: row;justify-content: center;
 	}
-	
-	.zi_info{ display: none; /* */
-		align-self: flex-end; text-align: left;    margin-bottom: 15px; max-width:300px;
-		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);padding: 10px;font-size: 12px;
+	.tasktext{ 
+		/* margin-left: 150px; */
+	}
+	.zi_info{  /*display: none; */
+		align-self: center; text-align: left; margin-left: 30px;    margin-bottom: 15px; max-width:300px;
+		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);padding: 10px;font-size: 12px;position: absolute; margin-right: 15px;
+		color: #606266;
+		    line-height: 1.4;
+		right: 0;
 	}
 	.zi_info span{
+		margin-right: 15px;  
+	}
+	
+	.zi_info_p{  /*display: none; */
+		 text-align: left; 
+		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);padding: 10px;font-size: 12px;
+	}
+	.zi_info_p span{
 		margin-right: 15px;  
 	}
 </style>
