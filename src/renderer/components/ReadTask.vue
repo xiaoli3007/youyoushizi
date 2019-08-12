@@ -40,6 +40,8 @@
 							<el-tab-pane label="字" name='0'>
 								<div style="" class="zi_main">
 									
+									<div class="tasktext_ci" v-if="type===2 && slide.sw.length>1"><p style=" ">{{slide.sw}}</p></div>
+									
 									<div class="tasktext" v-if="type===2 && slide.sw.length===1">
 									<!--  <el-popover
 										placement="right"
@@ -99,7 +101,6 @@
 									
 								</div>
 						 
-								<div class="tasktext_ci" v-if="type===2 && slide.sw.length>1">{{slide.sw}}</div>
 							</el-tab-pane>
 							<el-tab-pane label="词" name='1'>
 								<div class="tasktext_ci" v-if="type===2" 
