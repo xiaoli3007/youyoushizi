@@ -40,7 +40,13 @@
 							<el-tab-pane label="字" name='0'>
 								<div style="" class="zi_main">
 									
-									<div class="tasktext_ci" v-if="type===2 && slide.sw.length>1"><p style=" ">{{slide.sw}}</p></div>
+									<div class="tasktext_ci" v-if="type===2 && slide.sw.length>1">
+									<p style=" ">
+									 {{slide.sw}} 
+									<!-- 踏破铁鞋无觅处，得来全不费功夫 -->
+									</p>
+									
+									</div>
 									
 									<div class="tasktext" v-if="type===2 && slide.sw.length===1">
 									<!--  <el-popover
@@ -69,10 +75,10 @@
 											</p>
 										</div>
 									<span slot="reference">	{{slide.sw}}</span>
-									</el-popover>  -->{{slide.sw}}
+									</el-popover>  -->{{slide.sw}} 
 									</div>
 									 <transition name="el-zoom-in-center">
-									<div class="zi_info" style=""  v-if="zi_info">
+									<div class="zi_info" style=""  v-if="slide.wcell_type!='25' && zi_info">
 										<p><span>笔顺： 
 										<el-image style="width: 50px; height: 50px" :src="slide.word_show_detail.bihua_img" fit="fill">
 											
@@ -92,9 +98,20 @@
 											
 										</p>
 										<el-alert
-										    title="按E关闭此框"
+										    title="按E关闭或开启此框"
 										    type="warning"
-										    close-text="知道了">
+										    :closable="false">
+										  </el-alert>
+									</div>
+									<div class="zi_info_chengyu" style=""  v-if="slide.wcell_type=='25' && zi_info">
+										<p>注音：<span>{{slide.word_show_detail.zhuyin}}</span></p>
+										<p>出处：<span>{{slide.word_show_detail.chuchu}}</span></p>
+										<p>释义：<span>{{slide.word_show_detail.shiyi}}</span></p>
+										<p v-if="slide.word_show_detail.shili!=''">实例：<span>{{slide.word_show_detail.shili}}</span></p>
+										<el-alert
+										    title="按E关闭或开启此框"
+										    type="warning"
+										    :closable="false">
 										  </el-alert>
 									</div>
 									</transition>
@@ -192,40 +209,8 @@
 
 
 		<el-dialog title="使用帮助" :visible.sync="dialogTableVisible">
-			<el-alert title="识字模式" type="success" :closable="false" description="1. 点击右侧 '字' '词' '句' 或 点击相应读音时， 显示对应字,词语,例句 ">
-			</el-alert>
-
-			<el-alert title="" type="success" :closable="false" description="2. 选择不认识，则会被加入到错字本 ">
-			</el-alert>
-			<el-alert title="" type="success" :closable="false" description=" 3. 在跳转过程中，每个字的检查结果保留">
-			</el-alert>
-			
-			<el-alert title="键盘快捷键" type="warning" :closable="false" description="↑ ↓:切换字词句 ">
-			</el-alert>
-			
-			<el-alert title="" type="warning" :closable="false" description="←:上一个字 ">
-			</el-alert>
-
-			<el-alert title="" type="warning" :closable="false" description="→:下一个字 ">
-			</el-alert>
-			<el-alert title="" type="warning" :closable="false" description="Home:转到第一个字 ">
-			</el-alert>
-
-			<el-alert title="" type="warning" :closable="false" description="End: 转到最后一个字">
-			</el-alert>
-			<el-alert title="" type="warning" :closable="false" description="空格: 字发音">
-			</el-alert>
-			<el-alert title="" type="warning" :closable="false" description="T: 词语发音">
-			</el-alert>
-			<el-alert title="" type="warning" :closable="false" description="S: 句子发音">
-			</el-alert>
-
-			<el-alert title="" type="warning" :closable="false" description="F1: 全屏幕">
-			</el-alert>
-
+			<readtaskhelptext></readtaskhelptext>
 		</el-dialog>
-
-
 
 
 	</div>
@@ -245,7 +230,7 @@
 	import Screenfull from '@/components/Screenfull'
 	import mytime from '@/components/mytime'
 	import myradio from '@/components/myradio'
-	
+	import readtaskhelptext from '@/components/readtaskhelptext'
 	import { taskin , taskindata ,taskinwcell ,taskinwcell_super} from '@/api/task'
 	
 	export default {
@@ -349,7 +334,7 @@
 							}, 1000)
 						},
 						keyPress: function(event) {
-							console.log('你按了键盘' + event)
+							// console.log('你按了键盘' + event)
 							if (event == 32) {
 								//空格控制语音
 								// console.log(this.audiolist)
@@ -440,19 +425,17 @@
 			//语音文件加载==========================================================
 			_(temp).forEach(function(value, key) {
 				// console.log(value);
-				let a = new Audio()
-				a.src = value.sw_sound
-				let b = new Audio()
-				b.src = value.sw_sound
-				let c = new Audio()
-				c.src = value.sw_sound
+				// let a = new Audio()
+				// a.src = value.sw_sound
+				// let b = new Audio()
+				// b.src = value.sw_sound
+				// let c = new Audio()
+				// c.src = value.sw_sound
 				// this.audiolist.push(a)
-				_.set(temp, key + "[sw_audio]", a);
-				_.set(temp, key + "[dw_audio]", b);
-				_.set(temp, key + "[lw_audio]", c);
+				// _.set(temp, key + "[sw_audio]", a);
+				// _.set(temp, key + "[dw_audio]", b);
+				// _.set(temp, key + "[lw_audio]", c);
 				// _.set(temp, key + "[local_sw_sound]", require('@/assets/' + value.sw_sound));
-				// _.set(temp, key + "[local_dw_sound]", require('@/assets/' + value.dw_sound));
-				// _.set(temp, key + "[local_lw_sound]", require('@/assets/' + value.lw_sound));
 				
 				_.set(temp, key + "[local_sw_sound]", value.sw_sound);
 				_.set(temp, key + "[local_dw_sound]", value.dw_sound);
@@ -499,7 +482,8 @@
 		components: {
 			Screenfull,
 			mytime,
-			myradio
+			myradio,
+			readtaskhelptext
 		},
 		computed: {
 			swiper() {
@@ -741,13 +725,13 @@
 	}
 
 	.tasktext_ci {
-		display: flex;min-height: 600px;flex-direction: row;justify-content: center;
+		display: flex;min-height: 650px;flex-direction: row;justify-content: center;
 		font-size: 200px;text-align: left;
 
 	}
 
 	.tasktext_ju {
-		display: flex;min-height: 600px;flex-direction: row;justify-content: center;
+		display: flex;min-height: 650px;flex-direction: row;justify-content: center;
 		font-size: 80px;
 		text-align: left;
 
@@ -772,6 +756,13 @@
 	}
 	.tasktext{ 
 		/* margin-left: 150px; */
+	}
+	.zi_info_chengyu{
+		align-self: flex-end; text-align: left;    margin-bottom: 10px; max-width:350px;
+		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);padding: 10px;font-size: 12px;position: absolute;  
+		color: #606266;
+		    line-height: 1.4;
+		right: 0;
 	}
 	.zi_info{  /*display: none; */
 		align-self: center; text-align: left; margin-left: 30px;    margin-bottom: 15px; max-width:300px;
