@@ -18,9 +18,9 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">听写任务</div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="parseInt(counttodata.task_tingxie_nums)" :duration="3000" class="card-panel-num"/>
         </div>
-      </div>
+      </div> 
     </el-col>
     <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
       <div class="card-panel" >
@@ -29,7 +29,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">识字任务</div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="parseInt(counttodata.task_shizi_nums)" :duration="3200" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -40,10 +40,24 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">识字量</div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="parseInt(counttodata.shizi_nums)" :duration="3600" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
+	
+	<el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+	  <div class="card-panel" >
+	    <div class="card-panel-icon-wrapper icon-shopping">
+			<svg-icon  icon-class="tongji" class-name="card-panel-icon"></svg-icon>
+	    </div>
+	    <div class="card-panel-description">
+	      <div class="card-panel-text">掌握成语</div>
+	      <count-to :start-val="0" :end-val="parseInt(counttodata.shizi_chengyu_nums)" :duration="3600" class="card-panel-num"/>
+	    </div>
+	  </div>
+	</el-col>
+	
+	
   </el-row>
 </template>
 
@@ -56,6 +70,13 @@ export default {
 	  return {
 	    shijian: 'shijian',
 	  }
+	},
+	props: {
+	  counttodata: {
+	    type: Object,
+	    default: null,
+	  }
+	  
 	},
   components: {
     CountTo

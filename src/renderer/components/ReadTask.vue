@@ -85,7 +85,7 @@
 										</el-image></span>
 										<span> 
 										
-										<m-audio :show-duration="false" text="读音" :src="slide.word_show_detail.pyaudio" :block="false" ></m-audio>
+										<m-audio  v-if="slide.word_show_detail.pyaudio!=''" :show-duration="false" text="读音" :src="slide.word_show_detail.pyaudio" :block="false" ></m-audio>
 										</span>
 										</p>
 										<p><span>部首：{{slide.word_show_detail.bushou}}</span><span>字形：{{slide.word_show_detail.zixing}}</span></p>

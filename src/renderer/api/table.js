@@ -56,3 +56,11 @@ export function review_list(params) {
     params
   })
 }
+
+export function index_count(params) {
+  return request({
+    url: '?act=index_count',
+    method: 'get',
+    params
+  })
+}

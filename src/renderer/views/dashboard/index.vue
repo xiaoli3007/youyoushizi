@@ -1,7 +1,7 @@
 <template>
 	<div class="dashboard-editor-container">
 		
-		<panel-group/>
+		<panel-group :counttodata="counttodata" v-if="taskin"/>
 		
 		<el-row style="margin-bottom:32px;">
 		  <line-chart :chart-data="lineChartData"/>
@@ -30,6 +30,10 @@
 </template>
 
 <script>
+	
+	import { index_count} from '@/api/table'
+	import _g from '@/utils/global.js'
+	
 	import PanelGroup from './components/PanelGroup'
 	import LineChart from './components/LineChart'
 	import RaddarChart from './components/RaddarChart'
@@ -60,11 +64,14 @@
 		data () {
 		  return {
 		    voice: localStorage.getItem('voice'),
-			lineChartData: lineChartData.newVisitis
+			lineChartData: lineChartData.newVisitis,
+			counttodata:null,
+			taskin:false,
 		  }
 		},
 		created() {
 			// console.log(this.voice)
+			this.fetchData()
 		},
 		name: 'dashboard',
 		computed: {
@@ -77,6 +84,22 @@
 		  handleSetLineChartData(type) {
 		    this.lineChartData = lineChartData[type]
 		  }
+		  ,
+		  fetchData() {
+		      _g.openGlobalLoading()
+		    // this.listLoading = true
+		  		const params = {
+		  				
+		  				userid: this.$store.state.user.userid,
+		  		}
+		    index_count(params).then(response => {
+		  	     _g.closeGlobalLoading()
+		        this.counttodata = response.countto
+		        // this.listLoading = false
+				this.taskin = true
+		    })
+		      // this.listLoading = false
+		  },
 		}
 	}
 </script>
