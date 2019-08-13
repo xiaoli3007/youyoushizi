@@ -2,57 +2,56 @@
   <div class="app-container">
 	  
  <el-form :inline="true"  class="demo-form-inline">
-	    <el-form-item>
-	  	<el-input v-model="keywords" placeholder="关键词"></el-input>
+	    <el-form-item style="margin-bottom: 0;">
+	  	<el-input v-model="keywords" placeholder="标题"></el-input>
 	    </el-form-item>
-	    <el-form-item>
+		<el-form-item style="margin-bottom: 0;">
+		<el-input v-model="search_author" placeholder="作者"></el-input>
+		</el-form-item>
+	    <el-form-item style="margin-bottom: 0;">
 	  	<el-button type="primary" @click="search()">查询</el-button>
 	    </el-form-item>
 	  </el-form>
+	  <div class="booklist">
+	  <el-row :gutter="20" v-loading.body="listLoading" element-loading-text="Loading" >
+	  	<el-col :span="4" v-for="(singe, index) in list" :key="index">
+	  		<div class="grid-content bg-purple" >
+	  			<el-row>
+	  				<el-col :span="20" :offset="2" justify="center" align="center">
+	  					<el-image style="width: 120px;cursor: pointer; " :src="singe.thumb_zm" fit="fill" @click.native="gotoBookShow(singe.id)"></el-image>
+	  				</el-col>
+	  			</el-row>
+	  			<el-row style="margin-top: 0;">
+	  				<el-col :span="20" :offset="2" justify="center" align="center">
+	  					<p >
+						<el-link @click.native="gotoBookShow(singe.id)">{{singe.title}}</el-link>
+						 </p>
+						<p v-if="singe.author!=''"><el-tag effect="dark" type="success">{{singe.author}}</el-tag></p>
+	  				</el-col>
+	  			</el-row>
+			<!-- 	<el-row>
+					<el-col :span="20" :offset="2" justify="center" align="center">
+						  <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid===0" v-on:click="read(2,scope.row.id,'ebook',0)">识字</el-button>
+						 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid!=0" v-on:click="readtask(scope.row.shizi_taskid)" plain>识字</el-button> 
+						 
+						 
+						  <el-button type="success" size="medium"  v-on:click="gotoBookShow(scope.row.id)">详情</el-button>  
+					</el-col>
+				</el-row> -->
+		</div>
+	  	</el-col>
 	  
-	   
-    <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
-    <!-- <el-table-column align="center" label='ID' width="95">
-        <template slot-scope="scope">
-          {{scope.row.id}}
-        </template>
-      </el-table-column> -->
+	  </el-row>
+	   </div>
+<!--    <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
+    
       <el-table-column label="标题">
         <template slot-scope="scope">
           {{scope.row.title}}
         </template>
       </el-table-column>
-     <!-- <el-table-column label="字"   align="center">
-        <template slot-scope="scope">
-          <span>{{scope.row.s}}</span>
-        </template>
-      </el-table-column> -->
-     <!-- <el-table-column label="zixing" width="110" align="center">
-        <template slot-scope="scope">
-          {{scope.row.zixing}}
-        </template>
-      </el-table-column> -->
-			
-				<el-table-column label="操作"   align="center">
-			  <template slot-scope="scope">
-				  
-				  <!-- <el-col :span="12"><el-button type="success" size="medium" v-on:click="read(1,scope.row.id,'ebook',0)">听写</el-button></el-col> -->
-				  <!-- <el-col :span="8"><el-button type="success" size="medium" v-on:click="read(1,1,scope.row.id,'lesson',0)">自动听写</el-button> </el-col> -->
-		 <el-col :span="24">
-			 
-			<!-- <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid===0" v-on:click="read(2,scope.row.id,'ebook',0)">识字</el-button> 
-			 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid!=0" v-on:click="readtask(scope.row.shizi_taskid)" plain>识字</el-button> 
-			 -->
-			 
-			 <el-button type="success" size="medium"  v-on:click="gotoBookShow(scope.row.id)">详情</el-button>
-			 
-			 
-			 </el-col>
-			  	
-			  </template>
-			</el-table-column>
-
-    </el-table>
+  
+    </el-table> -->
 	
 	
 	<div class="block pages">
@@ -84,7 +83,8 @@ export default {
 	  currentPage: null,
 	  keywords: '',
 	  multipleSelection: [],
-	  pagesize: 12,
+	  pagesize: 18,
+	  search_author:''
 	  
     }
   },
@@ -119,16 +119,17 @@ export default {
 		},
 	  search() {
 			
-	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: 1 }})
+	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords,search_author: this.search_author, page: 1 }})
 	  },
 	   handleCurrentChange(page) {
-	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords, page: page }})
+	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords,search_author: this.search_author, page: page }})
 	  },
     fetchData() {
 	    _g.openGlobalLoading()
       this.listLoading = true
 			const params = {
 					
+					search_author: this.search_author,
 					keywords: this.keywords,
 					page: this.currentPage,
 					pagesize: this.pagesize,
@@ -178,8 +179,19 @@ export default {
 	    }
 	  }
 	},
+	getsearch_author() {
+	  let data = this.$route.query
+	  if (data) {
+	    if (data.search_author) {
+	      this.search_author = data.search_author
+	    } else {
+	      this.search_author = ''
+	    }
+	  }
+	}, 
 	init() {
 	  this.getKeywords()
+	  this.getsearch_author()
 	  this.getCurrentPage()
 	  this.fetchData()
 	},
@@ -192,3 +204,46 @@ export default {
   }
 }
 </script>
+<style rel="stylesheet/scss" lang="scss">
+	.booklist{
+	p {
+		margin: 10px 0 0 0; font-size: 12px;   line-height: 1.2;
+	}
+	.el-row {
+		margin: 10px 0 0;
+		padding: 0 15px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	.el-col {
+		border-radius: 4px;
+		margin-bottom: 10px;
+	}
+
+	.bg-purple-dark {
+		background: #99a9bf;
+	}
+
+	.bg-purple {
+		background: #eee; border: 1px solid #ccc;
+	}
+
+	.bg-purple-light {
+		background: #e5e9f2;
+	}
+
+	.grid-content {
+		border-radius: 4px;
+		height: 260px; overflow: hidden;
+	}
+
+	.row-bg {
+		padding: 10px 0;
+		background-color: #f9fafc;
+	}
+
+	}
+</style>

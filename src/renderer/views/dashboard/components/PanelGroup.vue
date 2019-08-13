@@ -6,7 +6,7 @@
 			<svg-icon  icon-class="shijian" class-name="card-panel-icon"></svg-icon>
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">在线学习时长</div>
+          <div class="card-panel-text">学习时长(分钟)</div>
           <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
         </div>
       </div>
