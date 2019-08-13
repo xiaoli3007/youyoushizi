@@ -83,14 +83,15 @@
 										<el-image style="width: 50px; height: 50px" :src="slide.word_show_detail.bihua_img" fit="fill">
 											
 										</el-image></span>
-										<span> 
+										<span>{{slide.word_show_detail.bishun}} </span>
+										</p>
+										<p><span>笔画：{{slide.word_show_detail.bihuaw}} </span> <span>部首：{{slide.word_show_detail.bushou}}</span><span>字形：{{slide.word_show_detail.zixing}}</span></p>
+										<p><span>拼音：<m-audio  v-if="slide.word_show_detail.pyaudio!=''" :show-duration="false" :text="slide.word_show_detail.pinyin" :src="slide.word_show_detail.pyaudio" :block="false" ></m-audio> </span>
+										<span>注音：{{slide.word_show_detail.zhuyin}} </span>
+										<span>
 										
-										<m-audio  v-if="slide.word_show_detail.pyaudio!=''" :show-duration="false" text="读音" :src="slide.word_show_detail.pyaudio" :block="false" ></m-audio>
 										</span>
 										</p>
-										<p><span>部首：{{slide.word_show_detail.bushou}}</span><span>字形：{{slide.word_show_detail.zixing}}</span></p>
-										<p><span>笔画：{{slide.word_show_detail.bihuaw}} </span><span>笔顺：{{slide.word_show_detail.bishun}} </span></p>
-										<p><span>拼音：{{slide.word_show_detail.pinyin}} </span><span>注音：{{slide.word_show_detail.zhuyin}} </span></p>
 										<p>释义：
 										<span v-for="(shiyi, indexsy) in slide.word_show_detail.submean_list" :key="indexsy">
 											{{shiyi}}
