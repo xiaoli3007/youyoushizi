@@ -86,18 +86,21 @@
 										<span>{{slide.word_show_detail.bishun}} </span>
 										</p>
 										<p><span>笔画：{{slide.word_show_detail.bihuaw}} </span> <span>部首：{{slide.word_show_detail.bushou}}</span><span>字形：{{slide.word_show_detail.zixing}}</span></p>
-										<p><span>拼音：<m-audio  v-if="slide.word_show_detail.pyaudio!=''" :show-duration="false" :text="slide.word_show_detail.pinyin" :src="slide.word_show_detail.pyaudio" :block="false" ></m-audio> </span>
-										<span>注音：{{slide.word_show_detail.zhuyin}} </span>
-										<span>
 										
-										</span>
-										</p>
-										<p>释义：
-										<span v-for="(shiyi, indexsy) in slide.word_show_detail.submean_list" :key="indexsy">
-											{{shiyi}}
-										</span>
-											
-										</p>
+										<div v-for="(item, indexssy)  in slide.word_show_detail.mean_list" :key="indexssy">
+											 
+											<p><span>拼音：<m-audio  v-if="item.mp3!=''" 
+											:show-duration="false" :text="item.pinyin" :src="item.mp3" 
+											:block="false" ></m-audio> </span>
+											<span>注音：{{item.zhuyin}} </span>
+											</p>
+											<p>释义：
+											<span v-for="(shiyi, indexsy) in item.submean_list" :key="indexsy">
+												{{shiyi}}
+											</span>
+											</p>
+										</div>
+										
 										<el-alert
 										    title="按E关闭或开启此框"
 										    type="warning"
