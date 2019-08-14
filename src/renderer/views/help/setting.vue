@@ -7,9 +7,19 @@
 
   <el-form-item label="调试窗口">
    <el-button type="primary" @click="openDev">打开 / 关闭 调试窗口</el-button>
-   
+   <!-- <el-button type="text" @click="table = true">打开嵌套表格的 Drawer</el-button> -->
   </el-form-item> 
-	
+	<el-drawer
+	  title="我嵌套了表格!"
+	  :visible.sync="table"
+	  direction="rtl"
+	  size="50%">
+	   <el-table :data="gridData">
+	      <el-table-column property="date" label="日期" width="150"></el-table-column>
+	      <el-table-column property="name" label="姓名" width="200"></el-table-column>
+	      <el-table-column property="address" label="地址"></el-table-column>
+	    </el-table>
+	</el-drawer>
 	
   <el-form-item label="播放声音">
     <el-radio-group v-model="form.voicetype">
@@ -44,6 +54,7 @@
   export default {
     data() {
       return {
+		  table: false,
         form: {
           voicetype: getVoicetype()?parseInt(getVoicetype()):2,
           autoplay_time: getAutoplay_time()?parseInt(getAutoplay_time()):5,

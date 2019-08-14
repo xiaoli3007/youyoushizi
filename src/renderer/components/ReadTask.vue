@@ -235,7 +235,7 @@
 	import mytime from '@/components/mytime'
 	import myradio from '@/components/myradio'
 	import readtaskhelptext from '@/components/readtaskhelptext'
-	import { taskin , taskindata ,taskinwcell ,taskinwcell_super} from '@/api/task'
+	import { taskin , taskindata ,taskinwcell ,taskinwcell_super , taskintime} from '@/api/task'
 	
 	export default {
 		name: 'read-task',
@@ -555,19 +555,29 @@
 			  }
 			,
 			gotoback() {
+				this.timelog()
 				this.$router.replace({
 					name: 'Task'
 				})
 			},
 			gotoReview() {
+				this.timelog()
 				this.$router.replace({
 					name: 'Reviewlist'
 				})
 			},
 			gotojc() {
+				this.timelog()
 				this.$router.replace({
 					name: 'ReadCheck',
 					query: { words: this.words}
+				})
+			},
+			timelog(){
+				console.log("xx_time"+this.xx_time);
+				//发送请求记录当前字的 学习时间
+				taskintime(this.words.taskid,this.$store.state.user.userid,this.xx_time).then(response => {
+						// console.log(response)
 				})
 			},
 			swiper_slideTo(data) {

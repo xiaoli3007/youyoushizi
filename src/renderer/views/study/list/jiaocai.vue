@@ -18,6 +18,17 @@
 
 
 		<el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
+			
+			
+			
+			<el-table-column align="center" label='封面'>
+				<template slot-scope="scope">
+					<el-image style="width: 80px;cursor: pointer; " :src="scope.row.thumb_zm" fit="fill">
+						
+					</el-image>
+				</template>
+			</el-table-column> 
+			
 			<el-table-column align="center" label='类别'>
 				<template slot-scope="scope">
 					<el-tag> {{scope.row.catinfotext}}</el-tag>
