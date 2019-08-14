@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie'
 
 import Lockr from 'lockr'
 
@@ -12,51 +13,51 @@ const autoplay_timeKey = 'autoplay_time-c'
 const autoplay_repeatKey = 'autoplay_repeat-c'
 
 export function getToken() {
-  return Lockr.get(TokenKey)
+  return Cookies.get(TokenKey)
 }
 
 export function setToken(token) {
-  return Lockr.set(TokenKey, token)
+  return Cookies.set(TokenKey, token)
 }
 
 export function removeToken() {
-  return Lockr.remove(TokenKey)
+  return Cookies.remove(TokenKey)
 }
 
 export function getName() {
-  return Lockr.get(NameKey)
+  return Cookies.get(NameKey)
 }
 
 export function setName(name) {
-  return Lockr.set(NameKey, name)
+  return Cookies.set(NameKey, name)
 }
 
 export function removeName() {
-  return Lockr.remove(NameKey)
+  return Cookies.remove(NameKey)
 }
 
 export function getUserid() {
-  return Lockr.get(UseridKey)
+  return Cookies.get(UseridKey)
 }
 
 export function setUserid(Userid) {
-  return Lockr.set(UseridKey, Userid)
+  return Cookies.set(UseridKey, Userid)
 }
 
 export function removeUserid() {
-  return Lockr.remove(UseridKey)
+  return Cookies.remove(UseridKey)
 }
 
 export function getAvatar() {
-  return Lockr.get(AvatarKey)
+  return Cookies.get(AvatarKey)
 }
 
 export function setAvatar(name) {
-  return Lockr.set(AvatarKey, name)
+  return Cookies.set(AvatarKey, name)
 }
 
 export function removeAvatar() {
-  return Lockr.remove(AvatarKey)
+  return Cookies.remove(AvatarKey)
 }
 
 

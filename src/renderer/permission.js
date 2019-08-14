@@ -4,10 +4,14 @@ import NProgress from 'nprogress' // Progress 进度条
 import 'nprogress/nprogress.css'// Progress 进度条样式
 import { Message } from 'element-ui'
 
+// import { getToken,getUserid,getName,getAutoplay_time} from '@/utils/auth'
+
+
 const whiteList = ['/login'] // 不重定向白名单
 const blockList = ['Read','Review','ReadCheck'] // 必须加载个人信息的页面
 router.beforeEach((to, from, next) => {
   NProgress.start()
+  // console.log(getAutoplay_time())
   if (store.getters.token) {
     if (to.path === '/login') {
       next({ path: '/' })
