@@ -3,7 +3,7 @@
 		
 		<panel-group :counttodata="counttodata" v-if="taskin"/>
 		
-		<el-row style="margin-bottom:32px;">
+		<el-row style="margin-bottom:32px;" v-if="taskin">
 		  <line-chart :chart-data="lineChartData"/>
 		</el-row>
 		

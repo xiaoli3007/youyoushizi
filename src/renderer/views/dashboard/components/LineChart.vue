@@ -81,7 +81,7 @@ export default {
     setOptions({ expectedData, actualData } = {}) {
       this.chart.setOption({
 				title:{
-        text: '学习时间',
+        text: '学习时间（分钟）',
         textStyle:{
             color: '#666',
             fontSize: '12',
@@ -116,10 +116,10 @@ export default {
           }
         },
         legend: {
-          data: ['听写', '识字']
+          data: ['本周', '上周']
         },
         series: [{
-          name: '听写', itemStyle: {
+          name: '本周', itemStyle: {
             normal: {
               color: '#FF005A',
               lineStyle: {
@@ -135,7 +135,7 @@ export default {
           animationEasing: 'cubicInOut'
         },
         {
-          name: '识字',
+          name: '上周',
           smooth: true,
           type: 'line',
           itemStyle: {

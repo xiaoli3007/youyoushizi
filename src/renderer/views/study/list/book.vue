@@ -26,7 +26,7 @@
 	  					<p >
 						<el-link @click.native="gotoBookShow(singe.id)">{{singe.title}}</el-link>
 						 </p>
-						<p v-if="singe.author!=''"><el-tag effect="dark" type="success">{{singe.author}}</el-tag></p>
+						<p v-if="singe.author!=''"><el-tag  type="info">{{singe.author}}</el-tag></p>
 	  				</el-col>
 	  			</el-row>
 			<!-- 	<el-row>

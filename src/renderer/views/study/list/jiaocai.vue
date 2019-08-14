@@ -205,7 +205,7 @@
 					this.list = response.items
 					this.dataCount = parseInt(response.dataCount)
 					// this.listLoading = false
-
+						
 					var temp = this.list
 					_(temp).forEach(function(value, key) {
 						// console.log(value.word1);
@@ -220,7 +220,7 @@
 						_.set(temp, key + '.s', s);
 					});
 					this.list = temp 
-					// console.log(temp);
+					console.log(temp);
 				})
 				this.listLoading = false
 			},

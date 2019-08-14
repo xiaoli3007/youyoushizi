@@ -20,7 +20,7 @@ export function setToken(token) {
 }
 
 export function removeToken() {
-  return Lockr.remove(TokenKey)
+  return Lockr.rm(TokenKey)
 }
 
 export function getName() {
@@ -32,7 +32,7 @@ export function setName(name) {
 }
 
 export function removeName() {
-  return Lockr.remove(NameKey)
+  return Lockr.rm(NameKey)
 }
 
 export function getUserid() {
@@ -44,7 +44,7 @@ export function setUserid(Userid) {
 }
 
 export function removeUserid() {
-  return Lockr.remove(UseridKey)
+  return Lockr.rm(UseridKey)
 }
 
 export function getAvatar() {
@@ -56,7 +56,7 @@ export function setAvatar(name) {
 }
 
 export function removeAvatar() {
-  return Lockr.remove(AvatarKey)
+  return Lockr.rm(AvatarKey)
 }
 
 
