@@ -95,6 +95,7 @@
 		    index_count(params).then(response => {
 		  	     _g.closeGlobalLoading()
 		        this.counttodata = response.countto
+		        this.lineChartData = response.linetime
 		        // this.listLoading = false
 				this.taskin = true
 		    })

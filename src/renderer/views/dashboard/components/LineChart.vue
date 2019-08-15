@@ -40,6 +40,7 @@ export default {
     chartData: {
       deep: true,
       handler(val) {
+		  console.log(val)
         this.setOptions(val)
       }
     }
@@ -134,7 +135,7 @@ export default {
           animationDuration: 2800,
           animationEasing: 'cubicInOut'
         },
-        {
+        { 
           name: '上周',
           smooth: true,
           type: 'line',
@@ -158,6 +159,7 @@ export default {
     },
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
+	   console.log(this.chartData)
       this.setOptions(this.chartData)
     }
   }

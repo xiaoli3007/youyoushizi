@@ -7,7 +7,7 @@
         </div>
         <div class="card-panel-description">
           <div class="card-panel-text">学习时长(分钟)</div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num"/>
+          <count-to :start-val="0" :end-val="parseInt(counttodata.all_learntime_f)" :duration="2600" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
