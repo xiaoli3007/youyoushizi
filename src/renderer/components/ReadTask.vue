@@ -574,9 +574,9 @@
 				})
 			},
 			timelog(){
-				console.log("xx_time"+this.xx_time);
+				console.log("xx_time"+this.$refs.mytimea.all_second);
 				//发送请求记录当前字的 学习时间
-				taskintime(this.words.taskid,this.$store.state.user.userid,this.xx_time).then(response => {
+				taskintime(this.words.taskid,this.$store.state.user.userid,this.$refs.mytimea.all_second,this.review).then(response => {
 						// console.log(response)
 				})
 			},
@@ -681,10 +681,12 @@
 				// taskindata(15,str).then(response => {
 				// 		console.log(response.data)
 				// })
-			},
+			},  
 			getDataFromChild(data) {
 				this.xx_time = data
-				// console.log("getDataFromChild"+this.xx_time);
+				console.log("getDataFromChild"+this.xx_time);
+				
+				console.log(this.$refs.mytimea.all_second)
 			},
 			passtoparentradio(data) {
 				// console.log("passtoparentradio---" + data);

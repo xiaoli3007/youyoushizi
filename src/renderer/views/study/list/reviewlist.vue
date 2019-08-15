@@ -17,7 +17,7 @@
  
  
   <el-form-item label="抽取数目">
-     <el-slider v-model="form.nums" :min="10" :max="30" show-input></el-slider>
+     <el-slider v-model="form.nums" :min="10" :max="50" show-input></el-slider>
   </el-form-item>
 	
   <el-form-item>

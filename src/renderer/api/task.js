@@ -89,7 +89,7 @@ export function taskinwcell_super(userid, task_wcell_id, day,quality,factor ) {
 }
 
 
-export function taskintime(taskid, userid, duration) {
+export function taskintime(taskid, userid, duration,review) {
 	return request({
 		url: '?act=taskintime',
 		method: 'post',
@@ -97,6 +97,7 @@ export function taskintime(taskid, userid, duration) {
 			taskid,
 			userid,
 			duration,
+			review
 		},
 		// params: { username ,password}
 	})
