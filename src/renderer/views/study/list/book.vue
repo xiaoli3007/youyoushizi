@@ -17,16 +17,16 @@
 	  	<el-col :span="4" v-for="(singe, index) in list" :key="index">
 	  		<div class="grid-content bg-purple" >
 	  			<el-row>
-	  				<el-col :span="20" :offset="2" justify="center" align="center">
+	  				<el-col :span="20" :offset="2" justify="center" align="center" style="margin-bottom:0;">
 	  					<el-image style="width: 120px;cursor: pointer; " :src="singe.thumb_zm" fit="fill" @click.native="gotoBookShow(singe.id)"></el-image>
 	  				</el-col>
 	  			</el-row>
 	  			<el-row style="margin-top: 0;">
-	  				<el-col :span="20" :offset="2" justify="center" align="center">
+	  				<el-col :span="20" :offset="2" justify="center" align="center" style="margin-bottom:0;">
 	  					<p >
 						<el-link @click.native="gotoBookShow(singe.id)">{{singe.title}}</el-link>
 						 </p>
-						<p v-if="singe.author!=''"><el-tag  type="info">{{singe.author}}</el-tag></p>
+						<p v-if="singe.author!=''"><el-tag  style="cursor: pointer;" type="info" @click.native="searchauthor(singe.author)">{{singe.author}}</el-tag></p>
 	  				</el-col>
 	  			</el-row>
 			<!-- 	<el-row>
@@ -116,6 +116,10 @@ export default {
 		},
 		 read(b,c,d,e) {
 			this.$router.replace({ name: 'Read' , query:{ type: b,relation_id: c, relation_type: d, taskid: e}})
+		},
+		searchauthor(a) {
+					
+		  this.$router.push({ path: this.$route.path, query: { keywords: this.keywords,search_author: a, page: 1 }})
 		},
 	  search() {
 			

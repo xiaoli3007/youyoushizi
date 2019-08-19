@@ -12,12 +12,23 @@
 
 
 		<el-row v-if="taskin">
+			
 			<el-col :span="20" :offset="2" justify="left" align="left">
 				<div class="" style="margin-top: 15px;box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);padding: 10px;font-size: 12px; line-height: 20px;">
-
-					<p v-if="program.author!=''">作者：{{program.author}}</p>
-					<p v-if="program.subject!=''">主题：{{program.subject}}</p>
-					<p v-if="program.description!=''">简介：{{program.description}}</p>
+				
+				<el-row>
+					<el-col :span="3"  >
+						<el-image style="width: 120px;cursor: pointer; " :src="program.thumb" fit="fill" ></el-image>
+					</el-col>
+					
+					<el-col :span="21"  justify="left" align="left">
+						
+							<p v-if="program.author!=''">作者：{{program.author}}</p>
+							<p v-if="program.subject!=''">主题：{{program.subject}}</p>
+							<p v-if="program.description!=''">简介：{{program.description}}</p>
+						
+				</el-col>
+				</el-row>
 				</div>
 			</el-col>
 		</el-row>
