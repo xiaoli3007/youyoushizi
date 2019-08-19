@@ -14,52 +14,40 @@
 		</el-form-item>
 	 
 	    <el-form-item style="margin-bottom: 0;">
-	  	<el-button type="primary" @click="search()">查询</el-button>
+	  	<el-button type="primary" @click="search()">查询</el-button> 
 	    </el-form-item>
 	  </el-form>
 	  <div class="booklist">
 	  <el-row :gutter="20" v-loading.body="listLoading" element-loading-text="Loading" >
-	  	<el-col :span="4" v-for="(singe, index) in list" :key="index">
+	  	<el-col :span="6" v-for="(singe, index) in list" :key="index">
 	  		<div class="grid-content bg-purple" >
-	  			<el-row>
-	  				<el-col :span="20" :offset="2" justify="center" align="center" style="margin-bottom:0;">
-	  					<el-image style="width: 120px;cursor: pointer; " :src="singe.thumb_zm" fit="fill" @click.native="gotoBookShow(singe.id)"></el-image>
-	  				</el-col>
-	  			</el-row>
-	  			<el-row style="margin-top: 0;">
-	  				<el-col :span="20" :offset="2" justify="center" align="center" style="margin-bottom:0;">
-	  					<p >
-						<el-link @click.native="gotoBookShow(singe.id)">{{singe.title}}</el-link>
-						 </p>
-						<p v-if="singe.author!=''"><el-tag  style="cursor: pointer;"  @click.native="searchauthor(singe.author)">作者:{{singe.author}}</el-tag></p>
-						<p v-if="singe.translator!=''"><el-tag  style="cursor: pointer;" type="warning" @click.native="searchtranslator(singe.translator)">译者:{{singe.translator}}</el-tag></p>
-	  				</el-col>
-	  			</el-row>
-			<!-- 	<el-row>
-					<el-col :span="20" :offset="2" justify="center" align="center">
-						  <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid===0" v-on:click="read(2,scope.row.id,'ebook',0)">识字</el-button>
-						 <el-button type="warning" size="medium" v-if="scope.row.shizi_taskid!=0" v-on:click="readtask(scope.row.shizi_taskid)" plain>识字</el-button> 
-						 
-						 
-						  <el-button type="success" size="medium"  v-on:click="gotoBookShow(scope.row.id)">详情</el-button>  
+	   
+	  			<el-row style="margin-top: 10px;">
+					<el-col :span="9"  justify="center" align="center" style="margin-bottom:0;">
+						<el-image style="width: 120px;cursor: pointer; " :src="singe.thumb_zm" fit="fill" @click.native="gotoBookShow(singe.id)"></el-image>
 					</el-col>
-				</el-row> -->
+	  				<el-col :span="14" :offset="1" justify="center" align="left" style="margin-bottom:0;">
+	  					<p >
+						<el-link type="primary" @click.native="gotoBookShow(singe.id)">{{singe.title}}</el-link>
+						 </p>
+			<p><el-rate
+  v-model="rvalue"
+  disabled
+    
+  text-color="#ff9900"
+  score-template="{value}">
+</el-rate></p>
+			<p>作者:{{singe.author}}</p>
+			<p>译者:{{singe.translator}}</p>
+			<p class="desc" :title="singe.summary">描述:{{singe.description_list}}</p>
+	  				</el-col>
+	  			</el-row>
 		</div>
 	  	</el-col>
 	  
 	  </el-row>
-	   </div>
-<!--    <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
-    
-      <el-table-column label="标题">
-        <template slot-scope="scope">
-          {{scope.row.title}}
-        </template>
-      </el-table-column>
+	   </div> 
   
-    </el-table> -->
-	
-	
 	<div class="block pages">
 					<el-pagination
 					@current-change="handleCurrentChange"
@@ -72,11 +60,11 @@
 				</div>
 				
 				
-  </div>
+  </div> 
 </template>
 
 <script>
-import { getList} from '@/api/table'
+import { getbookrecommendlist} from '@/api/table'
 import _g from '@/utils/global.js'
 
 export default {
@@ -89,9 +77,10 @@ export default {
 	  currentPage: null,
 	  keywords: '',
 	  multipleSelection: [],
-	  pagesize: 18,
+	  pagesize: 12,
 	  search_author:'',
-	  search_translator:''
+	  search_translator:'',
+	  rvalue: 5
 	  
     }
   },
@@ -152,27 +141,12 @@ export default {
 					pagesize: this.pagesize,
 					userid: this.$store.state.user.userid,
 			}
-      getList(params).then(response => {
+      getbookrecommendlist(params).then(response => {
 		     _g.closeGlobalLoading()
         this.list = response.items
 		    this.dataCount = parseInt(response.dataCount)
         this.listLoading = false
 					
-					// var temp = this.list
-					// _(temp).forEach(function(value,key) {
-					// 	// console.log(value.word1);
-					// 		 var s = []
-					// 		_(value.wcell_list).forEach(function(value2,key2) {
-					// 			s.push(value2.word)
-					// 		});
-					// 		  s=_.join(s, ',')
-					// 		// console.log(typeof temp);
-					// 		// console.log(temp[key].name);
-					// 		// this.list['sss']=s  
-					// 		_.set(temp, key+'.s', s);
-					// });
-					// this.list = temp
-					// console.log(this.list);
       })
 	    this.listLoading = false
     },
@@ -185,7 +159,7 @@ export default {
 	      this.currentPage = 1
 	    }
 	  }
-	},
+	},  
 	getKeywords() {
 	  let data = this.$route.query
 	  if (data) {
@@ -236,7 +210,9 @@ export default {
 	.booklist{
 	p {
 		margin: 10px 0 0 0; font-size: 12px; 
-		  // line-height: 1.2;
+	}
+	p.desc {
+		   line-height: 1.8;
 	}
 	.el-row {
 		margin: 10px 0 0;
@@ -268,7 +244,7 @@ export default {
 		border-radius: 4px; 
 		// min-height: 260px; max-height: 290px;  
 		 overflow: hidden;
-		 height: 290px;
+		 height: 230px;
 	}
 
 	.row-bg {

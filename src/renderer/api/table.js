@@ -15,6 +15,14 @@ export function getList(params) {
     params
   })
 }
+
+export function getbookrecommendlist(params) {
+  return request({
+    url: '?act=getbookrecommendlist',
+    method: 'get',
+    params
+  })
+}
 export function getjiaocaiList(params) {
   return request({
     url: '?act=jiaocailist',
