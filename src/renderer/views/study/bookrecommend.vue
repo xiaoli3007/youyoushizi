@@ -2,7 +2,7 @@
   <div class="app-container">
 	  
  <el-form :inline="true"  class="demo-form-inline">
-	    <el-form-item style="margin-bottom: 0;">
+	   <!-- <el-form-item style="margin-bottom: 0;">
 	  	<el-input v-model="keywords" placeholder="标题"></el-input>
 	    </el-form-item>
 		<el-form-item style="margin-bottom: 0;">
@@ -11,8 +11,51 @@
 		
 		<el-form-item style="margin-bottom: 0;">
 		<el-input v-model="search_translator" placeholder="译者"></el-input>
+		</el-form-item> -->
+		
+		<el-form-item style="margin-bottom: 0;">
+		  <el-select v-model="ssvalue" clearable placeholder="年级">
+		    <el-option
+		      v-for="item in options"
+		      :key="item.value"
+		      :label="item.label"
+		      :value="item.value">
+		    </el-option>
+		  </el-select>
+	 	</el-form-item>
+		
+		<el-form-item style="margin-bottom: 0;">
+		  <el-select v-model="ssvalue" clearable placeholder="类别">
+		    <el-option
+		      v-for="item in options"
+		      :key="item.value"
+		      :label="item.label"
+		      :value="item.value">
+		    </el-option>
+		  </el-select>
 		</el-form-item>
-	 
+		<el-form-item style="margin-bottom: 0;">
+		  <el-select v-model="ssvalue" clearable placeholder="篇幅">
+		    <el-option
+		      v-for="item in options"
+		      :key="item.value"
+		      :label="item.label"
+		      :value="item.value">
+		    </el-option>
+		  </el-select>
+		</el-form-item>
+		<el-form-item style="margin-bottom: 0;">
+		  <el-select v-model="ssvalue" clearable placeholder="专题">
+		    <el-option
+		      v-for="item in options"
+		      :key="item.value"
+		      :label="item.label"
+		      :value="item.value">
+		    </el-option>
+		  </el-select>
+		</el-form-item>
+		
+		
 	    <el-form-item style="margin-bottom: 0;">
 	  	<el-button type="primary" @click="search()">查询</el-button> 
 	    </el-form-item>
@@ -38,7 +81,7 @@
   score-template="{value}">
 </el-rate></p>
 			<p>作者:{{singe.author}}</p>
-			<p>译者:{{singe.translator}}</p>
+			<p v-if="singe.translator!=''">译者:{{singe.translator}}</p>
 			<p class="desc" :title="singe.summary">描述:{{singe.description_list}}</p>
 	  				</el-col>
 	  			</el-row>
@@ -80,7 +123,24 @@ export default {
 	  pagesize: 12,
 	  search_author:'',
 	  search_translator:'',
-	  rvalue: 5
+	  rvalue: 5,
+	  options: [{
+	            value: '选项1',
+	            label: '黄金糕'
+	          }, {
+	            value: '选项2',
+	            label: '双皮奶'
+	          }, {
+	            value: '选项3',
+	            label: '蚵仔煎'
+	          }, {
+	            value: '选项4',
+	            label: '龙须面'
+	          }, {
+	            value: '选项5',
+	            label: '北京烤鸭'
+	          }],
+	          ssvalue: ''
 	  
     }
   },
@@ -102,7 +162,7 @@ export default {
 	  
 	  gotoBookShow(a) {
 	  	this.$router.replace({
-	  		name: 'BookShow',
+	  		name: 'BookRecommend_show',
 	  		query: { ebookid: a}
 	  	})
 	  },

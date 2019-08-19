@@ -8,6 +8,14 @@ export function getbookshow(params) {
   })
 }
 
+export function getbookshowrecommend(params) {
+  return request({
+    url: '?act=ebook_show_recommend',
+    method: 'get',
+    params
+  })
+}
+
 export function getList(params) {
   return request({
     url: '?act=list',

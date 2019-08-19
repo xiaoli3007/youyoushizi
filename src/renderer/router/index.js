@@ -39,6 +39,7 @@ export const constantRouterMap = [{
 		component: require('@/views/404').default,
 		hidden: true
 	},
+
 	{
 		path: '/',
 		component: Layout,
@@ -136,22 +137,42 @@ export const constantRouterMap = [{
 	//     }
 	//   ]
 	// }, 
- 
+
 	{
 		path: '/r',
 		component: Layout,
 		redirect: '/r/bookrecommend',
 		name: 'R',
 		children: [{
-			path: 'bookrecommend',
-			name: 'BookRecommend',
-			component: require('@/views/study/bookrecommend').default,
-			meta: {
-				title: '图书推荐',
-				icon: 'bookrecommend'
+				path: 'bookrecommend',
+				name: 'BookRecommend',
+				component: require('@/views/study/bookrecommend').default,
+				meta: {
+					title: '图书推荐',
+					icon: 'bookrecommend'
+				},
+
+			},
+			{
+				path: 'bookrecommend_show',
+				name: 'BookRecommend_show',
+				component: require('@/views/study/bookrecommend_show').default,
+				hidden: true
 			}
-		}]
+		]
 	},
+	// {
+	// 	path: '/r',
+	// 	component: Layout,
+	// 	name: 'R',
+	// 	children: [{
+	// 	path: 'bookrecommend_show',
+	// 	name: 'BookRecommend_show',
+	// 	component: require('@/views/study/bookrecommend_show').default,
+	// 	
+	// 	}],
+	//  hidden: true
+	// },
 	{
 		path: '/serve',
 		component: Layout,
