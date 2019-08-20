@@ -13,7 +13,7 @@
 		<el-input v-model="search_translator" placeholder="译者"></el-input>
 		</el-form-item> -->
 		
-		<el-form-item style="margin-bottom: 0;">
+		<el-form-item >
 		  <el-select v-model="ssvalue" clearable placeholder="年级">
 		    <el-option
 		      v-for="item in options"
@@ -24,7 +24,7 @@
 		  </el-select>
 	 	</el-form-item>
 		
-		<el-form-item style="margin-bottom: 0;">
+		<el-form-item >
 		  <el-select v-model="ssvalue" clearable placeholder="类别">
 		    <el-option
 		      v-for="item in options"
@@ -34,7 +34,7 @@
 		    </el-option>
 		  </el-select>
 		</el-form-item>
-		<el-form-item style="margin-bottom: 0;">
+		<el-form-item >
 		  <el-select v-model="ssvalue" clearable placeholder="篇幅">
 		    <el-option
 		      v-for="item in options"
@@ -44,7 +44,7 @@
 		    </el-option>
 		  </el-select>
 		</el-form-item>
-		<el-form-item style="margin-bottom: 0;">
+		<el-form-item >
 		  <el-select v-model="ssvalue" clearable placeholder="专题">
 		    <el-option
 		      v-for="item in options"
@@ -56,7 +56,7 @@
 		</el-form-item>
 		
 		
-	    <el-form-item style="margin-bottom: 0;">
+	    <el-form-item >
 	  	<el-button type="primary" @click="search()">查询</el-button> 
 	    </el-form-item>
 	  </el-form>

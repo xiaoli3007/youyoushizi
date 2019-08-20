@@ -49,7 +49,7 @@
 				    active-color="#13ce66"
 				    inactive-color="#ff4949"
 				    active-value="1"
-				    inactive-value="0">
+				    inactive-value="2">
 				  </el-switch>
 			</el-form-item>
 
@@ -105,7 +105,8 @@
 		},
 		created() {
 			this.fetchData()
-			// console.log(getVoicetype());
+			// console.log(getshiyi_isshow());
+			// console.log(this.form.shiyi_isshow);
 			// console.log(getAutoplay_time());
 			// console.log(getAutoplay_repeat());
 				
@@ -125,7 +126,7 @@
 					background: 'rgba(0, 0, 0, 0.7)'
 				});
 
-				// console.log(this.form);
+				console.log(this.form);
 				setVoicetype(this.form.voicetype)
 				setAutoplay_time(this.form.autoplay_time)
 				setAutoplay_repeat(this.form.autoplay_repeat)
@@ -153,6 +154,20 @@
 					 this.version_info = response.version_info
 					 this.setting_info = response.setting_info
 					 console.log(this.version_info )
+					 console.log(this.setting_info )
+					 if(this.setting_info){
+						 this.form.voicetype  = parseInt(this.setting_info.voicetype)
+						 this.form.autoplay_time  = parseInt(this.setting_info.autoplay_time)
+						 this.form.autoplay_repeat  = parseInt(this.setting_info.autoplay_repeat)
+						 this.form.shiyi_isshow  = this.setting_info.shiyi_isshow
+						 
+						 setVoicetype(parseInt(this.setting_info.voicetype))
+						 setAutoplay_time(parseInt(this.setting_info.autoplay_time))
+						 setAutoplay_repeat(parseInt(this.setting_info.autoplay_repeat))
+						 setshiyi_isshow(this.setting_info.shiyi_isshow)
+					 }
+					
+					 
 					 this.v = true
 			  })
 			    // this.listLoading = false

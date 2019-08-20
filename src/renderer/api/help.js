@@ -11,3 +11,15 @@ export function feedback(userid, content) {
 		// params: { username ,password}
 	})
 }
+
+export function askbook(userid, info) {
+	return request({
+		url: '?act=askbook',
+		method: 'post',
+		data: {
+			userid,
+			info,
+		},
+		// params: { username ,password}
+	})
+}

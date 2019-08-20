@@ -99,7 +99,7 @@
 												{{shiyi}}
 											</span>
 											</p>
-											<el-button style="float: right;" 
+											<el-button style="float: right;  margin-bottom: 5px;" 
 											v-if="slide.word_show_detail.mean_list.length>1" @click="showshiyi(index)" size="mini" round>更多音节释义</el-button>
 										</div>
 										
@@ -238,7 +238,9 @@
 									{{shiyi}}
 								</span>
 								</p>
+								 <el-divider></el-divider>
 							</div>
+							
 					  </div>
 				</el-col>
 				 
@@ -295,7 +297,7 @@
 				// shiyi_isshow: getshiyi_isshow()=='1' ? true : false,
 				table:false,
 				shiyi_show_list: [],
-				zi_info:getshiyi_isshow()=='1' ? true : false,
+				zi_info:getshiyi_isshow()=='' ? true : getshiyi_isshow()=='1' ? true : false,
 				rautoplay:true,
 				TabsValue: [],
 				TabsValue2: '0',
@@ -823,7 +825,7 @@
 		    line-height: 1.4;
 		right: 0;
 	}
-	.zi_info span{
+	.zi_info p span{
 		margin-right: 15px;  
 	}
 	
@@ -831,7 +833,7 @@
 		 text-align: left; 
 		box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);padding: 10px;font-size: 12px;
 	}
-	.zi_info_p span{
+	.zi_info_p  span{
 		margin-right: 15px;  
 	}
 	.zi_info_shiyi{

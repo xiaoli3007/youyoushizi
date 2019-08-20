@@ -84,7 +84,7 @@ export function index_count(params) {
 export function setting_info(params) {
   return request({
     url: '?act=setting_info',
-    method: 'get',
+    method: 'get', 
     params
   })
 }
