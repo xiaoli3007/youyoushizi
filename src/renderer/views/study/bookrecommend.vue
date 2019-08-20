@@ -60,7 +60,7 @@
 	  	<el-button type="primary" @click="search()">查询</el-button> 
 	    </el-form-item>
 	  </el-form>
-	  <div class="booklist">
+	  <div class="bookrecommentlist">
 	  <el-row :gutter="20" v-loading.body="listLoading" element-loading-text="Loading" >
 	  	<el-col :span="6" v-for="(singe, index) in list" :key="index">
 	  		<div class="grid-content bg-purple" >
@@ -267,7 +267,7 @@ export default {
 }
 </script>
 <style rel="stylesheet/scss" lang="scss">
-	.booklist{
+	.bookrecommentlist{
 	p {
 		margin: 10px 0 0 0; font-size: 12px; 
 	}

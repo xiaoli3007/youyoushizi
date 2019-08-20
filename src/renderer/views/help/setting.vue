@@ -42,6 +42,16 @@
 			<el-form-item label="自动听写重复播报次数">
 				<el-slider v-model="form.autoplay_repeat" :min="1" :max="5" show-input></el-slider>
 			</el-form-item>
+			
+			<el-form-item label="识字多音释义框默认是否显示">
+				<el-switch
+				    v-model="form.shiyi_isshow"
+				    active-color="#13ce66"
+				    inactive-color="#ff4949"
+				    active-value="1"
+				    inactive-value="0">
+				  </el-switch>
+			</el-form-item>
 
 			<el-form-item>
 				<el-button type="primary" @click="onSubmit">保存</el-button>
@@ -65,7 +75,9 @@
 		getVoicetype,
 		getAutoplay_time,
 		getAutoplay_repeat,
-		setAutoplay_repeat
+		setAutoplay_repeat,
+		setshiyi_isshow,
+		getshiyi_isshow
 	} from '@/utils/auth'
 	import _g from '@/utils/global.js'
 	import {
@@ -86,7 +98,8 @@
 					
 					voicetype: getVoicetype() ? parseInt(getVoicetype()) : 2,
 					autoplay_time: getAutoplay_time() ? parseInt(getAutoplay_time()) : 5,
-					autoplay_repeat: getAutoplay_repeat() ? parseInt(getAutoplay_repeat()) : 1
+					autoplay_repeat: getAutoplay_repeat() ? parseInt(getAutoplay_repeat()) : 1,
+					shiyi_isshow: getshiyi_isshow() ? getshiyi_isshow() : '1'
 				}
 			}
 		},
@@ -116,8 +129,9 @@
 				setVoicetype(this.form.voicetype)
 				setAutoplay_time(this.form.autoplay_time)
 				setAutoplay_repeat(this.form.autoplay_repeat)
+				setshiyi_isshow(this.form.shiyi_isshow)
 
-				setting(this.$store.state.user.userid, this.form.voicetype, this.form.autoplay_time, this.form.autoplay_repeat).then(
+				setting(this.$store.state.user.userid, this.form.voicetype, this.form.autoplay_time, this.form.autoplay_repeat,this.form.shiyi_isshow).then(
 					response => {
 						loading.close();
 						console.log(response)

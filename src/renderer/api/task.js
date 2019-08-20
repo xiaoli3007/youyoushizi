@@ -59,7 +59,7 @@ export function task_delete(taskid) {
 	})
 }
 
-export function setting(userid,voicetype,autoplay_time,autoplay_repeat) {
+export function setting(userid,voicetype,autoplay_time,autoplay_repeat,shiyi_isshow) {
 	return request({
 		url: '?act=setting',
 		method: 'post',
@@ -67,7 +67,8 @@ export function setting(userid,voicetype,autoplay_time,autoplay_repeat) {
 			userid,
 			voicetype,
 			autoplay_time,
-			autoplay_repeat
+			autoplay_repeat,
+			shiyi_isshow
 		},
 		// params: { username ,password}
 	})

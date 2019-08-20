@@ -81,13 +81,13 @@
 									<div class="zi_info" style=""  v-if="slide.wcell_type!='25' && zi_info">
 										<p><span>笔顺： 
 										<el-image style="width: 50px; height: 50px" :src="slide.word_show_detail.bihua_img" fit="fill">
-											
+											  
 										</el-image></span>
 										<span>{{slide.word_show_detail.bishun}} </span>
 										</p>
 										<p><span>笔画：{{slide.word_show_detail.bihuaw}} </span> <span>部首：{{slide.word_show_detail.bushou}}</span><span>字形：{{slide.word_show_detail.zixing}}</span></p>
 										
-										<div v-for="(item, indexssy)  in slide.word_show_detail.mean_list" :key="indexssy">
+										<div v-for="(item, indexssy)  in slide.word_show_detail.mean_list" :key="indexssy" v-if="indexssy<1">
 											 
 											<p><span>拼音：<m-audio  v-if="item.mp3!=''" 
 											:show-duration="false" :text="item.pinyin" :src="item.mp3" 
@@ -99,6 +99,8 @@
 												{{shiyi}}
 											</span>
 											</p>
+											<el-button style="float: right;" 
+											v-if="slide.word_show_detail.mean_list.length>1" @click="showshiyi(index)" size="mini" round>更多音节释义</el-button>
 										</div>
 										
 										<el-alert
@@ -121,17 +123,20 @@
 									</transition>
 									
 								</div>
+							
+								
+							<!-- 	 -->
 						 
 							</el-tab-pane>
 							<el-tab-pane label="词" name='1'>
 								<div class="tasktext_ci" v-if="type===2" 
 								style=" ">
-									<p style=" "> {{slide.dw}} </p></div>
+									<p style=" "><span v-html="slide.dw"></span>  </p></div>
 							</el-tab-pane>
 							<el-tab-pane label="句" name='2'>
 								<div class="tasktext_ju" v-if="type===2">
 								
-								<p style=" ">{{slide.lw}}</p></div>
+								<p style=" "> <span v-html="slide.lw"></span></p></div>
 							</el-tab-pane>
 						</el-tabs>
 					</el-col>
@@ -216,14 +221,38 @@
 			<readtaskhelptext></readtaskhelptext>
 		</el-dialog>
 
-
+		
+		<el-drawer v-for="(dslide, dindex) in words.word1" :key="dindex" title="多音字释义详细" :visible.sync="shiyi_show_list[dindex]" direction="rtl" size="50%">
+				<el-row :gutter="20">
+				  <el-col :span="24">
+					  <div class="zi_info_shiyi">
+							<div v-for="(item, indexssy)  in dslide.word_show_detail.mean_list" :key="indexssy" >
+								 
+								<p><span>拼音：<m-audio  v-if="item.mp3!=''" 
+								:show-duration="false" :text="item.pinyin" :src="item.mp3" 
+								:block="false" ></m-audio> </span>
+								<span>注音：{{item.zhuyin}} </span>
+								</p>
+								<p>释义：
+								<span v-for="(shiyi, indexsy) in item.submean_list" :key="indexsy">
+									{{shiyi}}
+								</span>
+								</p>
+							</div>
+					  </div>
+				</el-col>
+				 
+				</el-row>
+		</el-drawer>
+		
+		
 	</div>
 </template>
 
 <script>
 	// import wavv from '@/assets/voice/26/73/2673734f025fa484228e34212569c44a.wav'
 	
-	import { getAutoplay_time,getAutoplay_repeat} from '@/utils/auth'
+	import { getAutoplay_time,getAutoplay_repeat,getshiyi_isshow} from '@/utils/auth'
 		
 	const remote = require('electron').remote
 	import {
@@ -263,7 +292,10 @@
 				// wavv,
 				// data_rautoplay: this.rautoplay,
 				// radioaaa: '',
-				zi_info:true,
+				// shiyi_isshow: getshiyi_isshow()=='1' ? true : false,
+				table:false,
+				shiyi_show_list: [],
+				zi_info:getshiyi_isshow()=='1' ? true : false,
 				rautoplay:true,
 				TabsValue: [],
 				TabsValue2: '0',
@@ -446,6 +478,7 @@
 				_.set(temp, key + "[local_lw_sound]", value.lw_sound);
 				
 				_.set(selfmain.TabsValue, key, "0");
+				_.set(selfmain.shiyi_show_list, key, false);
 				
 				// _.set(selfmain.RadiofuxiArr, key, [{
 				// 	name: "6天",
@@ -534,6 +567,9 @@
 			this.rautoplay = false 
 		},
 		methods: {
+			showshiyi(index){
+				this.$set(this.shiyi_show_list, index, true)
+			},
 			 goto_index(temp_goto_index) {
 				this.$confirm('是否继续上次任务进度?', '提示', {
 				  confirmButtonText: '确定',
@@ -684,9 +720,9 @@
 			},  
 			getDataFromChild(data) {
 				this.xx_time = data
-				console.log("getDataFromChild"+this.xx_time);
+				// console.log("getDataFromChild"+this.xx_time);
 				
-				console.log(this.$refs.mytimea.all_second)
+				// console.log(this.$refs.mytimea.all_second)
 			},
 			passtoparentradio(data) {
 				// console.log("passtoparentradio---" + data);
@@ -797,5 +833,10 @@
 	}
 	.zi_info_p span{
 		margin-right: 15px;  
+	}
+	.zi_info_shiyi{
+		padding: 0 20px;
+		color: #606266; font-size: 18px;
+	   line-height: 1.8;
 	}
 </style>

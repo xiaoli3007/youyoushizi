@@ -25,7 +25,7 @@
 						
 							<p v-if="program.author!=''">作者：{{program.author}}</p>
 							<p v-if="program.subject!=''">主题：{{program.subject}}</p>
-							<p v-if="program.toc!=''">目录：{{program.toc}}</p>
+							<p v-if="program.toc!=''" >目录：<span v-html="program.toc">{{program.toc}}</span></p>
 							<p v-if="program.description!=''">详细描述：{{program.description}}</p>
 						 
 				</el-col> 

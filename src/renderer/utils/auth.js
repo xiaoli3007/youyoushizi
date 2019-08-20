@@ -10,6 +10,7 @@ const UseridKey = 'Admin-Userid'
 const voicetypeKey = 'voicetype-c'
 const autoplay_timeKey = 'autoplay_time-c'
 const autoplay_repeatKey = 'autoplay_repeat-c'
+const shiyi_isshowKey = 'shiyi_isshow-c'
 
 export function getToken() {
   return Lockr.get(TokenKey)
@@ -83,4 +84,12 @@ export function getAutoplay_repeat() {
 
 export function setAutoplay_repeat(name) {
   return Lockr.set(autoplay_repeatKey, name)
+}
+
+export function getshiyi_isshow() {
+  return Lockr.get(shiyi_isshowKey)
+}
+
+export function setshiyi_isshow(name) {
+  return Lockr.set(shiyi_isshowKey, name)
 }
