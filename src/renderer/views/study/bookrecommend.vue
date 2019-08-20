@@ -13,48 +13,16 @@
 		<el-input v-model="search_translator" placeholder="译者"></el-input>
 		</el-form-item> -->
 		
-		<el-form-item >
-		  <el-select v-model="ssvalue" clearable placeholder="年级">
+		<el-form-item  v-for="(item,index) in search_linkage_list" :key="index">
+		  <el-select v-model="search_linkage_default[index]" clearable :placeholder="item.title">
 		    <el-option
-		      v-for="item in options"
-		      :key="item.value"
-		      :label="item.label"
-		      :value="item.value">
+		      v-for="item2 in item.data"
+		      :key="item2.value"
+		      :label="item2.label"
+		      :value="item2.value">
 		    </el-option>
 		  </el-select>
 	 	</el-form-item>
-		
-		<el-form-item >
-		  <el-select v-model="ssvalue" clearable placeholder="类别">
-		    <el-option
-		      v-for="item in options"
-		      :key="item.value"
-		      :label="item.label"
-		      :value="item.value">
-		    </el-option>
-		  </el-select>
-		</el-form-item>
-		<el-form-item >
-		  <el-select v-model="ssvalue" clearable placeholder="篇幅">
-		    <el-option
-		      v-for="item in options"
-		      :key="item.value"
-		      :label="item.label"
-		      :value="item.value">
-		    </el-option>
-		  </el-select>
-		</el-form-item>
-		<el-form-item >
-		  <el-select v-model="ssvalue" clearable placeholder="专题">
-		    <el-option
-		      v-for="item in options"
-		      :key="item.value"
-		      :label="item.label"
-		      :value="item.value">
-		    </el-option>
-		  </el-select>
-		</el-form-item>
-		
 		
 	    <el-form-item >
 	  	<el-button type="primary" @click="search()">查询</el-button> 
@@ -107,7 +75,7 @@
 </template>
 
 <script>
-import { getbookrecommendlist} from '@/api/table'
+import { getbookrecommendlist , ebook_recommend_search_cat} from '@/api/table'
 import _g from '@/utils/global.js'
 
 export default {
@@ -140,7 +108,12 @@ export default {
 	            value: '选项5',
 	            label: '北京烤鸭'
 	          }],
-	          ssvalue: ''
+	          ssvalue: '',
+			  search_linkage_list:[],
+			  search_linkage_default:[],
+			  search_linkage_default_string:[],
+			  tempsearch_linkage_default:[],
+			  
 	  
     }
   },
@@ -155,9 +128,16 @@ export default {
     }
   },
   created() {
+	  
+	  ebook_recommend_search_cat().then(response => {
+	  	this.search_linkage_list = response.items
+	  	this.search_linkage_default = response.search_linkage_default
+	  	this.tempsearch_linkage_default = response.search_linkage_default
+	  	console.log(this.search_linkage_list);
+	  })
     this.init()
 		
-  },
+  }, 
   methods: {
 	  
 	  gotoBookShow(a) {
@@ -183,8 +163,16 @@ export default {
 		  this.$router.push({ path: this.$route.path, query: { keywords: this.keywords,search_translator: a, page: 1 }})
 		},
 	  search() {
+		  this.search_linkage_default_string = _.join(this.search_linkage_default, ',')
+		  console.log(this.search_linkage_default);
+		  console.log(this.search_linkage_default_string);
+		  // console.log( _.split(this.search_linkage_default_string, ','));
+		 
 			
-	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords,search_author: this.search_author,search_translator: this.search_translator, page: 1 }})
+	    this.$router.push({ path: this.$route.path,
+		 query: { keywords: this.keywords,search_author: this.search_author,search_translator: this.search_translator, 
+		 search_linkage_default_string: this.search_linkage_default_string, 
+		 page: 1 }})
 	  },
 	   handleCurrentChange(page) {
 	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords,search_author: this.search_author, page: page }})
@@ -193,9 +181,10 @@ export default {
 	    _g.openGlobalLoading()
       this.listLoading = true
 			const params = {
-					
+					 
 					search_author: this.search_author,
 					search_translator: this.search_translator,
+					search_linkage_default_string: this.search_linkage_default_string,
 					keywords: this.keywords,
 					page: this.currentPage,
 					pagesize: this.pagesize,
@@ -209,7 +198,7 @@ export default {
 					
       })
 	    this.listLoading = false
-    },
+    }, 
 	 getCurrentPage() {
 	  let data = this.$route.query
 	  if (data) {
@@ -250,10 +239,21 @@ export default {
 	    }
 	  }
 	}, 
+	getsearch_linkage_default() {
+	  let data = this.$route.query
+	  if (data) {
+	    if (data.search_linkage_default_string) {
+	      this.search_linkage_default_string = data.search_linkage_default_string
+	    } else {
+	      this.search_linkage_default_string = ''
+	    }
+	  }
+	},
 	init() {
 	  this.getKeywords()
 	  this.getsearch_author()
 	  this.getsearch_translator()
+	  this.getsearch_linkage_default()
 	  this.getCurrentPage()
 	  this.fetchData()
 	},
@@ -261,6 +261,8 @@ export default {
   },
   watch: {
     '$route' (to, from) {
+		 // console.log(to);
+		 // console.log(from);
       this.init()
     }
   }

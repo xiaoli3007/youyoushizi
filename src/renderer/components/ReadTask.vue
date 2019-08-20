@@ -217,10 +217,12 @@
 		</swiper>
 
 
-		<el-dialog title="使用帮助" :visible.sync="dialogTableVisible">
+	 	<el-dialog title="使用帮助" :visible.sync="dialogTableVisible">
 			<readtaskhelptext></readtaskhelptext>
-		</el-dialog>
-
+		</el-dialog> 
+		<!-- <el-drawer  direction="ttb" size="100%" title="使用帮助" :visible.sync="dialogTableVisible">
+				<readtaskhelptext></readtaskhelptext>
+		</el-drawer> -->
 		
 		<el-drawer v-for="(dslide, dindex) in words.word1" :key="dindex" title="多音字释义详细" :visible.sync="shiyi_show_list[dindex]" direction="rtl" size="50%">
 				<el-row :gutter="20">

@@ -88,3 +88,11 @@ export function setting_info(params) {
     params
   })
 }
+
+export function ebook_recommend_search_cat(params) {
+  return request({
+    url: '?act=ebook_recommend_search_cat',
+    method: 'get', 
+    params
+  })
+}

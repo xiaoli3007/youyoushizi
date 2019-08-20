@@ -25,8 +25,9 @@
 						
 							<p v-if="program.author!=''">作者：{{program.author}}</p>
 							<p v-if="program.subject!=''">主题：{{program.subject}}</p>
-							<p v-if="program.toc!=''" >目录：<span v-html="program.toc">{{program.toc}}</span></p>
 							<p v-if="program.description!=''">详细描述：{{program.description}}</p>
+							<p v-if="program.toc!=''" >目录：<span v-html="program.toc"></span></p>
+							
 						 
 				</el-col> 
 				</el-row>
@@ -87,6 +88,7 @@
 				}
 				getbookshowrecommend(params).then(response => {
 					loading.close();
+					console.log(response);
 					this.data = response.items
 					this.program = response.program
 					// this.activetablist = JSON.parse(JSON.stringify(response.datas_tab)); 
