@@ -26,6 +26,7 @@
 							<p v-if="program.author!=''">作者：{{program.author}}</p>
 							<p v-if="program.subject!=''">主题：{{program.subject}}</p>
 							<p v-if="program.description!=''">简介：{{program.description}}</p>
+							<p v-if="program.head!=''">开头：{{program.head}}</p>
 						
 				</el-col> 
 				</el-row>

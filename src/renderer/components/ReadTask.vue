@@ -92,7 +92,7 @@
 											<p><span>拼音：<m-audio  v-if="item.mp3!=''" 
 											:show-duration="false" :text="item.pinyin" :src="item.mp3" 
 											:block="false" ></m-audio> </span>
-											<span>注音：{{item.zhuyin}} </span>
+											<!-- <span>注音：{{item.zhuyin}} </span> -->
 											</p>
 											<p>释义：
 											<span v-for="(shiyi, indexsy) in item.submean_list" :key="indexsy">
@@ -190,6 +190,10 @@
 						<el-tooltip content="句音(键盘:S)" placement="bottom" effect="light">
 							<m-audio :show-duration="false" text="例句" :src="slide.local_lw_sound" :block="false" ref="myaudio_ju" tabvalue="2"
 							 v-on:passtoparenttabvlue="passtoparenttabvlue"></m-audio>
+						</el-tooltip>
+						
+						<el-tooltip content="释义(键盘:E)" placement="bottom" effect="light">
+							 <el-button size="small" @click="zi_info = !zi_info" round>释义</el-button>
 						</el-tooltip>
 						<el-tooltip content="键盘:End" placement="bottom" effect="light">
 							<el-button size="small" @click.native="swiper_slideTo(1)" round>尾字</el-button>

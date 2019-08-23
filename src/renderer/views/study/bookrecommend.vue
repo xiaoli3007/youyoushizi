@@ -2,10 +2,10 @@
   <div class="app-container">
 	  
  <el-form :inline="true"  class="demo-form-inline">
-	   <!-- <el-form-item style="margin-bottom: 0;">
+	    <!-- <el-form-item style="margin-bottom: 0;">
 	  	<el-input v-model="keywords" placeholder="标题"></el-input>
-	    </el-form-item>
-		<el-form-item style="margin-bottom: 0;">
+	    </el-form-item> -->
+		<!--<el-form-item style="margin-bottom: 0;">
 		<el-input v-model="search_author" placeholder="作者"></el-input>
 		</el-form-item>
 		
@@ -27,7 +27,7 @@
 	    <el-form-item >
 	  	<el-button type="primary" @click="search()">查询</el-button> 
 	    </el-form-item>
-	  </el-form>
+	  </el-form> 
 	  <div class="bookrecommentlist">
 	  <el-row :gutter="20" v-loading.body="listLoading" element-loading-text="Loading" >
 	  	<el-col :span="6" v-for="(singe, index) in list" :key="index">
@@ -35,11 +35,11 @@
 	   
 	  			<el-row style="margin-top: 10px;">
 					<el-col :span="9"  justify="center" align="center" style="margin-bottom:0;">
-						<el-image style="width: 120px;cursor: pointer; " :src="singe.thumb_zm" fit="fill" @click.native="gotoBookShow(singe.id)"></el-image>
+						<el-image style="width: 120px;cursor: pointer; " :src="singe.program.thumb_zm" fit="fill" @click.native="gotoBookShow(singe.program.id)"></el-image>
 					</el-col>
 	  				<el-col :span="14" :offset="1" justify="center" align="left" style="margin-bottom:0;">
 	  					<p >
-						<el-link type="primary" @click.native="gotoBookShow(singe.id)">{{singe.title}}</el-link>
+						<el-link type="primary" @click.native="gotoBookShow(singe.program.id)">{{singe.program.title}}</el-link>
 						 </p>
 			<p><el-rate
   v-model="rvalue"
@@ -48,12 +48,12 @@
   text-color="#ff9900"
   score-template="{value}">
 </el-rate></p>
-			<p>作者:{{singe.author}}</p>
-			<p v-if="singe.translator!=''">译者:{{singe.translator}}</p>
-			<p class="desc" :title="singe.summary">描述:{{singe.description_list}}</p>
+			<p>作者:{{singe.program.author}}</p>
+			<p v-if="singe.program.translator!=''">译者:{{singe.program.translator}}</p>
+			<p class="desc" :title="singe.program.summary">描述:{{singe.program.description_list}}</p>
 	  				</el-col>
 	  			</el-row>
-		</div>
+		</div> 
 	  	</el-col>
 	  
 	  </el-row>
@@ -82,7 +82,7 @@ export default {
   data() {
     return {
       list: null,
-      listLoading: true,
+      listLoading: false,
 	  loading:false,
 	  dataCount: null,
 	  currentPage: null,
@@ -178,8 +178,8 @@ export default {
 	    this.$router.push({ path: this.$route.path, query: { keywords: this.keywords,search_author: this.search_author, page: page }})
 	  },
     fetchData() {
-	    _g.openGlobalLoading()
-      this.listLoading = true
+	    // _g.openGlobalLoading()
+     this.listLoading = true
 			const params = {
 					 
 					search_author: this.search_author,
@@ -189,15 +189,15 @@ export default {
 					page: this.currentPage,
 					pagesize: this.pagesize,
 					userid: this.$store.state.user.userid,
-			}
+			} 
       getbookrecommendlist(params).then(response => {
-		     _g.closeGlobalLoading()
+		     // _g.closeGlobalLoading()
         this.list = response.items
 		    this.dataCount = parseInt(response.dataCount)
-        this.listLoading = false
+       this.listLoading = false
 					
       })
-	    this.listLoading = false
+	    // this.listLoading = false
     }, 
 	 getCurrentPage() {
 	  let data = this.$route.query
