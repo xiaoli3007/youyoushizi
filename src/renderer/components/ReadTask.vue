@@ -41,42 +41,16 @@
 								<div style="" class="zi_main">
 									
 									<div class="tasktext_ci" v-if="type===2 && slide.sw.length>1">
-									<p style=" ">
-									 {{slide.sw}} 
-									<!-- 踏破铁鞋无觅处，得来全不费功夫 -->
-									</p>
+										<p style=" ">
+										 {{slide.sw}} 
+										<!-- 踏破铁鞋无觅处，得来全不费功夫 -->
+										</p>
 									
 									</div>
 									
-									<div class="tasktext" v-if="type===2 && slide.sw.length===1">
-									<!--  <el-popover
-										placement="right"
-										width="300"
-										trigger="hover"
-										>
-											<div  style=" " class="zi_info_p">
-											<p><span>笔顺：
-											<el-image style="width: 50px; height: 50px" :src="slide.word_show_detail.bihua_img" :fit="fit">
-												
-											</el-image></span>
-											<span> 
-											
-											<m-audio :show-duration="false" text="读音" :src="slide.word_show_detail.pyaudio" :block="false" ></m-audio>
-											</span>
-											</p>
-											<p><span>部首：{{slide.word_show_detail.bushou}}</span><span>字形：{{slide.word_show_detail.zixing}}</span></p>
-											<p><span>笔画：{{slide.word_show_detail.bihuaw}} </span><span>笔顺：{{slide.word_show_detail.bishun}} </span></p>
-											<p><span>拼音：{{slide.word_show_detail.pinyin}} </span><span>注音：{{slide.word_show_detail.zhuyin}} </span></p>
-											<p>释义：
-											<span v-for="(shiyi, indexsy) in slide.word_show_detail.submean_list" :key="indexsy">
-												{{shiyi}}
-											</span>
-												
-											</p>
+										<div class="tasktext" v-if="type===2 && slide.sw.length===1">
+											{{slide.sw}} 
 										</div>
-									<span slot="reference">	{{slide.sw}}</span>
-									</el-popover>  -->{{slide.sw}} 
-									</div>
 									 <transition name="el-zoom-in-center">
 									<div class="zi_info" style=""  v-if="slide.wcell_type!='25' && zi_info">
 										<p><span>笔顺： 
@@ -129,9 +103,25 @@
 						 
 							</el-tab-pane>
 							<el-tab-pane label="词" name='1'>
+								
+								<div style="" class="zi_main">
 								<div class="tasktext_ci" v-if="type===2" 
 								style=" ">
-									<p style=" "><span v-html="slide.dw"></span>  </p></div>
+									<p style=" "><span v-html="slide.dw"></span>  </p>
+								</div>
+									
+									<transition name="el-zoom-in-center">
+										<div class="zi_info_chengyu" style=""  v-if="zi_info">
+											<p>拼音：<span>{{slide.dword_show_detail.pinyin}}</span></p>
+											<p>释义：<span>{{slide.dword_show_detail.shiyi}}</span></p>
+											<el-alert
+												title="按E关闭或开启此框"
+												type="warning"
+												:closable="false">
+											  </el-alert>
+										</div>
+									</transition>
+									</div>
 							</el-tab-pane>
 							<el-tab-pane label="句" name='2'>
 								<div class="tasktext_ju" v-if="type===2">
