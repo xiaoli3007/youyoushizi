@@ -28,6 +28,11 @@
           {{scope.row.id}}  
         </template>
       </el-table-column> -->
+	  <el-table-column label="任务标题">
+	    <template slot-scope="scope">
+	      {{scope.row.name}}
+	    </template>
+	  </el-table-column>
 	  
 	  <el-table-column label="任务类别">
 	    <template slot-scope="scope">
@@ -35,11 +40,7 @@
 	    </template>
 	  </el-table-column>
 	  
-      <el-table-column label="任务标题">
-        <template slot-scope="scope">
-          {{scope.row.name}}
-        </template>
-      </el-table-column>
+      
 			
     <el-table-column label="创建时间"  align="center">
         <template slot-scope="scope">

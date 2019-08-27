@@ -2,9 +2,9 @@
   <div class="app-container">
 	  
  <el-form :inline="true"  class="demo-form-inline">
-	    <!-- <el-form-item style="margin-bottom: 0;">
-	  	<el-input v-model="keywords" placeholder="标题"></el-input>
-	    </el-form-item> -->
+	     <el-form-item style="margin-bottom: 0;">
+	  	<el-input v-model="keywords" placeholder="关键字"></el-input>
+	    </el-form-item> 
 		<!--<el-form-item style="margin-bottom: 0;">
 		<el-input v-model="search_author" placeholder="作者"></el-input>
 		</el-form-item>
@@ -50,7 +50,7 @@
 </el-rate></p>
 			<p>作者:{{singe.program.author}}</p>
 			<p v-if="singe.program.translator!=''">译者:{{singe.program.translator}}</p>
-			<p class="desc" :title="singe.program.summary">描述:{{singe.program.description_list}}</p>
+			<p v-if="singe.program.summary!=''" class="desc" :title="singe.program.summary">描述:{{singe.program.description_list}}</p>
 	  				</el-col>
 	  			</el-row>
 		</div> 

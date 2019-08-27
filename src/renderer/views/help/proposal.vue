@@ -3,11 +3,11 @@
 
 
 		<el-tabs v-model="activeName">
-			<el-tab-pane label="意见建议" name="first">
+			<el-tab-pane label="建议" name="first">
 
 				<el-form :model="form" :rules="rules" ref="ruleForm" label-width="120px">
 
-					<el-form-item label="意见内容" prop="content">
+					<el-form-item label="内容" prop="content">
 						<el-input type="textarea" v-model="form.content" :rows="10"></el-input>
 					</el-form-item>
 					<el-form-item>
@@ -19,11 +19,11 @@
 			<el-tab-pane label="求书" name="second">
 
 				<el-form :model="form_qiushu" :rules="rules_qiushu" ref="rules_qiushuForm" label-width="120px">
-					<el-form-item label="书名" prop="name">
+					<el-form-item label="标题" prop="name">
 						<el-input v-model="form_qiushu.name"></el-input>
 					</el-form-item>
 
-					<el-form-item label="书的描述" prop="content">
+					<el-form-item label="内容" prop="content">
 						<el-input type="textarea" v-model="form_qiushu.content" :rows="10"></el-input>
 					</el-form-item>
 					<el-form-item>

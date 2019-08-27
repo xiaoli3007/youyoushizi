@@ -53,6 +53,23 @@ export const constantRouterMap = [{
 		}]
 	},
 	{
+		path: '/main',
+		component: Layout,
+		redirect: '/main/msub',
+		name: 'Main',
+		children: [{
+				path: 'msub',
+				name: 'Msub',
+				component: require('@/views/dashboard/index').default,
+				meta: {
+					title: '主页',
+					icon: 'zhuye'
+				},
+	
+			}
+		]
+	},
+	{
 		path: '/study',
 		component: Layout,
 		redirect: '/study/task',
@@ -66,7 +83,7 @@ export const constantRouterMap = [{
 				name: 'Task',
 				component: require('@/views/study/list/task').default,
 				meta: {
-					title: '历史任务',
+					title: '任务',
 					icon: 'tasklist'
 				}
 			},
