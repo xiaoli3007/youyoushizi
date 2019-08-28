@@ -45,7 +45,7 @@
       </div>
     </el-col>
 	
-	<el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+<!-- 	<el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
 	  <div class="card-panel" >
 	    <div class="card-panel-icon-wrapper icon-shopping">
 			<svg-icon  icon-class="tongji" class-name="card-panel-icon"></svg-icon>
@@ -55,7 +55,7 @@
 	      <count-to :start-val="0" :end-val="parseInt(counttodata.shizi_chengyu_nums)" :duration="3600" class="card-panel-num"/>
 	    </div>
 	  </div>
-	</el-col>
+	</el-col> -->
 	
 	
   </el-row>
