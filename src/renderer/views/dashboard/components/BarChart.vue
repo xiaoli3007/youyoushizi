@@ -22,7 +22,11 @@ export default {
     height: {
       type: String,
       default: '300px'
-    }
+    },
+	chartData: {
+	  type: Object,
+	  required: true
+	}
   },
   data() {
     return {
@@ -30,6 +34,7 @@ export default {
     }
   },
   mounted() {
+	  console.log(this.chartData)
     this.initChart()
     this.__resizeHandler = debounce(() => {
       if (this.chart) {
@@ -88,16 +93,26 @@ export default {
         series: [{
           name: '本周',
           type: 'bar',
+		  itemStyle: {
+		    normal: {
+		      color: '#FF005A',
+		    }
+		  },
           stack: 'vistors',
           barWidth: '60%',
-          data: [79, 52, 200, 334, 390, 330, 220],
+          data: this.chartData.expectedData,
           animationDuration
         }, {
           name: '上周',
           type: 'bar',
+		  itemStyle: {
+		    normal: {
+		      color: '#3888fa',
+		    }
+		  },
           stack: 'vistors',
           barWidth: '60%',
-          data: [80, 52, 20, 30, 50, 60, 100],
+          data: this.chartData.actualData,
           animationDuration
         }]
       })

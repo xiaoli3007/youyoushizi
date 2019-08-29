@@ -9,7 +9,7 @@
 		
 		<el-row v-if="taskin">
 		 <div class="chart-wrapper">
-		   <bar-chart/>
+		   <bar-chart :chart-data="barChartData" />
 		 </div>
 		</el-row>
 		
@@ -53,6 +53,13 @@
 	  }
 	}
 	
+	const barChartData = {
+	  newVisitis: {
+	    expectedData: [100, 120, 161, 134, 105, 160, 165],
+	    actualData: [120, 82, 91, 154, 162, 140, 145]
+	  }
+	}
+	
 	import {
 		mapGetters
 	} from 'vuex'
@@ -71,6 +78,7 @@
 		  return {
 		    voice: localStorage.getItem('voice'),
 			lineChartData: lineChartData.newVisitis,
+			barChartData: barChartData.newVisitis,
 			counttodata:null,
 			taskin:false,
 		  }
