@@ -110,6 +110,7 @@
 		  	     _g.closeGlobalLoading()
 		        this.counttodata = response.countto
 		        this.lineChartData = response.linetime
+		        this.barChartData = response.bra
 		        // this.listLoading = false
 				this.taskin = true
 		    })
