@@ -22,7 +22,7 @@
 	
 	import { taskin  } from '@/api/task'
 	import { taskone } from '@/api/table'
-	
+	 
 	export default {
 		data() {
 			return {

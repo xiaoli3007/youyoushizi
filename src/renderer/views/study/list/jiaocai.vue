@@ -54,7 +54,7 @@
 				<template slot-scope="scope">
 
 					<el-col :span="12">
-
+ 
 						<el-button type="success" size="medium" v-if="scope.row.tingxie_taskid===0 && scope.row.iswrite!=0" v-on:click="read(1,scope.row.id,'lesson',0)">听写</el-button>
 						<el-button type="success" size="medium" v-if="scope.row.tingxie_taskid!=0 && scope.row.iswrite!=0" v-on:click="readtask(scope.row.tingxie_taskid)" plain>听写</el-button>
 					</el-col>
